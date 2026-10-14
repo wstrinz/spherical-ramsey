@@ -1,5 +1,9 @@
 # spherical-ramsey
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23366343.svg)](https://doi.org/10.5281/zenodo.23366343)
+
+Archived on Zenodo. Cite all versions with the concept DOI [10.5281/zenodo.23366343](https://doi.org/10.5281/zenodo.23366343); v1.0.0 specifically is [10.5281/zenodo.23366344](https://doi.org/10.5281/zenodo.23366344).
+
 **Which finite sets of points on a sphere are Euclidean Ramsey?** Lean 4 proofs, exact
 certificates, numerical probes, a note and a conjecture ledger, each result labelled with how it
 was verified.
@@ -113,8 +117,8 @@ runner, and `certificates.yml` re-runs the fast certificate scripts and diffs th
 
 A mixed tree. MIT (`LICENSE`) for this project's files. Apache-2.0 (`LICENSES/Apache-2.0.txt`) for
 OpenAI's Lean files vendored unmodified in each rope, and for the few files adapted from them.
-`NOTICE` says which file is under which licence. Cite with `CITATION.cff`. Archive: Zenodo; the DOI
-is added here once v1.0.0 is archived.
+`NOTICE` says which file is under which licence. Cite with `CITATION.cff`. Archive: Zenodo,
+concept DOI 10.5281/zenodo.23366343 (v1.0.0: 10.5281/zenodo.23366344).
 
 This repository cites mobius-ramsey v1.0.0 (Will Strinz, 2026; doi:10.5281/zenodo.23339523), the
 published home of Theorem C; OpenAI's result 172; Pálvölgyi, *A cyclic non-Ramsey heptagon*
