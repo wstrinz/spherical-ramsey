@@ -1,0 +1,4 @@
+[LOR-a] Vahlen mu (3 rational instances): L = S Q(mu)^T has L^T S L = c^2 S, c != 0 (Lorentz up to scale): [True, True, True]
+[LOR-b] L q(x) is a light-cone multiple of q(mu x) (3 points each): [True, True, True]
+[LOR-c] P(mu1, mu2) = P(mu2, mu1) and 2 P(mu1, mu2) = Q(mu1 + mu2) - Q(mu1) - Q(mu2): [True, True, True]
+LORENTZ STRUCTURE CHECKS PASS: True

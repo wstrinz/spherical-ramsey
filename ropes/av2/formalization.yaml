@@ -1,0 +1,129 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "AV2: any at most six distinct points on a circle are Euclidean Ramsey"
+  description: >-
+    Claim B(a): any configuration of at most six
+    distinct points lying on a circle of EuclideanSpace R (Fin 2), with no
+    condition on the coordinates, is Euclidean Ramsey (for every r >= 2 there
+    is D >= 1 such that every r-colouring of EuclideanSpace R (Fin D) has a
+    monochromatic congruent copy). It builds on OpenAI's complete Lean proof of
+    the classification of finite Euclidean Ramsey configurations (openai/math
+    fd4aeeb2, result 172), vendored unmodified, which covers at most five
+    points: the new step is a certificate that six distinct points of the unit
+    circle (off the pole) satisfy OpenAI's field criterion (a product of two
+    Mobius graph forms, proved over an arbitrary commutative ring and moved
+    into F (x)_Q F by ring maps), plus a rotation and scaling to reach that case
+    and OpenAI's extend_to_five lemma adapted to six; OpenAI's
+    fieldCriterion_ramsey concludes. Stated in OpenAI's challenge vocabulary
+    (verbatim) and again in Mathlib vocabulary (Metric.sphere, Mathlib's
+    Congruent), with rope AV1's proved equivalence of the two Congruent notions
+    and of the two Ramsey conclusions. The checked theorems depend on propext,
+    Classical.choice and Quot.sound only. The only sorries are the placeholders
+    in the Comparator challenges and the deliberate sorry in the control
+    AV2Control/SorryMain, which Comparator must refuse.
+  authors:
+    - "Will Strinz"
+  license: "MIT for this project's files (the repository's LICENSE); Apache-2.0 for the vendored OpenAI files and the adapted lemma extend_to_six (vendor/OAI-LICENSE). See NOTICE."
+
+sources:
+  - title: "A classification of finite Euclidean Ramsey configurations (result 172)"
+    authors:
+      - "OpenAI"
+    id: "https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb"
+    type: "repository"
+    location: "lean/OAI/Combinatorics/EuclideanRamsey (proof, vendored unmodified; Circle.lean proves the at-most-five case); lean/ComparatorChallenges/EuclideanRamseyCircle.lean and EuclideanRamseySpherical.lean (vocabulary, verbatim)"
+    relationship: "builds-on"
+    license: "Apache-2.0"
+    author_endorsement: "not-contacted"
+  - title: "six-concyclic-lean (six concyclic points satisfy the criterion; Ramsey conclusions conditional on the sufficiency hypothesis hsuff)"
+    authors:
+      - "JD-Jones-ASES"
+    id: "https://github.com/JD-Jones-ASES/six-concyclic-lean"
+    type: "repository"
+    location: "root commit 0703d7d (2026-10-07), Lean v4.35.0-rc2"
+    relationship: "background"
+    note: "First Lean proof of the criterion for six concyclic points, with the same two-triple certificate idea; Ramsey level conditional on hsuff. Not consulted in assembling this rope; read by the agent that wrote the AV2 proof only after its certificate draft existed; no code shared. AV2 discharges hsuff by building on OpenAI's proof."
+    license: "MIT"
+    author_endorsement: "not-contacted"
+
+related_formalizations:
+  - id: "https://github.com/leanprover-community/mathlib4/blob/d13f23b723b8a846827a245b89c10fc7d3f11612/Mathlib/Topology/MetricSpace/Congruence.lean"
+    relationship: "builds-on"
+    note: "Mathlib's Congruent, used in the Mathlib-vocabulary statement."
+
+classification:
+  arxiv: ["math.CO", "math.MG"]
+  msc2020: ["05D10", "52C10"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["claude-opus-5-5"]
+      framework: "Claude Code"
+      tool_setup: "AI agents (Claude Opus 5.5, in Claude Code), directed by the author, wrote Rope/SixPoint.lean, Rope/SixPointAlgebra.lean and circle helpers on top of OpenAI's vendored proof; assembled this package, replaced the copied circle helpers by imports of OpenAI's modules, wrote Rope/MathlibStatement.lean (reusing rope AV1's bridge), the Comparator challenges and controls, and ran the checks in WSL Ubuntu with Landlock and on a fresh GitHub runner."
+  notes: "Agent-produced. No human has reviewed the proofs or this file."
+
+status:
+  scope: "B(a) and its Mathlib-vocabulary restatement; no hypotheses beyond each theorem's own."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - declaration: "OAI.EuclideanRamsey.circle_ramsey_of_le_six"
+      file: "Rope/SixPoint.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "SphericalRamsey.circle_ramsey_of_le_six_mathlib"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/mathlib.json"
+    - declaration: "SphericalRamsey.circle_ramsey_of_le_six_nonvacuous"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/mathlib.json"
+    - declaration: "SphericalRamsey.oai_congruent_iff"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/equiv.json"
+    - declaration: "SphericalRamsey.oai_ramsey_iff"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/equiv.json"
+    - declaration: "OAI.EuclideanRamsey.CircleConsequence.at_most_five_circle_points_ramsey"
+      file: "OAI/Combinatorics/EuclideanRamsey/Circle.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/oai-circle.json"
+      note: "OpenAI's theorem and OpenAI's challenge, byte for byte; checked here, not ours. AV2 extends it from five points to six."
+    - declaration: "OAI.EuclideanRamsey.ramsey_cospherical"
+      file: "OAI/Combinatorics/EuclideanRamsey/Spherical.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/oai-spherical.json"
+      note: "OpenAI's theorem and OpenAI's challenge, byte for byte; shows Ramsey is not vacuous."
+
+fidelity:
+  divergences: >-
+    No formal-conjectures statement exists, so the vocabulary is OpenAI's public
+    Comparator challenge (Space, Congruent, Ramsey), copied verbatim and checked
+    by cmp in REPRODUCE. "On a circle" is Mathlib's Metric.sphere in
+    EuclideanSpace R (Fin 2); OpenAI's five-point challenge writes the same
+    condition as dist (a i) c = r. OpenAI's Congruent compares dist with
+    arguments b-then-a; Mathlib's compares edist a-then-b; the two are proved
+    equivalent (SphericalRamsey.oai_congruent_iff), as are OpenAI's Ramsey and its
+    Mathlib-vocabulary unfolding (SphericalRamsey.oai_ramsey_iff). No condition on the
+    coordinates and no affine-span hypothesis. Stated for the plane only. See
+    FIDELITY.md.
+
+review:
+  status: "self-assessed"
+  notes: "Self-assessed by the assembling agent (FIDELITY.md). No human review."
+
+acknowledgements: "OpenAI (the classification, its five-point circle theorem and its Lean proof); Mathlib; leanprover/comparator. Prior Lean proof of the six-point criterion: JD-Jones-ASES/six-concyclic-lean."

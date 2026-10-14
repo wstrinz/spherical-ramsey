@@ -1,0 +1,12 @@
+{
+ "challenge_module": "AV3Challenge.Main",
+ "solution_module": "AV3Control.WeakerMain",
+ "theorem_names": [
+  "OAI.EuclideanRamsey.Radian.radian_configuration"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

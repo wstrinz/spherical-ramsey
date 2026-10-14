@@ -1,0 +1,13 @@
+== Part A (C-14): 5 rational points + 4 one-parameter points
+  Mobius image of rationals (CR constant) | two-group | naive H-CR const | det=0 at point | 2-jet PASS | curve PASS: 19
+  random | not two-group | naive H-CR non-const | det!=0 (EXACT NON-RAMSEY) | 2-jet FAIL | curve FAIL: 119
+  random | two-group | naive H-CR non-const | det=0 at point | 2-jet PASS | curve PASS: 1
+  C-14 mismatches (not two-group with a PASS, or two-group with a FAIL): 0
+== Part B (C-23(ii), n = 9, k = 1): exact determinants on fresh random one-parameter 9-sets
+  k=1 | not two-group | det!=0 EXACT NON-RAMSEY: 57
+  radian 9-gon control: see ../certificates/radian_det.py (det != 0)
+# retry tally: curve_probe PASS=20 FAIL=119 NO_VERDICT=0 MIXED=0; jet2 PASS=20 FAIL=119 NO_VERDICT=0 MIXED=0
+
+real	0m50.172s
+user	0m0.076s
+sys	0m0.264s

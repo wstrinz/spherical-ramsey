@@ -1,0 +1,31 @@
+name = "av4"
+version = "0.1.0"
+defaultTargets = ["OAI", "Rope", "AV4Challenge"]
+
+# Rope AV4: pinned to OpenAI's own pin for openai/math fd4aeeb2 (Lean v4.34.1, Mathlib
+# d13f23b723b8a846827a245b89c10fc7d3f11612), because the rope builds on that release's Lean proof.
+# OpenAI's package sets autoImplicit = false; so does this one.
+leanOptions = { autoImplicit = false }
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "d13f23b723b8a846827a245b89c10fc7d3f11612"
+
+# OpenAI's EuclideanRamsey sources, vendored unmodified (Apache-2.0; see NOTICE and vendor/OAI-LICENSE).
+[[lean_lib]]
+name = "OAI"
+globs = ["OAI.Combinatorics.EuclideanRamsey.+"]
+
+# The solution: Theorem C (Möbius invariance), its fidelity checks, and its Mathlib-vocabulary restatement.
+[[lean_lib]]
+name = "Rope"
+globs = ["Rope", "Rope.+"]
+
+[[lean_lib]]
+name = "AV4Challenge"
+globs = ["AV4Challenge.+"]
+
+[[lean_lib]]
+name = "AV4Control"
+globs = ["AV4Control.+"]

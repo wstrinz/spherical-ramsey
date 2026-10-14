@@ -1,0 +1,12 @@
+{
+ "challenge_module": "AV2Challenge.Mathlib",
+ "solution_module": "AV2Control.WeakerMathlib",
+ "theorem_names": [
+  "SphericalRamsey.circle_ramsey_of_le_six_mathlib"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

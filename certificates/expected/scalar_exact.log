@@ -1,0 +1,44 @@
+S^2 cell: m=6 j=4 n=10 d=3  tau-attempt 0: rank M_L = 9 (of 9 rows, n = 10), rank M_W = 15 (of 15 rows, 18 unknowns, 2 fixed to 0)
+   generic points carrying the derivation at tau: 4 of 4; lambda~_i(tau) != 0 for all 4 generic points: True
+   E(tau) = 6.915914e+01 (exact rational; numerator 178 digits, denominator 176 digits); nonzero => scalar certificate over F
+   checks at tau: Dp_0 = 0 True; sum lam p p^T = 0 True; sum lam D a = 0 True; sum lam D(a) a^T symmetric True; sum lam |Da|^2 = E True
+   tau (free points' stereographic u): [['6', '8/9'], ['6', '-1/2'], ['-3/8', '2/7'], ['1', '-1/4']]
+   as a jet2 dual vector at tau: y^T A = 0 True; y^T b = E True
+S^2 cell: m=5 j=5 n=10 d=3  tau-attempt 0: rank M_L = 9 (of 9 rows, n = 10), rank M_W = 15 (of 15 rows, 20 unknowns, 4 fixed to 0)
+   generic points carrying the derivation at tau: 5 of 5; lambda~_i(tau) != 0 for all 5 generic points: True
+   E(tau) = 9.643315e-03 (exact rational; numerator 150 digits, denominator 152 digits); nonzero => scalar certificate over F
+   checks at tau: Dp_0 = 0 True; sum lam p p^T = 0 True; sum lam D a = 0 True; sum lam D(a) a^T symmetric True; sum lam |Da|^2 = E True
+   tau (free points' stereographic u): [['3/2', '9/2'], ['-9/5', '7/6'], ['0', '2/3'], ['-5/2', '1/2'], ['-4/7', '3/8']]
+   as a jet2 dual vector at tau: y^T A = 0 True; y^T b = E True
+S^2 cell: m=4 j=6 n=10 d=3  tau-attempt 0: rank M_L = 9 (of 9 rows, n = 10), rank M_W = 15 (of 15 rows, 22 unknowns, 6 fixed to 0)
+   generic points carrying the derivation at tau: 6 of 6; lambda~_i(tau) != 0 for all 6 generic points: True
+   E(tau) = -2.093881e-01 (exact rational; numerator 227 digits, denominator 228 digits); nonzero => scalar certificate over F
+   checks at tau: Dp_0 = 0 True; sum lam p p^T = 0 True; sum lam D a = 0 True; sum lam D(a) a^T symmetric True; sum lam |Da|^2 = E True
+   tau (free points' stereographic u): [['-9/4', '-2/7'], ['1', '-5'], ['-2', '-5/2'], ['-7/6', '2'], ['-3/5', '1/2'], ['-4/5', '4']]
+   as a jet2 dual vector at tau: y^T A = 0 True; y^T b = E True
+S^2 cell: m=3 j=7 n=10 d=3  tau-attempt 0: rank M_L = 9 (of 9 rows, n = 10), rank M_W = 15 (of 15 rows, 24 unknowns, 8 fixed to 0)
+   generic points carrying the derivation at tau: 6 of 7; lambda~_i(tau) != 0 for all 7 generic points: True
+   E(tau) = 4.896879e-01 (exact rational; numerator 190 digits, denominator 190 digits); nonzero => scalar certificate over F
+   checks at tau: Dp_0 = 0 True; sum lam p p^T = 0 True; sum lam D a = 0 True; sum lam D(a) a^T symmetric True; sum lam |Da|^2 = E True
+   tau (free points' stereographic u): [['5/4', '-7/2'], ['3/8', '1/2'], ['3', '-5/4'], ['9', '-2'], ['-2', '7/5'], ['-4/7', '9/7'], ['-1/2', '-7/6']]
+   as a jet2 dual vector at tau: y^T A = 0 True; y^T b = E True
+S^3 cell: m=11 j=4 n=15 d=4  tau-attempt 0: rank M_L = 14 (of 14 rows, n = 15), rank M_W = 24 (of 24 rows, 27 unknowns, 2 fixed to 0)
+   generic points carrying the derivation at tau: 4 of 4; lambda~_i(tau) != 0 for all 4 generic points: True
+   E(tau) = 1.611964e+01 (exact rational; numerator 298 digits, denominator 297 digits); nonzero => scalar certificate over F
+   checks at tau: Dp_0 = 0 True; sum lam p p^T = 0 True; sum lam D a = 0 True; sum lam D(a) a^T symmetric True; sum lam |Da|^2 = E True
+   tau (free points' stereographic u): [['3/2', '-2', '1/9'], ['1/3', '4/7', '-2/3'], ['-4/9', '-1/2', '2'], ['5/3', '-2/3', '2/3']]
+   as a jet2 dual vector at tau: y^T A = 0 True; y^T b = E True
+S^3 cell: m=10 j=5 n=15 d=4  tau-attempt 0: rank M_L = 14 (of 14 rows, n = 15), rank M_W = 24 (of 24 rows, 30 unknowns, 5 fixed to 0)
+   generic points carrying the derivation at tau: 5 of 5; lambda~_i(tau) != 0 for all 5 generic points: True
+   E(tau) = 5.937120e+03 (exact rational; numerator 397 digits, denominator 393 digits); nonzero => scalar certificate over F
+   checks at tau: Dp_0 = 0 True; sum lam p p^T = 0 True; sum lam D a = 0 True; sum lam D(a) a^T symmetric True; sum lam |Da|^2 = E True
+   tau (free points' stereographic u): [['3', '1', '-9/5'], ['-2', '-5/2', '1'], ['-2/3', '-7/8', '-5/7'], ['-5/6', '9/2', '-7/5'], ['-1/6', '-7/5', '-4/3']]
+   as a jet2 dual vector at tau: y^T A = 0 True; y^T b = E True
+S^4 threshold: m=17 j=4: no exact certificate of this shape in 50 attempts (inconclusive, not NONE); last attempt: rank M_L = 20 of 20; rank M_W(kept columns) = 34 of R = 35 rows, full M_W rank 34.  If full M_W rank < R the cofactor construction needs a second certified row relation.
+S^2 generic (e3_sphere generic 3): m=0 j=10 n=10 d=3  tau-attempt 0: rank M_L = 9 (of 9 rows, n = 10), rank M_W = 15 (of 15 rows, 30 unknowns, 14 fixed to 0)
+   generic points carrying the derivation at tau: 8 of 10; lambda~_i(tau) != 0 for all 10 generic points: True
+   E(tau) = -3.239918e+00 (exact rational; numerator 248 digits, denominator 247 digits); nonzero => scalar certificate over F
+   checks at tau: Dp_0 = 0 True; sum lam p p^T = 0 True; sum lam D a = 0 True; sum lam D(a) a^T symmetric True; sum lam |Da|^2 = E True
+   tau (free points' stereographic u): [['-1', '-3/2'], ['-7/5', '5/4'], ['-1', '-1/2'], ['-4/3', '-2/7'], ['5/2', '8/3'], ['1', '-2/3'], ['1/3', '-9/2'], ['1', '9/7'], ['4/3', '-6/5'], ['1/4', '5/9']]
+   as a jet2 dual vector at tau: y^T A = 0 True; y^T b = E True
+all certified: False [True, True, True, True, True, True, False, True]

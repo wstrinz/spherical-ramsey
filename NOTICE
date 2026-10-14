@@ -1,0 +1,47 @@
+spherical-ramsey: Euclidean Ramsey theory of finite spherical sets (Lean ropes, exact certificates,
+probes, a note and a conjecture ledger)
+Copyright (c) 2026 Will Strinz
+
+Licensing
+=========
+
+* Files written for this project are under the MIT License (LICENSE): the rope packages'
+  own files under ropes/av*/ (Rope.lean, Rope/, AV*Challenge/, AV*Control/, comparator/, the Lake
+  files, README.md, FIDELITY.md, REPRODUCE, MANIFEST, formalization.yaml), certificates/, probes/,
+  note/ (apart from the quotations it marks), ledger/, .github/workflows/ and the documentation,
+  apart from the files listed below.
+
+* ropes/av*/OAI/Combinatorics/EuclideanRamsey/*.lean, ropes/av*/vendor/OAI-ComparatorChallenge-*.lean
+  and the challenge copies ropes/av*/AV*Challenge/OAIClassification.lean, OAISpherical.lean and
+  OAICircle.lean are OpenAI's files from "A classification of finite Euclidean Ramsey
+  configurations" (result 172 of the OpenAI math release), unmodified:
+
+    https://github.com/openai/math, commit fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb
+    lean/OAI/Combinatorics/EuclideanRamsey/<file>.lean -> ropes/av*/OAI/Combinatorics/EuclideanRamsey/<file>.lean
+    lean/ComparatorChallenges/<file>.lean              -> ropes/av*/vendor/OAI-ComparatorChallenge-<file>.lean
+    LICENSE                                            -> ropes/av*/vendor/OAI-LICENSE and LICENSES/Apache-2.0.txt
+
+  They are under the Apache License, Version 2.0 (LICENSES/Apache-2.0.txt). Each rope's MANIFEST
+  pins their SHA-256, and `AV<n>_UPSTREAM=1 bash REPRODUCE` re-checks them byte for byte against
+  GitHub. Each rope's NOTICE lists its OpenAI files.
+
+* Adapted OpenAI code (Apache License, Version 2.0; each file's header and the rope's NOTICE say
+  what was changed):
+    ropes/av2/Rope/SixPointCircle.lean  extend_to_six, adapted from extend_to_five (5 replaced by 6)
+    ropes/av5/Rope/SixPointCircle.lean  eight circle lemmas copied into a new namespace, and
+                                        extend_to_six as above
+    ropes/av3/Rope/Radian.lean          two local Algebra instances (6 lines) and one proof pattern
+                                        from NineField.lean
+    ropes/av3/Rope/RadianAlgebra.lean   the proof structure of NineRationalDeterminant.lean
+
+* `Space`, `Congruent` and `Ramsey` in ropes/av*/AV*Challenge/*.lean and ropes/av*/AV*Control/*.lean
+  repeat OpenAI's definitions verbatim (Model.lean at the same commit; Apache-2.0).
+
+* The note and the ledger may quote OpenAI's preprint (Apache-2.0); each quotation is marked where
+  it appears.
+
+* Every other file in this repository that is not listed above as Apache-2.0 (or as a quotation
+  of Apache-2.0 material) is under the MIT License (LICENSE).
+
+This repository cites, and does not include, mobius-ramsey v1.0.0 (Will Strinz, 2026;
+doi:10.5281/zenodo.23339523), the published home of Theorem C.

@@ -1,0 +1,14 @@
+{
+ "challenge_module": "AV4Challenge.Sanity",
+ "solution_module": "Rope",
+ "theorem_names": [
+  "OAI.EuclideanRamsey.Mobius.mobiusMap_bijOn",
+  "OAI.EuclideanRamsey.Mobius.liftO_lorentz",
+  "OAI.EuclideanRamsey.Mobius.mobiusMap_liftO"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

@@ -1,0 +1,12 @@
+{
+ "challenge_module": "AV2Challenge.Main",
+ "solution_module": "AV2Control.SorryMain",
+ "theorem_names": [
+  "OAI.EuclideanRamsey.circle_ramsey_of_le_six"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

@@ -1,0 +1,25 @@
+== n=8, one parameter (pred PASS)
+   n=8 k=1 not-two pred=PASS obs=PASS: 38
+== n=9, one parameter (pred FAIL unless two-group)
+   n=9 k=1 not-two pred=FAIL obs=FAIL: 39
+== n=8, two parameters (pred FAIL unless two-group or k<=1)
+   n=8 k=1 not-two pred=PASS obs=PASS: 1
+   n=8 k=2 not-two pred=FAIL obs=FAIL: 38
+== n=8, lattice {a th + b ph} (pred FAIL unless k<=1/two-group)
+   n=8 k=2 not-two pred=FAIL obs=FAIL: 25
+== n=7, lattice {a th + b ph + c ps} (pred FAIL if k=3)
+   n=7 k=3 not-two pred=FAIL obs=FAIL: 25
+== n=7, mirror-symmetric {0, +-r_i(t)} (pred PASS)
+   n=7 k=1 not-two pred=PASS obs=PASS: 30
+== n=6, three parameters (control, B(a): PASS)
+   n=6 k=1 two pred=PASS obs=PASS: 1
+   n=6 k=2 two pred=PASS obs=PASS: 10
+   n=6 k=3 two pred=PASS obs=PASS: 9
+== n=9, lattice one parameter {a th}, a<=12 (pred FAIL unless two-group)
+   n=9 k=1 not-two pred=FAIL obs=FAIL: 20
+TOTAL MISMATCHES vs C-23 prediction: 0
+# retry tally: curve_probe PASS=68 FAIL=59 NO_VERDICT=0 MIXED=0; jet2 PASS=89 FAIL=147 NO_VERDICT=0 MIXED=0
+
+real	1m7.747s
+user	0m0.139s
+sys	0m0.295s

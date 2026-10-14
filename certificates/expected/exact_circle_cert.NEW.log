@@ -1,0 +1,3 @@
+NEW: 3 rat + t, t+1, 2t, 1/t  (7 pts, not two-group) n=7 dim V = 2  RAMSEY certificate found; independent verification: True
+NEW: 4 rat + t, t+1, 2t, 1/t  (8 pts, not two-group) n=8 dim V = 1  RAMSEY certificate found; independent verification: True
+NEW: radian 7-gon                                    n=7 dim V = 2  RAMSEY certificate found; independent verification: True

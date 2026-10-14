@@ -1,0 +1,15 @@
+{
+ "challenge_module": "AV3Challenge.Main",
+ "solution_module": "Rope",
+ "theorem_names": [
+  "OAI.EuclideanRamsey.Radian.radian_configuration",
+  "OAI.EuclideanRamsey.Radian.radian_not_ramsey",
+  "OAI.EuclideanRamsey.Radian.radian_ramsey_iff",
+  "OAI.EuclideanRamsey.Radian.radian_ramsey_iff_tan"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

@@ -1,0 +1,26 @@
+Rope AV3 contains, unmodified, the Lean sources of "A classification of finite Euclidean
+Ramsey configurations" (result 172 of the OpenAI math release):
+
+  https://github.com/openai/math, commit fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb
+  lean/OAI/Combinatorics/EuclideanRamsey/*.lean  ->  OAI/Combinatorics/EuclideanRamsey/*.lean
+  lean/ComparatorChallenges/EuclideanRamsey.lean  ->  vendor/OAI-ComparatorChallenge-EuclideanRamsey.lean
+                                                     and AV3Challenge/OAIClassification.lean
+  lean/ComparatorChallenges/EuclideanRamseySpherical.lean
+                                                  ->  vendor/OAI-ComparatorChallenge-EuclideanRamseySpherical.lean
+                                                     and AV3Challenge/OAISpherical.lean
+  LICENSE                                         ->  vendor/OAI-LICENSE
+
+These files are licensed under the Apache License, Version 2.0 (vendor/OAI-LICENSE). They are
+byte-identical to the upstream blobs at that commit (MANIFEST; `AV3_UPSTREAM=1 bash REPRODUCE`
+re-checks this against GitHub). AV3Challenge/Main.lean and AV3Challenge/Equiv.lean repeat the
+upstream challenge's definitions of Space, Congruent and Ramsey verbatim, and the controls repeat
+them (one control redefines a constant on purpose). The rope imports OpenAI's files and uses their
+lemmas as they are, with two adaptations (Apache-2.0, attributed in the module headers):
+  - Rope/Radian.lean mirrors OpenAI's nine-point proof; its two local Algebra Q instances on
+    Q(T, U) (6 lines) and the proof pattern of coefficientEquiv_tau follow
+    OAI/Combinatorics/EuclideanRamsey/NineField.lean (coefficientEquiv_parameter);
+  - Rope/RadianAlgebra.lean follows the clear-denominators-and-specialize structure of
+    OAI/Combinatorics/EuclideanRamsey/NineRationalDeterminant.lean.
+
+Everything else in this directory was written for this project and is under the MIT License
+(the repository's LICENSE; see also the repository's NOTICE).

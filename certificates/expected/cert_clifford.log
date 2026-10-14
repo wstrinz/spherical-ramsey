@@ -1,0 +1,37 @@
+[0] Cl_(0,1) (dim 2): e_i^2 = -1, e_i e_j = -e_j e_i: True | associative (3 generic elements): True | (ab)bar = bbar abar, (ab)* = b* a*, (ab)^ = a^ b^, abar = (a^)*: True | Re(ab) = Re(ba) (= table scalar part): True | Re(a bbar) = sum a_I b_I: True | paravector x xbar = xbar x = |x|^2, x^ = xbar, x* = x: True
+[0] Cl_(0,2) (dim 4): e_i^2 = -1, e_i e_j = -e_j e_i: True | associative (3 generic elements): True | (ab)bar = bbar abar, (ab)* = b* a*, (ab)^ = a^ b^, abar = (a^)*: True | Re(ab) = Re(ba) (= table scalar part): True | Re(a bbar) = sum a_I b_I: True | paravector x xbar = xbar x = |x|^2, x^ = xbar, x* = x: True
+[0] Cl_(0,3) (dim 8): e_i^2 = -1, e_i e_j = -e_j e_i: True | associative (3 generic elements): True | (ab)bar = bbar abar, (ab)* = b* a*, (ab)^ = a^ b^, abar = (a^)*: True | Re(ab) = Re(ba) (= table scalar part): True | Re(a bbar) = sum a_I b_I: True | paravector x xbar = xbar x = |x|^2, x^ = xbar, x* = x: True
+[0] Cl_(0,4) (dim 16): e_i^2 = -1, e_i e_j = -e_j e_i: True | associative (3 generic elements): True | (ab)bar = bbar abar, (ab)* = b* a*, (ab)^ = a^ b^, abar = (a^)*: True | Re(ab) = Re(ba) (= table scalar part): True | Re(a bbar) = sum a_I b_I: True | paravector x xbar = xbar x = |x|^2, x^ = xbar, x* = x: True
+[0] Cl_(0,5) (dim 32): e_i^2 = -1, e_i e_j = -e_j e_i: True | associative (3 generic elements): True | (ab)bar = bbar abar, (ab)* = b* a*, (ab)^ = a^ b^, abar = (a^)*: True | Re(ab) = Re(ba) (= table scalar part): True | Re(a bbar) = sum a_I b_I: True | paravector x xbar = xbar x = |x|^2, x^ = xbar, x* = x: True
+[0] Cl_(0,6) (dim 64): e_i^2 = -1, e_i e_j = -e_j e_i: True | associative (3 generic elements): True | (ab)bar = bbar abar, (ab)* = b* a*, (ab)^ = a^ b^, abar = (a^)*: True | Re(ab) = Re(ba) (= table scalar part): True | Re(a bbar) = sum a_I b_I: True | paravector x xbar = xbar x = |x|^2, x^ = xbar, x* = x: True
+[0] S^5 coordinates: |a(x)| = 1: True | q = C b: True | q^T S q' = -2|x-y|^2: True | q^T (C^-T M C^-1) q' = b^T M b' (symbolic M): True
+[I] S^5 (Cl_(0,4)): Re(h1 conj h2) = b(x)^T M b(y), M bilinear in the 128 coefficient symbols, free of x, y: True  (f has 4096 terms)
+[III] S^5: at C = B = 0, D = kappa, A = -kappa: P = C^-T M C^-1 = -(kappa1 kappa2 / 2) S_6: True
+[L] one-step Lipschitz lemma, n = 1..7: p pbar = pbar p = |p|^2 and p s p = 2<p, sbar> p - |p|^2 sbar: True
+[II'] S^5, w = product of 4 generic paravectors (36 symbols, one tensor factor):
+      (V0) w wbar = wbar w = w^ w* = w* w^ = |w|^2 (scalar): True | w s w* is a paravector: True
+      (V1) u = N21 t + N22 = w^ (t+p);  n = u ubar = ubar u = |t+p|^2 |w|^2 (scalar): True
+      (V2) X~ = (N11 t + N12) ubar is a paravector (so nu(t) = X~/n lies in the chart R^5): True  (terms 48430)
+      (V3) adj(N) N = N adj(N) = Delta I, Delta = -lam |w|^2 (pure-tensor scalar): True
+[IV'] end-to-end at exact rationals, S^5: two normal-form Mobius maps x 5 rational seeds, left != right: all 10 OAI evaluations (1,a)^T P (1,a') = 0: True;  diagonal P = c S_6, c != 0: True
+      control: third group, all 5 evaluations nonzero: True;  normal form is conformal with the inversion distortion (4 pairs): True
+[IV'] end-to-end at exact rationals, S^5: two normal-form Mobius maps x 5 rational seeds, left != right: all 10 OAI evaluations (1,a)^T P (1,a') = 0: True;  diagonal P = c S_6, c != 0: True
+      control: third group, all 5 evaluations nonzero: True;  normal form is conformal with the inversion distortion (4 pairs): True
+[I]+[III] universal identity, S^n for n = 2, 3, 4, 6, 7 (Cl_(0,n-1)): [(2, True), (3, True), (4, True), (6, True), (7, True)]
+[II'] S^2, w = product of 2 generic paravectors (11 symbols, one tensor factor):
+      (V0) w wbar = wbar w = w^ w* = w* w^ = |w|^2 (scalar): True | w s w* is a paravector: True
+      (V1) u = N21 t + N22 = w^ (t+p);  n = u ubar = ubar u = |t+p|^2 |w|^2 (scalar): True
+      (V2) X~ = (N11 t + N12) ubar is a paravector (so nu(t) = X~/n lies in the chart R^2): True  (terms 34)
+      (V3) adj(N) N = N adj(N) = Delta I, Delta = -lam |w|^2 (pure-tensor scalar): True
+[II'] S^3, w = product of 2 generic paravectors (16 symbols, one tensor factor):
+      (V0) w wbar = wbar w = w^ w* = w* w^ = |w|^2 (scalar): True | w s w* is a paravector: True
+      (V1) u = N21 t + N22 = w^ (t+p);  n = u ubar = ubar u = |t+p|^2 |w|^2 (scalar): True
+      (V2) X~ = (N11 t + N12) ubar is a paravector (so nu(t) = X~/n lies in the chart R^3): True  (terms 156)
+      (V3) adj(N) N = N adj(N) = Delta I, Delta = -lam |w|^2 (pure-tensor scalar): True
+[II'] S^4, w = product of 4 generic paravectors (29 symbols, one tensor factor):
+      (V0) w wbar = wbar w = w^ w* = w* w^ = |w|^2 (scalar): True | w s w* is a paravector: True
+      (V1) u = N21 t + N22 = w^ (t+p);  n = u ubar = ubar u = |t+p|^2 |w|^2 (scalar): True
+      (V2) X~ = (N11 t + N12) ubar is a paravector (so nu(t) = X~/n lies in the chart R^4): True  (terms 13700)
+      (V3) adj(N) N = N adj(N) = Delta I, Delta = -lam |w|^2 (pure-tensor scalar): True
+[II'] normal-form Vahlen identities for n = 2, 3, 4: [(2, True), (3, True), (4, True)]
+ALL CHECKS PASS: True  (sympy)

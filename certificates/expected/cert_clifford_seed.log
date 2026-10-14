@@ -1,0 +1,4 @@
+[SEED] S^5, 3 instances (rational left != right parameters, w = product of 4 paravectors), symbolic seed t in R^5:
+       n_L n_R h(nu_L t, nu_R t) = 0 identically in t: [True, True, True]
+       control t_L != t_R: nonzero polynomial, vanishing on t_L = t_R: [True, True, True]
+SEED CHECKS PASS: True

@@ -1,0 +1,4 @@
+six arbitrary points (two triples, two Mobius graphs)
+   evaluation identities: True;  m(P) spatial block = c*I: True;  c = -(T1 - T2)*(T1 - T3)*(T2 - T3)*(T4 - T5)*(T4 - T6)*(T5 - T6)/2
+6 rational points + three arbitrary points (diagonal x Mobius graph)
+   evaluation identities: True;  m(P) spatial block = c*I: True;  c = (T1 - T2)*(T1 - T3)*(T2 - T3)/2

@@ -1,0 +1,482 @@
+# Generated from LEDGER.md (one YAML header per entry); do not edit by hand.
+- id: SR-C2
+  title: Two Möbius groups suffice, every d >= 2
+  status: proved
+  warrant: CERT + written glue for d <= 6; HAND for every d >= 2; reviewed by AI agents only
+  scope: MOBIUS_ORBIT_OF(ALGEBRAIC) x 2
+  difficulty: engineering (a dimension-uniform Lean proof)
+  lean_stub: lean/SphericalRamseyConjectures.lean#C2_two_group
+  fc_category: research open (until a proof is public and accepted)
+  ams:
+  - 05D10
+  - 51B10
+  - 52C10
+  replay:
+  - certificates/cert_s2.py
+  - certificates/cert_s2_quat.py
+  - certificates/g4_test.py
+  - certificates/cert_clifford.py
+  - certificates/cert_clifford_seed.py
+  - certificates/cert_clifford_crosscheck.py
+  note: Theorem C2
+  history:
+  - 2026-10-12 filed as a conjecture
+  - '2026-10-12 proved: CERT for d <= 5, then d = 6, HAND for every d'
+- id: SR-C10
+  title: Eight consecutive multiples of any angle form a Ramsey set
+  status: proved
+  warrant: HAND (via SR-C24) + exact rank computation; reviewed by one AI agent only
+  scope: ANY
+  difficulty: attackable (an explicit certificate would upgrade it to CERT)
+  lean_stub: lean/SphericalRamseyConjectures.lean#C10_radian_eight
+  fc_category: research open (until a proof is public and accepted)
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - certificates/rankN_check.py
+  note: Corollary (the radian 8-gon)
+  history:
+  - 2026-10-12 filed (probe evidence)
+  - 2026-10-13 proved via SR-C24 and an exact rank
+- id: SR-C14
+  title: One rigid five-point group forces the two-group structure
+  status: proved
+  warrant: HAND for regular coordinate fields; reviewed by one AI agent only; CERT instances
+  scope: REGULAR(F/Q)
+  difficulty: attackable (extension to algebraic seeds)
+  lean_stub: lean/SphericalRamseyConjectures.lean#C14_rigid_absorption
+  fc_category: research open
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - probes/c14_rigid.py
+  note: Theorem (rigid-group absorption)
+  history:
+  - 2026-10-13 filed with a proof sketch
+  - 2026-10-13 proved after review (fixes applied)
+- id: SR-C24
+  title: Rank criterion for one-parameter cyclic sets of at most eight points
+  status: proved
+  warrant: HAND; reviewed by one AI agent only
+  scope: transcendence degree 1, F regular over Q
+  difficulty: attackable (generalizations)
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 52C10
+  - 12F20
+  replay:
+  - certificates/rankN_check.py
+  - certificates/rankN_sweep.py
+  note: Theorem (rank criterion)
+  history:
+  - 2026-10-13 filed with a sketch, before its falsifier ran
+  - 2026-10-13 proved after review (fixes applied)
+- id: SR-C25
+  title: Big-ball lemma for definable colourings (o-minimal folklore)
+  status: proved
+  warrant: HAND (two derivations); reviewed by one AI agent only
+  scope: ANY
+  difficulty: done
+  lean_stub: none
+  fc_category: n/a
+  ams:
+  - 05D10
+  - 03C64
+  replay:
+  - certificates/definable_bigball.py
+  note: Remark (definable and polynomial-factor colourings), item (a)
+  history:
+  - 2026-10-13 proved
+- id: SR-C26
+  title: Colourings through boundedly many polynomials contain every low-dimensional spherical set
+  status: proved
+  warrant: HAND modulo two cited theorems (Dol'nikov-Karasev, Theorems 1 and 5, read at statement level);
+    reviewed by one AI agent only
+  scope: ANY
+  difficulty: needs new math (an effective bound)
+  lean_stub: none
+  fc_category: n/a
+  ams:
+  - 05D10
+  - 52A21
+  replay:
+  - certificates/definable_polyphase.py
+  note: Remark (definable and polynomial-factor colourings), item (b)
+  history:
+  - 2026-10-13 proved
+- id: SR-C13
+  title: Naive seven-point classification by two groups
+  status: refuted
+  warrant: CERT (exact certificates, independently re-checked; the circle glue is that of the six-point
+    theorem, reviewed for these instances by one AI agent)
+  scope: TRANSCENDENTAL_PARAM(t)
+  difficulty: done
+  lean_stub: lean/SphericalRamseyConjectures.lean#C13_refuted
+  fc_category: research solved (answer False) once public
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - certificates/cert_nontwogroup.py
+  - certificates/exact_circle_cert.py
+  note: Theorem (non-two-group Ramsey sets)
+  history:
+  - 2026-10-13 filed as the naive working hypothesis, before any check
+  - 2026-10-13 refuted at probe level, then exactly
+- id: SR-C22
+  title: Seven cyclic points with cross-ratio field of transcendence degree >= 2 are Ramsey iff two-group
+  status: refuted
+  warrant: PROBE (the 2-jet pass is a necessary test only at k = 2)
+  scope: GENERIC_OF(two-parameter rational families)
+  difficulty: attackable (an exact refutation)
+  lean_stub: none
+  fc_category: n/a
+  ams:
+  - 05D10
+  replay:
+  - probes/c13_c22_seven.py
+  - probes/c22_controls.py
+  history:
+  - 2026-10-13 filed as the refinement of SR-C13
+  - 2026-10-13 refuted at probe level; superseded by SR-C23
+- id: SR-C15
+  title: Generic unions of Möbius images of rational sets are Ramsey iff two-groupable
+  status: consistent-on-sample
+  warrant: PROBE
+  scope: GENERIC_OF(product of Möbius groups)
+  difficulty: attackable
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  replay:
+  - probes/c15_c16.py
+  - probes/e5_mobius.py
+  history:
+  - 2026-10-13 filed
+  - 2026-10-13 consistent on sample
+- id: SR-C16
+  title: Seven generic points on S^2 are Ramsey
+  status: consistent-on-sample
+  warrant: PROBE for (a); HAND, reviewed by AI, for (b)
+  scope: GENERIC_OF((S^2)^7)
+  difficulty: attackable
+  lean_stub: lean/SphericalRamseyConjectures.lean#C16_generic_seven_S2
+  fc_category: research open
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - probes/c15_c16.py
+  - probes/e1_s2.py
+  history:
+  - 2026-10-13 filed
+  - 2026-10-13 consistent on sample; part (c) withdrawn after its prediction failed
+- id: SR-C19
+  title: Ramsey-ness is decidable over an explicitly presented finitely generated field
+  status: consistent-on-sample
+  warrant: SKETCH (general); the one-parameter circle case is implemented, with 5/5 exact controls
+  scope: any finitely generated coordinate field, given by a presentation
+  difficulty: attackable
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 13P10
+  - 03B25
+  replay:
+  - certificates/exact_circle_cert.py
+  history:
+  - 2026-10-13 filed with a sketch
+  - 2026-10-13 consistent on sample (k = 1 circle case)
+- id: SR-C23
+  title: Ramsey iff two-group above the expected dimension, for rational families
+  status: consistent-on-sample
+  amended: the first form of (i), without a non-degeneracy hypothesis, is refuted at PROBE level at k
+    = 2
+  warrant: PROBE + CERT instances; the k = 1 case of (i') is SR-C24 (HAND)
+  scope: GENERIC_OF(rational family)
+  difficulty: attackable (k = 1); needs new math (k >= 2)
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - probes/c23_count_law.py
+  - probes/c14_rigid.py
+  - certificates/cert_nontwogroup.py
+  - certificates/exact_circle_cert.py
+  note: Conjecture (expected-dimension law on the circle)
+  history:
+  - 2026-10-13 filed, fitted on earlier data; fresh test filed before it ran
+  - 2026-10-13 fresh test 0 mismatches; (i) amended after a filed prediction failed
+- id: SR-C27
+  title: Low-degree polynomial-phase colourings of R^3 contain the radian 9-gon
+  status: consistent-on-sample
+  warrant: 30/30 seeded instances, each with an exactly certified copy
+  scope: colourings floor(r * frac(P)), P in Q(tan 1/2)[x, y, z], deg P <= 3, r in {2, 3}
+  difficulty: attackable
+  lean_stub: none
+  fc_category: n/a
+  ams:
+  - 05D10
+  replay:
+  - certificates/definable_polyphase.py
+  - certificates/definable_crosscheck.py
+  history:
+  - 2026-10-13 filed before its probe
+  - 2026-10-13 30/30
+- id: SR-C1
+  title: The second-order (2-jet) test decides Ramsey-ness
+  status: open
+  warrant: PROBE (sufficiency); necessity is HAND, reviewed by AI
+  scope: ANY
+  difficulty: attackable (one parameter); needs new math (general)
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 13N15
+  replay:
+  - probes/e4_six.py
+  - probes/realness.py
+  - certificates/exact_circle_cert.py
+  note: Conjecture C1; Proposition J2
+  history:
+  - 2026-10-12 filed
+  - 2026-10-12 evidence restricted to real configurations
+- id: SR-C3
+  title: Generic n-subsets of S^{d-1} are non-Ramsey iff n >= N(d)
+  status: open
+  merged_into: SR-C17
+  warrant: 'PROBE; failing-side boundary cells: S^2 CERT, circle HAND (AI-reviewed)'
+  scope: GENERIC_OF(configuration space)
+  difficulty: attackable
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - probes/e1_phase.py
+  - probes/e1_s2.py
+  - probes/e1_s3.py
+  - probes/e1_s4.py
+  note: Conjecture C3
+  history:
+  - 2026-10-12 filed
+  - 2026-10-13 merged into SR-C17
+- id: SR-C4
+  title: Algebraic points plus at most three arbitrary points are Ramsey on every sphere; four can fail
+  status: open
+  merged_into: SR-C17
+  warrant: 'first half: HAND via SR-C2 (CERT + glue for d <= 6); second half: CERT on S^1, S^2, S^3, PROBE
+    for d = 5..9'
+  scope: ALGEBRAIC + 3 ANY
+  difficulty: attackable
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - probes/e3b.py
+  - certificates/scalar_exact.py
+  - certificates/dual_cert.py
+  note: Conjecture C3 (related C4); Remark (three free points in every dimension)
+  history:
+  - 2026-10-12 filed
+  - 2026-10-13 merged into SR-C17
+- id: SR-C5
+  title: Every finite spherical set is Ramsey for measurable colourings
+  status: open
+  warrant: none
+  scope: ANY
+  difficulty: needs-new-math
+  lean_stub: lean/SphericalRamseyConjectures.lean#C5_measurable_graham
+  fc_category: research open
+  ams:
+  - 05D10
+  - 28A05
+  - 03E15
+  replay: []
+  note: Conjecture M1; Remarks (three lemmas around M1), (definable and polynomial-factor colourings)
+  history:
+  - 2026-10-12 filed
+  - 2026-10-12 restated in the forms M1, M1w, M1cat
+- id: SR-C6
+  title: Positive-dimensional Ramsey families of n >= 9 cyclic points are two-group
+  status: open
+  warrant: 'partial: SR-C14 (HAND) for regular families containing a rigid five-point group'
+  scope: GENERIC_OF(positive-dimensional families)
+  difficulty: attackable
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - probes/c14_rigid.py
+  - probes/c23_count_law.py
+  note: Conjecture R1
+  history:
+  - 2026-10-12 filed
+- id: SR-C7
+  title: If the generic member of an irreducible family is Ramsey, every member is
+  status: open
+  warrant: 'off the circle: refuted at PROBE level if SR-C16(a) holds; on the circle: no evidence either
+    way'
+  scope: GENERIC_OF(V)
+  difficulty: attackable
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 14Q99
+  replay:
+  - probes/c15_c16.py
+  history:
+  - 2026-10-12 filed
+  - 2026-10-13 probe-level counter-instance off the circle (SR-C16)
+- id: SR-C8
+  title: The tensor criterion with an indefinite form gives a well-posed O(p,q)-invariant Ramsey theory
+  status: open
+  warrant: framing only; concrete hyperbolic form in SR-C18
+  scope: ANY
+  difficulty: needs-new-math
+  lean_stub: none
+  fc_category: n/a
+  ams:
+  - 05D10
+  - 51F25
+  replay: []
+  history:
+  - 2026-10-12 filed
+- id: SR-C9
+  title: Ramsey-ness of explicit configurations can be equivalent to open transcendence problems
+  status: open
+  warrant: framing; the example rests on Theorem D (LEAN)
+  scope: TRANSCENDENTAL_PARAM
+  difficulty: attackable (literature)
+  lean_stub: none
+  fc_category: n/a
+  ams:
+  - 05D10
+  - 11J81
+  replay:
+  - certificates/radian_det.py
+  note: Conjecture T1; Corollary (radian progressions), item 2
+  history:
+  - 2026-10-12 filed
+- id: SR-C11
+  title: Is there a 2-jet failure with no scalar single-derivation certificate?
+  status: open
+  warrant: PROBE evidence against, on every tested cell
+  scope: ANY
+  difficulty: attackable
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  replay:
+  - probes/scalar_cert.py
+  - certificates/scalar_exact.py
+  note: Section (second-order necessary test), scalar certificates
+  history:
+  - 2026-10-12 filed (replacing a withdrawn witness)
+  - 2026-10-12 evidence against on all tested cells
+- id: SR-C12
+  title: Pálvölgyi's scalar method suffices for rational plus independent points
+  status: open
+  warrant: PROBE (working hypothesis)
+  scope: GENERIC_OF(rational + independent points)
+  difficulty: attackable
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  replay:
+  - probes/scalar_cert.py
+  - certificates/scalar_exact.py
+  history:
+  - 2026-10-12 filed as a working hypothesis
+- id: SR-C17
+  title: Rational plus independent points on S^{d-1}, d >= 3
+  status: open
+  warrant: PROBE; the minimal failing cells on S^2 and S^3 are CERT; the passing side with j <= 3 follows
+    from SR-C2
+  scope: GENERIC_OF(m rational in general position + j independent)
+  difficulty: attackable
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - probes/e1_s2.py
+  - probes/e3_sphere.py
+  - certificates/scalar_exact.py
+  note: Conjecture C3 (merged form); Theorem NR-S23
+  history:
+  - 2026-10-13 filed, merging SR-C3 and SR-C4
+- id: SR-C18
+  title: Hyperbolic-Ramsey sets are the hyperbolic models of Euclidean-Ramsey sets
+  status: open
+  warrant: HAND for one direction (unreviewed); SKETCH for linear necessity
+  scope: ANY
+  difficulty: needs new math (the test case); attackable (write-ups)
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 51M10
+  replay: []
+  history:
+  - 2026-10-13 filed
+- id: SR-C20
+  title: Computable and primitive recursive bounds on the Ramsey dimension
+  status: open
+  warrant: SKETCH for part 1; parts 2 and 3 conjectural
+  scope: ALGEBRAIC
+  difficulty: needs-new-math
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 03D20
+  replay: []
+  history:
+  - 2026-10-13 filed
+- id: SR-C21
+  title: Is the colour number of a non-Ramsey spherical set bounded in terms of its size?
+  status: open
+  warrant: none
+  scope: ANY
+  difficulty: attackable (upper bounds); needs new math (lower bounds)
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  replay: []
+  history:
+  - 2026-10-13 filed
+- id: SR-C28
+  title: Locally semialgebraic colourings contain every finite spherical set
+  status: open
+  warrant: partial results HAND (SR-C26, cube lemma); reviewed by AI
+  scope: ANY
+  difficulty: needs-new-math
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 14P10
+  replay: []
+  note: Remark (definable and polynomial-factor colourings), items (c), (d)
+  history:
+  - 2026-10-13 filed

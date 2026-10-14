@@ -1,0 +1,16 @@
+S^3, j=4 free + m rational: n=10:P
+S^3, j=4 free + m rational: n=10:P n=11:P
+S^3, j=4 free + m rational: n=10:P n=11:P n=12:P
+S^3, j=4 free + m rational: n=10:P n=11:P n=12:P n=13:P
+S^3, j=4 free + m rational: n=10:P n=11:P n=12:P n=13:P n=14:P
+S^3, j=4 free + m rational: n=10:P n=11:P n=12:P n=13:P n=14:P n=15:F
+S^3, j=5 free + m rational: n=11:P
+S^3, j=5 free + m rational: n=11:P n=12:P
+S^3, j=5 free + m rational: n=11:P n=12:P n=13:P
+S^3, j=5 free + m rational: n=11:P n=12:P n=13:P n=14:P
+S^3, j=5 free + m rational: n=11:P n=12:P n=13:P n=14:P n=15:F
+# retry tally: jet2 PASS=9 FAIL=2 NO_VERDICT=0 MIXED=0
+
+real	0m16.746s
+user	0m0.046s
+sys	0m0.185s

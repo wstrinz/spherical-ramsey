@@ -1,0 +1,12 @@
+{
+ "challenge_module": "AV1Challenge.Mathlib",
+ "solution_module": "AV1Control.WeakerMathlib",
+ "theorem_names": [
+  "SphericalRamsey.ramsey_of_algebraic_mathlib"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

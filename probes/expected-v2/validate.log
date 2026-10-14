@@ -1,0 +1,13 @@
+5 independent circle pts (<=5 => Ramsey)                expect PASS   | 2-jet PASS  | curve PASS
+OAI 12-pt three squares (non-Ramsey)                    expect FAIL   | 2-jet FAIL  | curve FAIL
+9 independent circle pts (OAI 7.6, non-Ramsey)          expect FAIL   | 2-jet FAIL  | curve FAIL
+Palvolgyi heptagon, r transcendental (non-Ramsey)       expect FAIL   | 2-jet FAIL  | curve FAIL
+5 rat + circ(t),circ(t+1),circ(2t),circ(1/t) (det!=0)   expect FAIL   | 2-jet FAIL  | curve FAIL
+5 rat + circ(kt), k=1..4 (expected Ramsey)              expect PASS?  | 2-jet PASS  | curve PASS
+circ(kt) k=1..7 (certificate found)                     expect PASS   | 2-jet PASS  | curve PASS
+6 rat + circ(t) (certificate found)                     expect PASS   | 2-jet PASS  | curve PASS
+# retry tally: curve_probe PASS=4 FAIL=4 NO_VERDICT=0 MIXED=0; jet2 PASS=4 FAIL=4 NO_VERDICT=0 MIXED=0
+
+real	0m7.239s
+user	0m0.031s
+sys	0m0.264s

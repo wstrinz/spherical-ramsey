@@ -1,0 +1,18 @@
+== Mobius invariance (circle)
+12 rational pts under one transcendental Mobius (generic 12 => FAIL)     expect PASS  | 2-jet PASS  | curve PASS
+== two Mobius groups (circle)
+generic triple + Mobius image of 4 rational pts (7 pts)                  expect PASS  | 2-jet PASS  | curve PASS
+Mobius-alg 4 (nu1) + Mobius-alg 4 (nu2)  (8 pts)                         expect PASS  | 2-jet PASS  | curve PASS
+Mobius-alg 6 + Mobius-alg 6  (12 pts)                                    expect PASS  | 2-jet PASS  | curve PASS
+Mobius-alg 4 + 4 + 4 (three groups, 12 pts)                              expect ?     | 2-jet FAIL  | curve FAIL
+Mobius-alg 3 + 3 + 3 + rational 3 (12 pts)                               expect ?     | 2-jet FAIL  | curve FAIL
+generic triple + generic 4 (= generic 7)                                 expect FAIL  | 2-jet FAIL  | curve PASS
+== S^2: complex Mobius z -> (z + b)/(c z + d), b,c,d complex transcendental
+S^2: 14 rational pts under one transcendental Mobius (generic 14 => FAIL) expect PASS  | 2-jet PASS  | curve -
+S^2: Mobius-alg 6 + Mobius-alg 6 (12 pts; generic 12 => FAIL)            expect PASS? | 2-jet PASS  | curve -
+S^2: Mobius-alg 4 + 4 + 4                                                expect ?     | 2-jet FAIL  | curve -
+# retry tally: curve_probe PASS=5 FAIL=2 NO_VERDICT=0 MIXED=0; jet2 PASS=6 FAIL=4 NO_VERDICT=0 MIXED=0
+
+real	1m9.108s
+user	0m0.154s
+sys	0m0.248s

@@ -1,0 +1,170 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "AV4: the Euclidean Ramsey property of a spherical set is Möbius invariant (Theorem C)"
+  description: >-
+    Theorem C: for finitely many distinct points on the
+    unit sphere of EuclideanSpace R (Fin d) (no spanning hypothesis) and any
+    real matrix L with L^T S L = S, S = diag(-1, 1, ..., 1) (that is, L in
+    O(1,d)), the configuration is Euclidean Ramsey iff its image under the
+    Möbius map of L is. The Möbius map of L sends x to the spatial part of
+    L(1, x) divided by its first coordinate; that these maps are the Möbius
+    group of the sphere (PO(1,d)) is the classical identification, cited and
+    not proved. Corollaries: Möbius images of algebraic spherical sets are
+    Ramsey, and for distinct rational parameters t_i and real k != 0, c, the
+    circle sets circ(k t_i) and circ(t_i + c) are Ramsey. It builds on OpenAI's
+    complete Lean proof of the classification of finite Euclidean Ramsey
+    configurations (openai/math fd4aeeb2, result 172), vendored unmodified:
+    OpenAI's necessity direction (made span-free through a congruent spanning
+    copy) gives the real tensor criterion, the new step transports it along L,
+    and OpenAI's descent and sufficiency conclude. Stated in OpenAI's challenge
+    vocabulary (verbatim) plus 7 lines of statement definitions, and again in
+    Mathlib vocabulary with no definitions. The checked theorems depend on
+    propext, Classical.choice and Quot.sound only. The only sorries are the
+    placeholders in the Comparator challenges and the deliberate sorry in the
+    control AV4Control/SorryMain.
+  authors:
+    - "Will Strinz"
+  license: "MIT for this project's files (the repository's LICENSE); Apache-2.0 for the vendored OpenAI files (vendor/OAI-LICENSE). See NOTICE."
+
+sources:
+  - title: "A classification of finite Euclidean Ramsey configurations (result 172)"
+    authors:
+      - "OpenAI"
+    id: "https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb"
+    type: "repository"
+    location: "lean/OAI/Combinatorics/EuclideanRamsey (proof, vendored unmodified); lean/ComparatorChallenges/EuclideanRamsey.lean and EuclideanRamseySpherical.lean (vocabulary, verbatim)"
+    relationship: "builds-on"
+    license: "Apache-2.0"
+    author_endorsement: "not-contacted"
+
+related_formalizations:
+  - id: "https://github.com/leanprover-community/mathlib4/blob/d13f23b723b8a846827a245b89c10fc7d3f11612/Mathlib/Topology/MetricSpace/Congruence.lean"
+    relationship: "builds-on"
+    note: "Mathlib's Congruent, used in the Mathlib-vocabulary statement."
+
+classification:
+  arxiv: ["math.CO", "math.MG"]
+  msc2020: ["05D10", "52C10", "51B10"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["claude-opus-5-5"]
+      framework: "Claude Code"
+      tool_setup: "AI agents (Claude Opus 5.5, in Claude Code), directed by the author, wrote Rope/MobiusDefs.lean, MobiusTransport.lean, MobiusSanity.lean, MobiusFullTransport.lean, MobiusFull.lean, MobiusCorCircle.lean, MobiusCor.lean and Rope/AlgebraicRamsey.lean on top of OpenAI's vendored proof; assembled this package, wrote Rope/MathlibStatement.lean, the Comparator challenges and controls, reused rope AV1's bridge (Rope/MathlibBridge.lean), and ran the checks in WSL Ubuntu with Landlock and on a fresh GitHub runner."
+  notes: "Agent-produced. No human has reviewed the Lean or this file. The author, Will Strinz, read the hand proof of Theorem C (an owner's read by a non-expert, not expert review); that is not a review of this rope."
+
+status:
+  scope: "Theorem C (no spanning hypothesis), its corollaries, its Mathlib-vocabulary restatement, and fidelity checks of the Möbius model; no hypotheses beyond each theorem's own."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - declaration: "OAI.EuclideanRamsey.Mobius.ramsey_iff_ramsey_mobius_full"
+      file: "Rope/MobiusFull.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Mobius.exists_mobius_circ_mul"
+      file: "Rope/MobiusCorCircle.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Mobius.exists_mobius_circ_add"
+      file: "Rope/MobiusCorCircle.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Mobius.ramsey_mobius_of_algebraic"
+      file: "Rope/MobiusCor.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Mobius.ramsey_circ_mul"
+      file: "Rope/MobiusCor.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Mobius.ramsey_circ_add"
+      file: "Rope/MobiusCor.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Mobius.ramsey_circ_mul_rat"
+      file: "Rope/MobiusCor.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Mobius.ramsey_circ_add_rat"
+      file: "Rope/MobiusCor.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Mobius.mobiusMap_bijOn"
+      file: "Rope/MobiusSanity.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Mobius.liftO_lorentz"
+      file: "Rope/MobiusSanity.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Mobius.mobiusMap_liftO"
+      file: "Rope/MobiusSanity.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "SphericalRamsey.ramsey_iff_ramsey_mobius_mathlib"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/mathlib.json"
+    - declaration: "SphericalRamsey.ramsey_iff_ramsey_mobius_nonvacuous"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/mathlib.json"
+    - declaration: "SphericalRamsey.oai_congruent_iff"
+      file: "Rope/MathlibBridge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/equiv.json"
+    - declaration: "SphericalRamsey.oai_ramsey_iff"
+      file: "Rope/MathlibBridge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/equiv.json"
+    - declaration: "OAI.EuclideanRamsey.classification"
+      file: "OAI/Combinatorics/EuclideanRamsey/Main.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/oai-classification.json"
+      note: "OpenAI's theorem and OpenAI's challenge, byte for byte; checked here, not ours."
+    - declaration: "OAI.EuclideanRamsey.ramsey_cospherical"
+      file: "OAI/Combinatorics/EuclideanRamsey/Spherical.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/oai-spherical.json"
+      note: "OpenAI's theorem and OpenAI's challenge, byte for byte; shows Ramsey is not vacuous."
+
+fidelity:
+  divergences: >-
+    No formal-conjectures statement exists, so the vocabulary is OpenAI's public
+    Comparator challenge (Space, Congruent, Ramsey), copied verbatim and checked
+    by cmp in REPRODUCE, plus 7 lines of statement definitions (lorentzForm, aug,
+    mobiusMap; and circ, liftO for the corollaries and model checks), checked
+    by cmp against the solution. "Möbius transformation of the sphere" is
+    modelled through the Lorentz group O(1,d); the identification with the
+    Möbius group is classical and cited, not proved; the rope proves each model
+    map is a bijection of the sphere, every orthogonal map is a model map, and
+    two non-isometric circle maps (t -> kt, t -> t + c) are model maps. No
+    spanning hypothesis. The sphere is the unit sphere about 0. See FIDELITY.md.
+
+review:
+  status: "self-assessed"
+  notes: "Self-assessed by the assembling agent (FIDELITY.md). No human review of the Lean."
+
+acknowledgements: "OpenAI (the classification and its Lean proof); Mathlib; leanprover/comparator."

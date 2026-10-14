@@ -1,0 +1,136 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "AV3: the radian nine-gon is Euclidean Ramsey iff e^(i theta) is algebraic (Theorem D)"
+  description: >-
+    Theorem D: the nine points (cos k theta, sin k theta),
+    k = 0..8, of EuclideanSpace R (Fin 2) are distinct, lie on the unit circle
+    and are not Euclidean Ramsey when tan(theta/2) is transcendental; whenever
+    they are distinct, they are Ramsey iff cos theta and sin theta are algebraic
+    (iff tan(theta/2) is algebraic). The non-Ramsey direction mirrors OpenAI's
+    nine-point proof (openai/math fd4aeeb2, result 172, vendored unmodified):
+    the coordinate field is Q(tan(theta/2)), the tensor square embeds in Q(T, U),
+    and the denominator-cleared 9x9 evaluation matrix is nonsingular, certified
+    at (T, U) = (2, 3) by an explicit integer triangular factorization checked by
+    decide +kernel; OpenAI's linear obstruction concludes. The converse is rope
+    AV1. Stated in OpenAI's challenge vocabulary (verbatim) plus the 2-line
+    definition of the nine points, and again in Mathlib vocabulary. The checked
+    theorems depend on propext, Classical.choice and Quot.sound only. The only
+    sorries are the placeholders in the Comparator challenges and the deliberate
+    sorry in the control AV3Control/SorryMain.
+  authors:
+    - "Will Strinz"
+  license: "MIT for this project's files (the repository's LICENSE); Apache-2.0 for the vendored OpenAI files (vendor/OAI-LICENSE). See NOTICE."
+
+sources:
+  - title: "A classification of finite Euclidean Ramsey configurations (result 172)"
+    authors:
+      - "OpenAI"
+    id: "https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb"
+    type: "repository"
+    location: "lean/OAI/Combinatorics/EuclideanRamsey (proof, vendored unmodified; NineField.lean instances and one proof pattern adapted with attribution in Rope/Radian.lean); lean/ComparatorChallenges/EuclideanRamsey.lean and EuclideanRamseySpherical.lean (vocabulary, verbatim)"
+    relationship: "builds-on"
+    license: "Apache-2.0"
+    author_endorsement: "not-contacted"
+
+related_formalizations:
+  - id: "https://github.com/leanprover-community/mathlib4/blob/d13f23b723b8a846827a245b89c10fc7d3f11612/Mathlib/Topology/MetricSpace/Congruence.lean"
+    relationship: "builds-on"
+    note: "Mathlib's Congruent, used in the Mathlib-vocabulary statement."
+
+classification:
+  arxiv: ["math.CO", "math.MG"]
+  msc2020: ["05D10", "52C10"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["claude-opus-5-5"]
+      framework: "Claude Code"
+      tool_setup: "AI agents (Claude Opus 5.5, in Claude Code), directed by the author, wrote Rope/Radian.lean, RadianAlgebra.lean and Rope/AlgebraicRamsey.lean on top of OpenAI's vendored proof; assembled this package, wrote Rope/MathlibStatement.lean, the Comparator challenges and controls, reused rope AV1's bridge (Rope/MathlibBridge.lean), and ran the checks in WSL Ubuntu with Landlock and on a fresh GitHub runner."
+  notes: "Agent-produced. No human has reviewed the Lean or this file."
+
+status:
+  scope: "Theorem D (both directions) and its Mathlib-vocabulary restatement; no hypotheses beyond each theorem's own."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - declaration: "OAI.EuclideanRamsey.Radian.radian_configuration"
+      file: "Rope/Radian.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Radian.radian_not_ramsey"
+      file: "Rope/Radian.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Radian.radian_ramsey_iff"
+      file: "Rope/Radian.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "OAI.EuclideanRamsey.Radian.radian_ramsey_iff_tan"
+      file: "Rope/Radian.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "SphericalRamsey.radian_configuration_mathlib"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/mathlib.json"
+    - declaration: "SphericalRamsey.radian_ramsey_iff_mathlib"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/mathlib.json"
+    - declaration: "SphericalRamsey.radian_ramsey_iff_tan_mathlib"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/mathlib.json"
+    - declaration: "SphericalRamsey.oai_congruent_iff"
+      file: "Rope/MathlibBridge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/equiv.json"
+    - declaration: "SphericalRamsey.oai_ramsey_iff"
+      file: "Rope/MathlibBridge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/equiv.json"
+    - declaration: "OAI.EuclideanRamsey.classification"
+      file: "OAI/Combinatorics/EuclideanRamsey/Main.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/oai-classification.json"
+      note: "OpenAI's theorem and OpenAI's challenge, byte for byte; checked here, not ours."
+    - declaration: "OAI.EuclideanRamsey.ramsey_cospherical"
+      file: "OAI/Combinatorics/EuclideanRamsey/Spherical.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/oai-spherical.json"
+      note: "OpenAI's theorem and OpenAI's challenge, byte for byte; shows Ramsey is not vacuous."
+
+fidelity:
+  divergences: >-
+    No formal-conjectures statement exists, so the vocabulary is OpenAI's public
+    Comparator challenge (Space, Congruent, Ramsey), copied verbatim and checked
+    by cmp in REPRODUCE, plus the 2-line definition radianConfig, checked by cmp
+    against the solution. Mathlib's tan has the junk value 0 at odd multiples of
+    pi/2; this only excludes theta = pi (mod 2 pi) from the non-Ramsey
+    hypothesis, where the statement must not apply anyway. No explicit theta
+    with transcendental tan(theta/2) is exhibited: theta = 1 needs
+    Lindemann-Weierstrass, which is not in Mathlib at this pin; an explicit
+    witness is available in principle (theta = 2 arctan L with L a Liouville
+    number, via Mathlib's Liouville.transcendental), but it is not done. See
+    FIDELITY.md.
+
+review:
+  status: "agent-reviewed"
+  notes: "Self-assessed by the assembling agent (FIDELITY.md), then reviewed by a non-builder AI agent (Claude Opus 5.5, read-only): faithful; its fixes to FIDELITY.md, README.md and this file are applied. Fresh-agent reproduction done: reproduced (Claude Sonnet 5.5, exit 0, all 10 as expected), so the rope is Lean-checked (fresh-runner Comparator, non-builder fidelity review, fresh-agent reproduction). No human review."
+
+acknowledgements: "OpenAI (the classification and its Lean proof); Mathlib; leanprover/comparator."

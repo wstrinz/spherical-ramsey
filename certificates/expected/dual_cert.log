@@ -1,0 +1,37 @@
+[1] configuration: t = 0, 1/2, 1/3, T1..T4 ; a_i = circ(t_i) on the unit circle
+    rational points: [('1', '0'), ('3/5', '4/5'), ('4/5', '3/5')]
+    det(p_1,p_2,p_3) = -2/25 (nonzero => affine span R^2)
+    |a_i|^2 = 1 for all 7 points: OK (exact)
+[2] 2-jet system: 98 rows x 96 unknowns over QQ(T1..T4)
+[3] CERT-M: omega_m = (1+T_m^2)^2 / (2 prod_{k!=m}(T_m-T_k)); sum omega_m (p v^T - v p^T) = 0 : OK
+    y^T A: 96/96 entries are exactly 0 ; nonzero columns: []
+    y^T b = 1/(T1**3 - T1**2*T2 - T1**2*T3 - T1**2*T4 + T1*T2*T3 + T1*T2*T4 + T1*T3*T4 - T2*T3*T4)
+    == 1/((T1-T2)(T1-T3)(T1-T4)) : OK.  CERT-M VERIFIED (exact).
+    nonzero Lambda_i entries (u,v) [0-based derivation index]:
+      point 0: [(0, 0), (0, 1), (0, 2), (0, 3)]
+      point 1: [(0, 0), (0, 1), (0, 2), (0, 3)]
+      point 2: [(0, 0), (0, 1), (0, 2), (0, 3)]
+      point 3: [(0, 0)]
+      point 4: [(0, 0), (0, 1), (0, 2), (0, 3)]
+      point 5: [(0, 0), (0, 1), (0, 2), (0, 3)]
+      point 6: [(0, 1), (0, 2), (0, 3)]
+    rank of span{Lambda_i} = 2  (1 would mean Lambda_i = lambda_i * C)
+    mu_{i,0} = ['(5*T3*T4 - 5*T3 - 5*T4 - 5)/(T1*T2*T3**2*T4**2 + T1*T2*T3**2 + T1*T2*T4**2 + T1*T2)', '(75*T3*T4 - 25*T3 - 25*T4 - 75)/(4*T1*T2*T3**2*T4**2 + 4*T1*T2*T3**2 + 4*T1*T2*T4**2 + 4*T1*T2 - 2*T1*T3**2*T4**2 - 2*T1*T3**2 - 2*T1*T4**2 - 2*T1 - 2*T2*T3**2*T4**2 - 2*T2*T3**2 - 2*T2*T4**2 - 2*T2 + T3**2*T4**2 + T3**2 + T4**2 + 1)', '(-200*T3*T4 + 100*T3 + 100*T4 + 200)/(9*T1*T2*T3**2*T4**2 + 9*T1*T2*T3**2 + 9*T1*T2*T4**2 + 9*T1*T2 - 3*T1*T3**2*T4**2 - 3*T1*T3**2 - 3*T1*T4**2 - 3*T1 - 3*T2*T3**2*T4**2 - 3*T2*T3**2 - 3*T2*T4**2 - 3*T2 + T3**2*T4**2 + T3**2 + T4**2 + 1)', '(5*T1**3*T3*T4 + 5*T1**3*T3 + 5*T1**3*T4 - 5*T1**3 + 5*T1**2*T3*T4 - 5*T1**2*T3 - 5*T1**2*T4 - 5*T1**2 + 5*T1*T3*T4 + 5*T1*T3 + 5*T1*T4 - 5*T1 + 5*T3*T4 - 5*T3 - 5*T4 - 5)/(6*T1**4*T3**2*T4**2 + 6*T1**4*T3**2 + 6*T1**4*T4**2 + 6*T1**4 - 6*T1**3*T2*T3**2*T4**2 - 6*T1**3*T2*T3**2 - 6*T1**3*T2*T4**2 - 6*T1**3*T2 - 5*T1**3*T3**2*T4**2 - 5*T1**3*T3**2 - 5*T1**3*T4**2 - 5*T1**3 + 5*T1**2*T2*T3**2*T4**2 + 5*T1**2*T2*T3**2 + 5*T1**2*T2*T4**2 + 5*T1**2*T2 + T1**2*T3**2*T4**2 + T1**2*T3**2 + T1**2*T4**2 + T1**2 - T1*T2*T3**2*T4**2 - T1*T2*T3**2 - T1*T2*T4**2 - T1*T2)', '(-5*T2**3*T3*T4 - 5*T2**3*T3 - 5*T2**3*T4 + 5*T2**3 - 5*T2**2*T3*T4 + 5*T2**2*T3 + 5*T2**2*T4 + 5*T2**2 - 5*T2*T3*T4 - 5*T2*T3 - 5*T2*T4 + 5*T2 - 5*T3*T4 + 5*T3 + 5*T4 + 5)/(6*T1*T2**3*T3**2*T4**2 + 6*T1*T2**3*T3**2 + 6*T1*T2**3*T4**2 + 6*T1*T2**3 - 5*T1*T2**2*T3**2*T4**2 - 5*T1*T2**2*T3**2 - 5*T1*T2**2*T4**2 - 5*T1*T2**2 + T1*T2*T3**2*T4**2 + T1*T2*T3**2 + T1*T2*T4**2 + T1*T2 - 6*T2**4*T3**2*T4**2 - 6*T2**4*T3**2 - 6*T2**4*T4**2 - 6*T2**4 + 5*T2**3*T3**2*T4**2 + 5*T2**3*T3**2 + 5*T2**3*T4**2 + 5*T2**3 - T2**2*T3**2*T4**2 - T2**2*T3**2 - T2**2*T4**2 - T2**2)', '0', '0']
+[4] CERT-S (Palvolgyi Thm A.3): lambda_i = (1+t_i^2)^2/H'(t_i), D = sum g(T_m) d/dT_m
+    Lemma A.1 hypotheses (sum l=0, sum l a=0, sum l a a^T=0, sum l Da=0, M sym): OK
+    energy E = sum lambda_i |D a_i|^2 = 4
+    as 2-jet dual (Lambda_i = lambda_i c c^T): y^T A nonzero columns: []; y^T b = 4
+    CERT-S VERIFIED (exact), both as Lemma A.1 data and as a 2-jet dual vector.
+[5] tau seed-trial 0: jet2 -> FAIL; exact A,b == jet2 matrix mod p: True; CERT-M (yA=0, yb!=0): (True, True); CERT-S: (True, True)
+[5] tau seed-trial 1: jet2 -> FAIL; exact A,b == jet2 matrix mod p: True; CERT-M (yA=0, yb!=0): (True, True); CERT-S: (True, True)
+[5] tau seed-trial 2: jet2 -> FAIL; exact A,b == jet2 matrix mod p: True; CERT-M (yA=0, yb!=0): (True, True); CERT-S: (True, True)
+[6] control 3 rat + 3 indep: 54 x 63; exact rank A = 51, rank [A|b] = 51 -> consistent: NO dual certificate exists
+    for comparison, 3 rat + 4 indep: exact rank A = 82, rank [A|b] = 83
+[7] CERT-S with symbolic triple R1,R2,R3: Lemma A.1 hypotheses OK; E = 4  (denominators: prod (t_i - t_j) only)
+[8] 14 kernel vectors (P_j = S, j<4; Q_jl = S, 10 pairs), disjoint supports, A x = 0 exactly: True  => generic rank A <= 82
+    triple ['-3/5', '1/2', '2'], theta -> ['29/13', '-1/18', '-2/27', '-17/19']: rank A = 82, rank [A|b] = 83
+    triple ['-1', '0', '4'], theta -> ['3/5', '23/8', '1/5', '-13/12']: rank A = 82, rank [A|b] = 83
+    triple ['-1', '-2/7', '1/2'], theta -> ['15/14', '7/15', '5/8', '4/11']: rank A = 82, rank [A|b] = 83
+    => generic rank [A|b] >= 83 > 82 >= generic rank A: 2-jet system inconsistent
+       over QQ(T1..T4) for each listed triple (independent of the dual certificates).
+ALL CHECKS PASSED

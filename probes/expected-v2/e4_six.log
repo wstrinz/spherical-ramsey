@@ -1,0 +1,165 @@
+  NO_VERDICT: rand 1-param 6pt NO_VERDICT NO_VERDICT
+6-point sets tested: 1107; 2-jet FAILs: 0; 2-jet/full disagreements: 0
+  6-point sets: 2-jet NO_VERDICT 3; full-criterion comparisons 707, decided 706, agreements 706, NO_VERDICT (2-jet/curve) 1/1
+  NO_VERDICT: rand 1-param 7pt NO_VERDICT NO_VERDICT
+  NO_VERDICT: rand 1-param 7pt NO_VERDICT NO_VERDICT
+  NO_VERDICT: rand 1-param 8pt NO_VERDICT NO_VERDICT
+  NO_VERDICT: rand 1-param 8pt NO_VERDICT NO_VERDICT
+  NO_VERDICT: rand 1-param 8pt NO_VERDICT NO_VERDICT
+  NO_VERDICT: rand 1-param 8pt NO_VERDICT NO_VERDICT
+  NO_VERDICT: rand 1-param 8pt NO_VERDICT NO_VERDICT
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  NO_VERDICT: rand 1-param 9pt NO_VERDICT NO_VERDICT
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  NO_VERDICT: rand 1-param 9pt NO_VERDICT NO_VERDICT
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  NO_VERDICT: rand 1-param 9pt NO_VERDICT NO_VERDICT
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  NO_VERDICT: rand 1-param 9pt NO_VERDICT NO_VERDICT
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  NO_VERDICT: rand 1-param 9pt NO_VERDICT NO_VERDICT
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+  2-jet FAIL: rand 1-param 9pt
+7-9 point one-parameter sets: 450, 2-jet FAIL 142; total disagreements with full criterion: 0
+  7-9 point sets: full-criterion comparisons 450, decided 438, agreements 438, NO_VERDICT (2-jet/curve) 12/12
+TOTAL: full-criterion comparisons 1157, decided 1144, agreements 1144, disagreements 0, undecided 13; 2-jet NO_VERDICT over all 1557 tests: 15
+# retry tally: curve_probe PASS=1002 FAIL=142 NO_VERDICT=13 MIXED=0; jet2 PASS=1400 FAIL=142 NO_VERDICT=15 MIXED=0
+
+real	5m6.244s
+user	0m0.156s
+sys	0m0.357s

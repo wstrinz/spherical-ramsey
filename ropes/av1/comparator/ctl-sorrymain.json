@@ -1,0 +1,12 @@
+{
+ "challenge_module": "AV1Challenge.Main",
+ "solution_module": "AV1Control.SorryMain",
+ "theorem_names": [
+  "OAI.EuclideanRamsey.ramsey_of_algebraic"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

@@ -1,0 +1,63 @@
+name: rope-av5
+
+# Rope AV5 (ropes/av5): stock Comparator on a fresh runner, by the rope's own one-command reproduction.
+# Pinned to Lean v4.34.1 / Mathlib d13f23b7 (OpenAI's pin for openai/math fd4aeeb2). Runs on a push that touches ropes/av5/ and on dispatch.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "ropes/av5/**"
+      - ".github/workflows/rope-av5.yml"
+  workflow_dispatch:
+    inputs:
+      upstream:
+        description: "Also re-check the vendored OpenAI files against openai/math (AV5_UPSTREAM=1)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - name: Free runner disk (Mathlib's cache needs room; some runners have a small disk)
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost || true
+          df -h /
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+          cache: false
+      - name: Install elan; add swap
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          sudo fallocate -l 8G /av5-swapfile && sudo chmod 600 /av5-swapfile && sudo mkswap /av5-swapfile && sudo swapon /av5-swapfile
+      - name: Enable the systemd user session (Comparator runs under systemd-run --user)
+        run: |
+          sudo loginctl enable-linger "$USER"
+          echo "XDG_RUNTIME_DIR=/run/user/$(id -u)" >> "$GITHUB_ENV"
+          sleep 2
+      - name: bash REPRODUCE (5 challenges accepted, 5 controls refused)
+        working-directory: ropes/av5
+        env:
+          AV5_UPSTREAM: ${{ (github.event_name == 'push' || inputs.upstream) && '1' || '0' }}
+        run: |
+          start=$(date +%s)
+          bash REPRODUCE | tee ../../reproduce.log
+          code=${PIPESTATUS[0]}
+          echo "REPRODUCE exit $code in $(( $(date +%s) - start )) s" | tee -a ../../reproduce.log
+          { echo '```'; cat ../../reproduce.log; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          exit $code
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rope-av5-reproduce
+          path: |
+            reproduce.log
+            ropes/av5/.lake/av5-logs/*.log
+            ropes/av5/.lake/av5-logs/runs.tsv

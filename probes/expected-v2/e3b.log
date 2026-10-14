@@ -1,0 +1,13 @@
+d=2 (S^1): 1:P 2:P 3:P 4:F   naive count (REFUTED) predicted = 3
+d=3 (S^2): 1:P 2:P 3:P 4:F   naive count (REFUTED) predicted = 3
+d=4 (S^3): 1:P 2:P 3:P 4:F   naive count (REFUTED) predicted = 3
+d=5 (S^4): 1:P 2:P 3:P 4:F   naive count (REFUTED) predicted = 3
+d=6 (S^5): 1:P 2:P 3:P 4:F   naive count (REFUTED) predicted = 4
+d=7 (S^6): 1:P 2:P 3:P 4:F   naive count (REFUTED) predicted = 4
+d=8 (S^7): 1:P 2:P 3:P 4:F   naive count (REFUTED) predicted = 5
+d=9 (S^8): 1:P 2:P 3:P 4:F   naive count (REFUTED) predicted = 5
+# retry tally: jet2_reduced PASS=24 FAIL=8 NO_VERDICT=0 MIXED=0
+
+real	0m6.647s
+user	0m0.093s
+sys	0m0.218s

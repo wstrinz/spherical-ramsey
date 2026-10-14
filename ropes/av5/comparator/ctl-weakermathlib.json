@@ -1,0 +1,12 @@
+{
+ "challenge_module": "AV5Challenge.Mathlib",
+ "solution_module": "AV5Control.WeakerMathlib",
+ "theorem_names": [
+  "SphericalRamsey.ramsey_alg_plus_three_mathlib"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

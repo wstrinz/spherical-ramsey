@@ -1,0 +1,45 @@
+name: certificates
+
+# Re-runs the fast exact certificate scripts (certificates/check.sh, default set: each under about
+# 2 min) on a fresh runner and diffs each output against certificates/expected/. Any mismatch fails.
+# The slow scripts (minutes to about an hour each; see certificates/README.md) run only on dispatch
+# with all = true.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "certificates/**"
+      - "probes/probe2.py"
+      - "probes/validate.py"
+      - "probes/c13_c22_seven.py"
+      - "probes/c22_controls.py"
+      - "probes/c23_count_law.py"
+      - ".github/workflows/certificates.yml"
+  workflow_dispatch:
+    inputs:
+      all:
+        description: "Run every script, including the slow ones (certificates/check.sh --all)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  certificates:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install the pinned Python packages
+        run: python3 -m pip install --quiet numpy==1.26.4 sympy==1.14.0 mpmath==1.3.0
+      - name: Run the certificate scripts and diff against expected/
+        run: |
+          if [ "${{ inputs.all }}" = "true" ]; then
+            bash certificates/check.sh --all
+          else
+            bash certificates/check.sh
+          fi

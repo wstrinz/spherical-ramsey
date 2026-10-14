@@ -1,0 +1,5 @@
+control: 6 rational + circ(t)  [Ramsey, B(b)]        n=7 dim V = 3  RAMSEY certificate found; independent verification: True
+control: circ(kt), k=1..7  [Ramsey, C-cor]           n=7 dim V = 4  RAMSEY certificate found; independent verification: True
+control: 5 rat + t, t+1, 2t, 1/t  [non-Ramsey, det]  n=9 dim V = 0  => NON-RAMSEY (exact: Theorem D argument)
+control: 3 rat + t, t+1, t+2, t+3  [Ramsey, two-group] n=7 dim V = 2  RAMSEY certificate found; independent verification: True
+control: radian 9-gon  [non-Ramsey, Theorem D]       n=9 dim V = 0  => NON-RAMSEY (exact: Theorem D argument)

@@ -1,0 +1,3 @@
+e*f(x_i, y_i) = 0 at all 7 algebraic seeds (Q(sqrt2) and Q(sqrt3) groups, compositum idempotent): True
+control: f(x_i, y_i) != 0 WITHOUT e at the 6 irrational seeds: True
+m(C)=m(B)=0, m(D)=m(A)=det N_k  => m(f) = det N1 det N2 (s'-s)^2: True

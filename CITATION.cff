@@ -1,0 +1,102 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "spherical-ramsey: which finite spherical sets are Euclidean Ramsey (Lean 4 ropes, exact certificates, probes, note and conjecture ledger)"
+version: "1.0.0"
+date-released: "2026-10-14"
+authors:
+  - family-names: "Strinz"
+    given-names: "Will"
+license: MIT
+repository-code: "https://github.com/wstrinz/spherical-ramsey"
+abstract: >-
+  Lean 4 proofs, exact certificates and numerical probes about which finite sets
+  of points on a sphere are Euclidean Ramsey, building on OpenAI's classification
+  of finite Euclidean Ramsey configurations (openai/math, result 172) and its Lean
+  proof, which is trusted. Every result carries its verification level: LEAN
+  (checked by stock Comparator, standard axioms only), CERT (an exact symbolic
+  identity, determinant or certificate checked by a script, plus a written
+  argument), HAND (a written proof, reviewed by AI only) or PROBE (evidence, not
+  proof). Five Lean ropes, standalone packages each checked by Comparator on a
+  fresh runner: finite spherical sets with algebraic coordinates are Ramsey (prior
+  work; a further proof); any six or fewer points on a circle are Ramsey; the
+  radian nine-gon (nine distinct points) is Ramsey if and only if e^{i theta} is
+  algebraic; the Ramsey property of a spherical set is Moebius invariant (Theorem
+  C, published in mobius-ramsey); algebraic concyclic points plus at most three
+  arbitrary points are Ramsey. The two-group theorem: a union of two Moebius
+  images of finite algebraic subsets of the sphere S^{d-1} is Ramsey for every
+  d >= 2 (HAND, AI-reviewed), with exact certificates on S^1 to S^5 (CERT). Exact
+  certificates also give cyclic Ramsey sets that are not unions of two Moebius
+  images of algebraic sets (CERT plus glue, reviewed by AI), and non-Ramsey
+  configurations on S^2 and S^3. A note states each claim at its level, and a
+  conjecture ledger keeps the open and refuted conjectures with replay commands.
+  AI disclosure. The author, Will Strinz, is the only human contributor. The
+  proofs, the Lean, the certificates, the probes, the checks and the documentation
+  were produced by AI agents (Claude Opus 5.5 and Claude Sonnet 5.5, Anthropic, in
+  Claude Code) under his direction. Every review reported here is an AI review,
+  except the author's own read; no human expert has reviewed this work. See
+  DISCLOSURE.md.
+  Licence. A mixed tree: this project's own files are under the MIT License; the
+  vendored and adapted OpenAI Lean files under ropes/ are under the Apache License
+  2.0. NOTICE lists which file is under which licence.
+keywords:
+  - Euclidean Ramsey theory
+  - spherical configurations
+  - Moebius transformations
+  - Lean 4
+  - formal verification
+  - exact certificates
+  - Mathlib
+references:
+  - type: software
+    title: "mobius-ramsey: Möbius invariance of the Ramsey property for finite spherical sets (Lean 4)"
+    authors:
+      - family-names: "Strinz"
+        given-names: "Will"
+    version: "1.0.0"
+    doi: "10.5281/zenodo.23339523"
+    repository-code: "https://github.com/wstrinz/mobius-ramsey"
+  - type: software
+    title: "openai/math: A classification of finite Euclidean Ramsey configurations (result 172), preprint and Lean proof"
+    authors:
+      - name: "OpenAI"
+    repository-code: "https://github.com/openai/math"
+    commit: "fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb"
+    license: Apache-2.0
+  - type: article
+    title: "A cyclic non-Ramsey heptagon"
+    authors:
+      - family-names: "Pálvölgyi"
+        given-names: "Dömötör"
+    identifiers:
+      - type: other
+        value: "arXiv:2609.23327"
+  - type: software
+    title: "six-concyclic-lean"
+    authors:
+      - name: "JD-Jones-ASES"
+    repository-code: "https://github.com/JD-Jones-ASES/six-concyclic-lean"
+    commit: "0703d7d"
+  - type: software
+    title: "openai-math-extensions"
+    authors:
+      - name: "Rogerhu12"
+    repository-code: "https://github.com/Rogerhu12/openai-math-extensions"
+    commit: "f8a2bb2"
+  - type: software
+    title: "math2"
+    authors:
+      - name: "atimics"
+    repository-code: "https://github.com/atimics/math2"
+    commit: "8ab51fa"
+  - type: article
+    title: "Colorings of the n-sphere and inversive geometry"
+    authors:
+      - family-names: "Gibbons"
+        given-names: "J. C."
+      - family-names: "Luo"
+        given-names: "Y."
+    year: 2013
+    identifiers:
+      - type: other
+        value: "arXiv:1307.5351"

@@ -1,0 +1,129 @@
+case  0  D=2  s=3
+    g = 3*1*x^(2, 0) + 2*1*x^(2, 2)
+    g = -3*tan(1/2)*x^(0, 0) + 3*cos 1*x^(0, 1) + -3*1*x^(0, 2) + -3*tan(1/2)*x^(1, 0) + -3*e*x^(1, 1) + 2*cos 1*x^(2, 0)
+    g = -2*e*x^(0, 3) + -5*tan(1/2)*x^(1, 1) + 2*tan(1/2)*x^(1, 2) + -4*1*x^(2, 0) + 3*1*x^(2, 1) + 3*cos 1*x^(3, 0)
+    CERTIFIED: box 128*(-1, -1) + [-1,1]^2 has constant signs [1, -1, -1]; E_1 copy x_k = 128*(-1, -1) + (cos k, sin k, 0..) monochromatic
+case  1  D=2  s=1
+    g = -2*tan(1/2)*x^(0, 0) + -5*cos 1*x^(0, 1) + -4*e*x^(1, 0)
+    CERTIFIED: box 2*(-1, 0) + [-1,1]^2 has constant signs [1]; E_1 copy x_k = 2*(-1, 0) + (cos k, sin k, 0..) monochromatic
+case  2  D=2  s=3
+    g = -3*e*x^(0, 0) + 2*tan(1/2)*x^(0, 1) + -4*1*x^(1, 0)
+    g = -4*cos 1*x^(2, 0) + -4*cos 1*x^(3, 0) + 5*e*x^(3, 1)
+    g = -2*tan(1/2)*x^(0, 0) + 1*e*x^(0, 3) + 5*e*x^(1, 1) + 4*e*x^(1, 2) + -3*e*x^(2, 0) + 5*e*x^(2, 1)
+    CERTIFIED: box 8*(-1, -1) + [-1,1]^2 has constant signs [1, 1, -1]; E_1 copy x_k = 8*(-1, -1) + (cos k, sin k, 0..) monochromatic
+case  3  D=2  s=1
+    g = 1*1*x^(0, 0) + -1*cos 1*x^(0, 1) + 2*e*x^(0, 2) + 4*cos 1*x^(1, 0) + -3*tan(1/2)*x^(1, 1) + 1*e*x^(2, 0)
+    CERTIFIED: box 4*(-1, 0) + [-1,1]^2 has constant signs [1]; E_1 copy x_k = 4*(-1, 0) + (cos k, sin k, 0..) monochromatic
+case  4  D=2  s=3
+    g = -2*1*x^(0, 0) + 2*e*x^(0, 1) + -5*1*x^(0, 2) + 2*1*x^(1, 0) + 4*tan(1/2)*x^(1, 1) + 1*tan(1/2)*x^(2, 0)
+    g = 5*cos 1*x^(0, 0) + -1*tan(1/2)*x^(0, 1) + -2*tan(1/2)*x^(1, 0)
+    g = 2*e*x^(0, 1) + -1*tan(1/2)*x^(1, 3) + 1*tan(1/2)*x^(2, 0) + -3*1*x^(3, 0) + 3*e*x^(3, 1) + -5*e*x^(4, 0)
+    CERTIFIED: box 16*(-1, 0) + [-1,1]^2 has constant signs [1, 1, -1]; E_1 copy x_k = 16*(-1, 0) + (cos k, sin k, 0..) monochromatic
+case  5  D=2  s=1
+    g = -1*tan(1/2)*x^(0, 0) + 4*cos 1*x^(0, 1) + 3*e*x^(0, 3) + -4*1*x^(3, 0) + -4*1*x^(3, 1)
+    CERTIFIED: box 4*(-1, -1) + [-1,1]^2 has constant signs [-1]; E_1 copy x_k = 4*(-1, -1) + (cos k, sin k, 0..) monochromatic
+case  6  D=2  s=3
+    g = 5*1*x^(0, 0) + -1*cos 1*x^(1, 0)
+    g = 3*1*x^(0, 2) + 2*tan(1/2)*x^(0, 3) + 3*e*x^(1, 1) + 4*cos 1*x^(2, 1)
+    g = 1*1*x^(0, 0) + -5*e*x^(0, 1) + 2*cos 1*x^(0, 2) + 1*tan(1/2)*x^(1, 0) + 2*e*x^(1, 1) + 5*1*x^(2, 0)
+    CERTIFIED: box 8*(-1, -1) + [-1,1]^2 has constant signs [1, -1, 1]; E_1 copy x_k = 8*(-1, -1) + (cos k, sin k, 0..) monochromatic
+case  7  D=2  s=2
+    g = -3*e*x^(0, 2) + -1*cos 1*x^(0, 3) + -4*tan(1/2)*x^(1, 0) + 2*1*x^(1, 1) + 4*cos 1*x^(2, 0) + 3*1*x^(3, 0)
+    g = -1*e*x^(0, 0) + 4*cos 1*x^(0, 1) + 4*1*x^(1, 0)
+    CERTIFIED: box 4*(-1, 0) + [-1,1]^2 has constant signs [-1, -1]; E_1 copy x_k = 4*(-1, 0) + (cos k, sin k, 0..) monochromatic
+case  8  D=2  s=2
+    g = 2*tan(1/2)*x^(0, 0) + 3*1*x^(0, 1) + -3*e*x^(1, 0)
+    g = 5*cos 1*x^(0, 0) + 2*1*x^(0, 1) + 1*tan(1/2)*x^(1, 0)
+    CERTIFIED: box 16*(-1, 0) + [-1,1]^2 has constant signs [1, -1]; E_1 copy x_k = 16*(-1, 0) + (cos k, sin k, 0..) monochromatic
+case  9  D=2  s=1
+    g = 2*tan(1/2)*x^(3, 0) + 3*e*x^(3, 1)
+    CERTIFIED: box 4*(-1, -1) + [-1,1]^2 has constant signs [1]; E_1 copy x_k = 4*(-1, -1) + (cos k, sin k, 0..) monochromatic
+case 10  D=3  s=3
+    g = 5*e*x^(0, 0, 0) + 1*1*x^(0, 0, 1)
+    g = 1*cos 1*x^(0, 0, 1) + -1*cos 1*x^(0, 1, 0)
+    g = 1*e*x^(0, 0, 0) + -1*cos 1*x^(0, 0, 1) + 4*cos 1*x^(0, 1, 0) + 5*cos 1*x^(1, 0, 0)
+    CERTIFIED: box 8*(0, 0, -1) + [-1,1]^3 has constant signs [1, -1, 1]; E_1 copy x_k = 8*(0, 0, -1) + (cos k, sin k, 0..) monochromatic
+case 11  D=3  s=2
+    g = -3*cos 1*x^(0, 0, 0) + -5*tan(1/2)*x^(0, 1, 0) + -5*cos 1*x^(0, 1, 1) + -3*1*x^(0, 2, 0) + 2*tan(1/2)*x^(1, 2, 0) + 2*1*x^(3, 0, 0)
+    g = 5*e*x^(0, 0, 4) + -1*cos 1*x^(0, 2, 2) + -2*1*x^(1, 0, 2)
+    CERTIFIED: box 4*(-1, 0, -1) + [-1,1]^3 has constant signs [-1, 1]; E_1 copy x_k = 4*(-1, 0, -1) + (cos k, sin k, 0..) monochromatic
+case 12  D=3  s=3
+    g = 3*tan(1/2)*x^(0, 0, 0) + -4*cos 1*x^(0, 1, 3) + -2*tan(1/2)*x^(0, 2, 2) + 2*cos 1*x^(1, 0, 1) + 2*cos 1*x^(2, 0, 2) + 1*1*x^(4, 0, 0)
+    g = -1*tan(1/2)*x^(0, 0, 0) + 4*e*x^(0, 0, 1) + -2*tan(1/2)*x^(0, 1, 0) + 1*tan(1/2)*x^(1, 0, 0)
+    g = 2*e*x^(0, 0, 0) + 4*cos 1*x^(0, 2, 0) + 5*1*x^(1, 0, 1)
+    CERTIFIED: box 32*(-1, -1, 0) + [-1,1]^3 has constant signs [1, 1, 1]; E_1 copy x_k = 32*(-1, -1, 0) + (cos k, sin k, 0..) monochromatic
+case 13  D=3  s=3
+    g = -4*cos 1*x^(0, 0, 0) + 4*tan(1/2)*x^(0, 0, 1) + 3*e*x^(0, 1, 0) + 2*tan(1/2)*x^(1, 0, 0)
+    g = -5*e*x^(0, 0, 0) + -5*tan(1/2)*x^(0, 0, 1) + 3*tan(1/2)*x^(0, 3, 1) + 3*1*x^(0, 4, 0) + -5*cos 1*x^(1, 2, 0) + 3*e*x^(3, 1, 0) + 1*1*x^(4, 0, 0)
+    g = 2*e*x^(0, 0, 1) + 1*e*x^(0, 1, 0)
+    CERTIFIED: box 8*(0, -1, 0) + [-1,1]^3 has constant signs [-1, 1, -1]; E_1 copy x_k = 8*(0, -1, 0) + (cos k, sin k, 0..) monochromatic
+case 14  D=3  s=2
+    g = 4*cos 1*x^(0, 0, 1) + -5*1*x^(0, 1, 0) + -1*cos 1*x^(1, 0, 2) + 2*cos 1*x^(1, 1, 1) + -3*cos 1*x^(2, 1, 0)
+    g = 3*e*x^(0, 0, 3) + -4*1*x^(0, 1, 1) + 1*cos 1*x^(2, 1, 0)
+    CERTIFIED: box 8*(-1, -1, 0) + [-1,1]^3 has constant signs [1, -1]; E_1 copy x_k = 8*(-1, -1, 0) + (cos k, sin k, 0..) monochromatic
+case 15  D=3  s=1
+    g = 3*e*x^(0, 1, 3) + 4*e*x^(0, 2, 0) + 3*tan(1/2)*x^(0, 3, 1) + -5*cos 1*x^(1, 0, 3) + 3*cos 1*x^(1, 1, 1) + -2*cos 1*x^(1, 2, 1) + -3*1*x^(2, 1, 1)
+    CERTIFIED: box 16*(-1, 0, -1) + [-1,1]^3 has constant signs [-1]; E_1 copy x_k = 16*(-1, 0, -1) + (cos k, sin k, 0..) monochromatic
+case 16  D=3  s=1
+    g = 2*tan(1/2)*x^(0, 3, 1) + 4*tan(1/2)*x^(0, 4, 0) + -3*tan(1/2)*x^(1, 1, 0) + -1*e*x^(2, 0, 1) + 2*tan(1/2)*x^(3, 1, 0)
+    CERTIFIED: box 4*(0, -1, 0) + [-1,1]^3 has constant signs [1]; E_1 copy x_k = 4*(0, -1, 0) + (cos k, sin k, 0..) monochromatic
+case 17  D=3  s=1
+    g = -5*e*x^(0, 1, 1) + -1*cos 1*x^(1, 0, 0)
+    CERTIFIED: box 2*(0, -1, -1) + [-1,1]^3 has constant signs [-1]; E_1 copy x_k = 2*(0, -1, -1) + (cos k, sin k, 0..) monochromatic
+case 18  D=3  s=1
+    g = 1*e*x^(0, 0, 0) + -1*1*x^(0, 1, 0) + -4*tan(1/2)*x^(1, 0, 0)
+    CERTIFIED: box 2*(-1, 0, 0) + [-1,1]^3 has constant signs [1]; E_1 copy x_k = 2*(-1, 0, 0) + (cos k, sin k, 0..) monochromatic
+case 19  D=3  s=3
+    g = -3*cos 1*x^(0, 2, 2) + -4*tan(1/2)*x^(1, 3, 0) + 1*1*x^(2, 0, 1)
+    g = 2*cos 1*x^(0, 0, 0) + -3*1*x^(0, 0, 1) + 1*e*x^(0, 1, 0) + 3*1*x^(1, 0, 0)
+    g = -3*1*x^(0, 0, 0) + -4*cos 1*x^(0, 0, 2) + 3*cos 1*x^(0, 1, 0) + 2*e*x^(0, 2, 0) + 4*1*x^(1, 0, 1) + 5*1*x^(1, 1, 0)
+    CERTIFIED: box 4*(-1, -1, 0) + [-1,1]^3 has constant signs [-1, -1, 1]; E_1 copy x_k = 4*(-1, -1, 0) + (cos k, sin k, 0..) monochromatic
+case 20  D=4  s=2
+    g = 3*1*x^(0, 0, 0, 1) + -1*1*x^(0, 0, 1, 0) + 2*tan(1/2)*x^(0, 1, 0, 0) + -1*e*x^(1, 0, 0, 0)
+    g = -4*e*x^(0, 0, 0, 0) + 2*1*x^(0, 0, 0, 1) + 2*cos 1*x^(0, 0, 1, 0) + -3*e*x^(0, 1, 0, 0) + -3*e*x^(1, 0, 0, 0)
+    CERTIFIED: box 4*(-1, 0, 0, 0) + [-1,1]^4 has constant signs [1, 1]; E_1 copy x_k = 4*(-1, 0, 0, 0) + (cos k, sin k, 0..) monochromatic
+case 21  D=4  s=1
+    g = -1*e*x^(0, 0, 0, 4) + 3*cos 1*x^(0, 1, 0, 3) + -5*e*x^(0, 2, 0, 0)
+    CERTIFIED: box 4*(0, 0, 0, -1) + [-1,1]^4 has constant signs [-1]; E_1 copy x_k = 4*(0, 0, 0, -1) + (cos k, sin k, 0..) monochromatic
+case 22  D=4  s=2
+    g = -4*e*x^(0, 0, 1, 2) + -5*1*x^(0, 1, 2, 1) + -5*tan(1/2)*x^(3, 0, 0, 1)
+    g = -5*tan(1/2)*x^(1, 0, 0, 2) + 4*e*x^(1, 2, 0, 1) + 1*1*x^(2, 1, 1, 0)
+    CERTIFIED: box 8*(-1, -1, 0, -1) + [-1,1]^4 has constant signs [-1, 1]; E_1 copy x_k = 8*(-1, -1, 0, -1) + (cos k, sin k, 0..) monochromatic
+case 23  D=4  s=3
+    g = 4*1*x^(0, 0, 0, 2) + -4*tan(1/2)*x^(0, 0, 2, 1) + 4*e*x^(0, 1, 0, 0) + 5*cos 1*x^(0, 1, 0, 2) + 5*cos 1*x^(0, 3, 0, 0) + 5*1*x^(1, 2, 0, 0) + 1*e*x^(3, 0, 0, 0)
+    g = -1*cos 1*x^(0, 1, 0, 0) + 4*e*x^(0, 1, 0, 3) + -1*1*x^(0, 3, 0, 1) + 3*tan(1/2)*x^(0, 4, 0, 0) + 1*cos 1*x^(2, 0, 0, 1)
+    g = 2*cos 1*x^(0, 0, 1, 0) + 2*cos 1*x^(0, 1, 0, 2) + -3*cos 1*x^(0, 2, 0, 0) + -3*cos 1*x^(1, 0, 0, 1) + 4*1*x^(1, 1, 1, 0) + -4*cos 1*x^(3, 0, 0, 0)
+    CERTIFIED: box 8*(-1, -1, 0, 0) + [-1,1]^4 has constant signs [-1, 1, 1]; E_1 copy x_k = 8*(-1, -1, 0, 0) + (cos k, sin k, 0..) monochromatic
+case 24  D=4  s=3
+    g = -4*1*x^(0, 0, 1, 0) + 1*cos 1*x^(0, 0, 2, 0) + -3*e*x^(0, 0, 3, 0) + -1*1*x^(0, 1, 0, 2) + -1*1*x^(0, 1, 2, 0) + 1*tan(1/2)*x^(0, 3, 0, 0) + -5*e*x^(1, 0, 2, 0)
+    g = 4*tan(1/2)*x^(0, 0, 1, 0) + -5*e*x^(0, 0, 1, 2) + 3*1*x^(0, 1, 0, 2) + 2*e*x^(0, 1, 1, 0) + 1*cos 1*x^(0, 1, 2, 0) + -4*cos 1*x^(1, 0, 1, 0) + -5*e*x^(2, 0, 0, 1)
+    g = -4*e*x^(0, 0, 1, 3) + 5*cos 1*x^(0, 0, 3, 1) + -5*e*x^(1, 2, 1, 0)
+    CERTIFIED: box 8*(0, 0, -1, -1) + [-1,1]^4 has constant signs [1, 1, -1]; E_1 copy x_k = 8*(0, 0, -1, -1) + (cos k, sin k, 0..) monochromatic
+case 25  D=4  s=1
+    g = 5*tan(1/2)*x^(0, 0, 0, 1) + 5*cos 1*x^(0, 0, 1, 0) + -1*e*x^(1, 0, 0, 0)
+    CERTIFIED: box 4*(-1, 0, 0, 0) + [-1,1]^4 has constant signs [1]; E_1 copy x_k = 4*(-1, 0, 0, 0) + (cos k, sin k, 0..) monochromatic
+case 26  D=4  s=1
+    g = 5*cos 1*x^(0, 0, 0, 4) + 2*1*x^(0, 0, 2, 0) + 4*tan(1/2)*x^(0, 1, 1, 2)
+    CERTIFIED: box 4*(0, 0, 0, -1) + [-1,1]^4 has constant signs [1]; E_1 copy x_k = 4*(0, 0, 0, -1) + (cos k, sin k, 0..) monochromatic
+case 27  D=4  s=3
+    g = 1*cos 1*x^(0, 0, 0, 2) + -5*tan(1/2)*x^(0, 0, 1, 0) + 2*1*x^(0, 2, 0, 0) + -3*e*x^(1, 0, 0, 0) + -2*e*x^(2, 0, 0, 0)
+    g = -4*tan(1/2)*x^(0, 0, 0, 0) + 5*e*x^(0, 0, 0, 1) + -2*1*x^(0, 0, 1, 0) + -2*tan(1/2)*x^(1, 0, 0, 0)
+    g = -2*1*x^(0, 0, 0, 0) + -3*cos 1*x^(0, 0, 1, 0) + 1*e*x^(0, 1, 0, 0) + -5*cos 1*x^(1, 0, 0, 0)
+    CERTIFIED: box 32*(-1, 0, 0, 0) + [-1,1]^4 has constant signs [-1, 1, 1]; E_1 copy x_k = 32*(-1, 0, 0, 0) + (cos k, sin k, 0..) monochromatic
+case 28  D=4  s=3
+    g = -2*1*x^(0, 0, 0, 1) + 4*e*x^(0, 0, 0, 2) + 1*1*x^(0, 0, 0, 3) + -2*tan(1/2)*x^(0, 0, 2, 2) + 3*e*x^(1, 0, 1, 2) + -2*cos 1*x^(1, 1, 0, 1) + 2*cos 1*x^(2, 1, 0, 1)
+    g = 4*cos 1*x^(0, 1, 0, 1) + -1*cos 1*x^(0, 1, 1, 0) + 2*e*x^(1, 0, 0, 0) + 4*tan(1/2)*x^(1, 0, 0, 1) + 1*e*x^(2, 0, 0, 0)
+    g = 4*cos 1*x^(0, 0, 0, 1) + -1*tan(1/2)*x^(0, 0, 2, 1) + 1*tan(1/2)*x^(0, 1, 0, 0) + -1*cos 1*x^(1, 0, 0, 0) + 5*tan(1/2)*x^(1, 1, 0, 1)
+    CERTIFIED: box 16*(-1, -1, 0, -1) + [-1,1]^4 has constant signs [1, 1, -1]; E_1 copy x_k = 16*(-1, -1, 0, -1) + (cos k, sin k, 0..) monochromatic
+case 29  D=4  s=3
+    g = 2*1*x^(0, 0, 1, 0) + 4*1*x^(0, 0, 2, 1) + 2*e*x^(0, 1, 0, 1) + 4*e*x^(1, 0, 1, 0) + 2*1*x^(1, 0, 1, 1) + 1*tan(1/2)*x^(1, 1, 0, 1) + -3*tan(1/2)*x^(1, 1, 1, 0)
+    g = 1*tan(1/2)*x^(0, 0, 0, 2) + 5*tan(1/2)*x^(0, 0, 2, 0) + 5*tan(1/2)*x^(1, 0, 1, 0)
+    g = -5*1*x^(0, 0, 0, 1) + 5*tan(1/2)*x^(0, 0, 0, 2) + -3*cos 1*x^(0, 0, 1, 0) + 3*e*x^(0, 1, 1, 0) + 1*1*x^(1, 0, 0, 1) + 2*tan(1/2)*x^(1, 1, 0, 0) + 4*cos 1*x^(2, 0, 0, 0)
+    CERTIFIED: box 8*(0, 0, -1, -1) + [-1,1]^4 has constant signs [-1, 1, 1]; E_1 copy x_k = 8*(0, 0, -1, -1) + (cos k, sin k, 0..) monochromatic
+case 30  D=2  s=2
+    g = x - tan(1/2)*y
+    g = prod_{k=-3..3}(x - k y) - 1
+    CERTIFIED: box 16*(-1, 0) + [-1,1]^2 has constant signs [-1, -1]; E_1 copy x_k = 16*(-1, 0) + (cos k, sin k, 0..) monochromatic
+R_exp case: g1 = exp(x) - tan(1/2)*y^3 + 2xy - e ;  g2 = exp(y) - cos(1)*x^2
+    CERTIFIED: box 4*(0, 1) + [-1,1]^2: g1 in [-80.6382, -4.75017], g2 in [19.5452, 148.413] (constant signs)
+SUMMARY: 32/32 colourings certified to contain a monochromatic radius-1 ball and an explicit monochromatic copy of E_1

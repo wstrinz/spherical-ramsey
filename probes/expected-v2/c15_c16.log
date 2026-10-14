@@ -1,0 +1,24 @@
+== C-15: generic Mobius-group unions on S^1 (group 1 rational; nu_2, nu_3 generic; singletons free)
+  (4,4)        two rigid groups                                      predict PASS  | 2-jet PASS       | curve PASS
+  (4) + 3 free  one rigid + 3                                        predict PASS  | 2-jet PASS       | curve PASS
+  (4) + 4 free  = PD (4,4)                                           predict FAIL  | 2-jet FAIL       | curve PASS
+  (4,4,1)                                                            predict FAIL  | 2-jet FAIL       | curve FAIL
+  (4,4,2)                                                            predict FAIL  | 2-jet FAIL       | curve FAIL
+  (4,4,3)                                                            predict FAIL  | 2-jet FAIL       | curve FAIL
+  (4,4,4)                                                            predict FAIL  | 2-jet FAIL       | curve FAIL
+  (4,4,4) with group 1 also generic                                  predict FAIL  | 2-jet FAIL       | curve FAIL
+  (5,4,1)      (C-14 covers)                                         predict FAIL  | 2-jet FAIL       | curve FAIL
+  (4,3,3) = rigid 4 + 6 generic points (via groups of 3)             predict FAIL  | 2-jet FAIL       | curve FAIL
+  (3,3) + 0 = two non-rigid groups (6 pts)                           predict PASS  | 2-jet PASS       | curve PASS
+== C-16: S^2, seven points
+  7 generic points on S^2 (k = 14)                                   predict PASS  | 2-jet PASS       | curve PASS
+  7 independent points on a great circle of S^2 (k = 7)              predict FAIL  | 2-jet FAIL       | curve PASS
+  3 rational on the great circle + 4 free on S^2 (k = 8)             predict PASS  | 2-jet PASS       | curve PASS
+  3 rational + 4 independent, all on the great circle (k = 4)        predict FAIL  | 2-jet FAIL       | curve PASS
+  8 generic points on S^2 (k = 16)                                   predict PASS  | 2-jet PASS       | curve -
+  9 generic points on S^2 (k = 18)                                   predict PASS  | 2-jet PASS       | curve -
+# retry tally: curve_probe PASS=8 FAIL=7 NO_VERDICT=0 MIXED=0; jet2 PASS=7 FAIL=10 NO_VERDICT=0 MIXED=0
+
+real	0m12.953s
+user	0m0.030s
+sys	0m0.342s

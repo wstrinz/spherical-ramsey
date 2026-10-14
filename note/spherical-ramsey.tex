@@ -1,0 +1,1538 @@
+% Version 1.0.0, 2026-10-14 (released with spherical-ramsey v1.0.0).
+% Every claim carries exactly one verification tag (see "Status conventions"); open problems are
+% collected in the public conjecture ledger that accompanies this note (ledger/ in the release).
+% Vocabulary: "Comparator-checked" only for statements with a fresh-runner CI receipt;
+% "Lean-checked" only where the full release gate (CI, non-builder fidelity review, fresh-agent
+% reproduction) has passed for that rope. Theorem C is published (doi:10.5281/zenodo.23339523): it
+% is stated and cited here, not re-proved. The quotation of OpenAI's Theorem 1.1 is copied from the
+% published note of [MR]. Pure ASCII source; \TODO and \PH mark what remains before posting.
+\documentclass[11pt]{amsart}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage{mathtools}% psmallmatrix
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\setlength{\emergencystretch}{3em}% fewer overfull lines; no content change
+
+% Robust, so that amsart's upper-cased title and headings leave the colour names alone.
+\DeclareRobustCommand{\TODO}[1]{\textcolor{red}{[TODO: #1]}}
+\DeclareRobustCommand{\PH}[1]{\textcolor{blue}{[#1]}}
+\newcommand{\st}[1]{\textsf{[#1]}}
+\newcommand{\Kriz}{K\v{r}\'{\i}\v{z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\Qbar}{\overline{\mathbb{Q}}}
+\newcommand{\Cl}{\mathrm{Cl}}
+\newcommand{\Rea}{\operatorname{Re}}
+\newcommand{\circmap}{\mathrm{circ}}
+\newcommand{\BB}{\mathscr{B}}
+\DeclareMathOperator{\PO}{PO}
+\DeclareMathOperator{\Ort}{O}
+\DeclareMathOperator{\CO}{CO}
+\DeclareMathOperator{\PGL}{PGL}
+\DeclareMathOperator{\PSL}{PSL}
+\DeclareMathOperator{\SO}{SO}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\Mob}{M\ddot{o}b}
+\DeclareMathOperator{\adj}{adj}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem*{oaithm}{Theorem 1.1}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\title[Two M\"obius groups suffice]{Two M\"obius groups suffice: Euclidean Ramsey sets on spheres of
+every dimension, after the tensor classification}
+\author{Will Strinz}
+\date{Version 1.0.0, 14 October 2026}
+
+\begin{document}
+
+\begin{abstract}
+OpenAI's classification of finite Euclidean Ramsey configurations \cite{OAI172} decides whether a
+finite spherical set is Ramsey by a tensor condition over its coordinate field. We record
+consequences of it; all of them rest on \cite{OAI172}, and the deep work is OpenAI's.
+The main one is a \emph{two-group theorem}: for every $d\ge2$, a union of two M\"obius images of
+finite subsets of $S^{d-1}$ with real algebraic coordinates is Ramsey, with no bound on the number
+of points. The certificate pairs two Clifford-algebra graph forms, built from Vahlen matrices in a
+normal form whose entries lie in the Lipschitz group. For $d\le6$ ($S^1$ to $S^5$) every identity
+it needs is verified as an exact polynomial identity and the passage from identities to the
+theorem is written out; for general $d$ the argument is a written proof, with its identity families
+cross-checked on exact instances through $d=8$. Both levels have been reviewed only by AI agents.
+Two groups are not the only mechanism. On the circle we give exact certificates for $7$- and
+$8$-point Ramsey sets that are not unions of two M\"obius images of algebraic sets, among them the
+seven points $0,\theta,\dots,6\theta$ for transcendental $e^{i\theta}$; a rank criterion for
+one-parameter cyclic sets of at most eight points, from which the eight points
+$0,\theta,\dots,7\theta$ are Ramsey for every $\theta$; and a rigidity theorem: if the coordinate
+field is regular over $\Q$ and five of the points have rational cross-ratios, Ramsey-ness is
+equivalent to the two-group property. These are written proofs reviewed only by AI agents, except
+the certificates, which are exact identities.
+We also state, with their verification status: M\"obius invariance of Ramsey-ness, published
+separately with a Lean proof \cite{MR}; the nine points $0,\theta,\dots,8\theta$ on a circle are
+Ramsey if and only if $e^{i\theta}$ is algebraic (at $\theta=e$ this is equivalent to a
+transcendence question that is, to our knowledge, open); algebraic circle points plus at most
+three arbitrary points are Ramsey; and, on the non-Ramsey side, a phase diagram for rational plus
+independent points on a circle and exact certificates for the smallest such configurations on
+$S^2$ and $S^3$. The theorems on six points, on algebraic points plus three, and on the radian $9$-gon are proved
+in Lean~4 on top of OpenAI's formalization and checked by Comparator on a fresh CI runner. We describe a second-order
+necessary test, with computational evidence for its sufficiency, and state conjectures, including an
+expected-dimension law for cyclic sets and measurable forms of Graham's conjecture. We observe that
+Graham's conjecture holds trivially for colourings definable in an o-minimal structure (folklore
+tameness), and, by a theorem of Dol'nikov and Karasev, for colourings that factor through boundedly
+many polynomials. Several of the easier statements are
+prior work by others (\S\ref{sec:credit}). A public ledger of the open problems, with replayable
+starting states, accompanies the note.
+\end{abstract}
+
+\maketitle
+
+\noindent\textbf{Status conventions.} Every result carries one tag.
+\st{LEAN}: proved in Lean~4 on top of OpenAI's unmodified Lean proof of \cite{OAI172}, with
+\texttt{\#print axioms} reporting only \texttt{propext}, \texttt{Classical.choice},
+\texttt{Quot.sound} (Lean v4.34.1 and Mathlib \texttt{d13f23b7} for the ropes of
+Appendix~\ref{app:lean}; Lean v4.35.0-rc2 and Mathlib \texttt{065356127b} for the published package
+\cite{MR}).
+\st{CERT}: an exact symbolic identity (sympy, over $\Q$) plus written glue that is not
+machine-checked.
+\st{HAND}: a complete written argument, not machine-checked.
+\st{SKETCH}: an outline.
+\st{PROBE}: computational evidence, often modulo a prime; never a theorem.
+For \st{LEAN} results we say \emph{Comparator-checked} when a stock Comparator \cite{Comparator}
+run on a fresh CI runner accepted the statement against OpenAI's challenge definitions and refused
+negative controls (the run number is given), and \emph{Lean-checked} when, in addition, a
+non-builder fidelity review and a fresh-agent reproduction have passed; today that is
+Theorems~\ref{thm:A}, \ref{thm:Bb} and \ref{thm:D} and, for the published package \cite{MR}, Theorem~\ref{thm:C}. All reviews cited below were performed by AI agents, unless stated
+otherwise (\S\ref{sec:disclosure}). Each result also names the type of its coordinates over $\Q$
+(\texttt{ALGEBRAIC}, \texttt{GENERIC\_OF}, \texttt{TRANSCENDENTAL\_PARAM},
+\texttt{MOBIUS\_ORBIT\_OF}, \texttt{ANY}). ``Real'' alone is never a scope, because the verdict
+can change between algebraic and transcendental members of one real family
+(Theorem~\ref{thm:D}). CI run numbers below for the ropes are fresh-runner runs of this release's
+own workflows (which re-run every rope and every fast exact script) on a private staging copy of the
+release repository, on a tree identical to the released one (the release repository runs the same
+workflows on every push); the runs for \cite{MR} are that package's. Script paths
+(\texttt{certificates/\dots}, \texttt{probes/\dots}, \texttt{ropes/\dots}) are relative to the release
+repository \url{https://github.com/wstrinz/spherical-ramsey}.
+
+\section{Introduction}
+
+A finite set $X$ in a Euclidean space is \emph{Ramsey} if for every $r\ge2$ there is $D$ such that
+every $r$-colouring of $\R^D$ is constant on some congruent copy of $X$. Erd\H{o}s, Graham,
+Montgomery, Rothschild, Spencer and Straus \cite{EGMRSS} showed that Ramsey sets are spherical;
+Graham conjectured the converse \cite{Graham94}. Known Ramsey families include triangles
+\cite{FR86}, simplices \cite{FR90}, trapezoids \cite{Kriz92}, sets with suitable transitive
+symmetry \cite{Kriz91}, and regular polytopes \cite{Cantwell}. Leader, Russell and Walters
+\cite{LRW12,LRW11} proposed a description in terms of transitive sets; their Conjecture~3 is
+refuted in \cite[Cor.~7.5]{OAI172}. In September 2026 P\'alv\"olgyi \cite{Palvolgyi} refuted
+Graham's conjecture with a seven-point non-Ramsey set on a circle, and shortly afterwards OpenAI
+\cite{OAI172} classified the finite Ramsey configurations exactly, with a complete Lean proof.
+
+The classification turns ``is $A$ Ramsey?'' into ``does a linear system over $F\otimes_\Q F$ have a
+solution?'', where $F$ is the coordinate field of $A$. For algebraic $F$ the answer is always yes
+(Theorem~\ref{thm:A}, prior work). For transcendental $F$ it depends on the configuration, and
+nine generic points on a circle already fail \cite[Prop.~7.6]{OAI172}. The question this note
+pursues is which transcendental configurations still pass. The M\"obius group gives one answer:
+Ramsey-ness is M\"obius invariant (Theorem~\ref{thm:C}, published \cite{MR}), so every M\"obius
+image of an algebraic set is Ramsey, whatever its transcendence degree. Our main theorem says that
+\emph{two} such groups can be combined (Theorem~\ref{thm:C2}): the union of two M\"obius images of
+algebraic sets, under unrelated maps, is Ramsey on spheres of every dimension. The certificate is
+heuristically the polar form of a quadratic ``spinor to Lorentz matrix'' map, so it has exactly two
+slots (Remark~\ref{rem:whytwo}), and three groups fail a second-order necessary test in every case we tried (\st{PROBE},
+\S\ref{sec:jet}). Theorem~\ref{thm:D} shows that the boundary between the two regimes can sit on
+a transcendence problem that is, to our knowledge, open.
+
+Two groups are not the whole story (\S\ref{sec:beyond}). On the circle there are Ramsey sets of
+seven and eight points, with a single transcendental parameter, that are not two-group
+(Theorem~\ref{thm:NTG}). For one-parameter cyclic sets of at most eight points a rank condition on
+an explicit $n\times8$ matrix implies Ramsey (Theorem~\ref{thm:rank}); it gives the radian
+$8$-gon for every $\theta$ (Corollary~\ref{cor:radian8}), one point short of Theorem~\ref{thm:D}.
+In the other direction, five points with rational cross-ratios make the two-group property
+necessary, for regular coordinate fields (Theorem~\ref{thm:rigid}). These results fit an
+expected-dimension count for cyclic sets (Conjecture~\ref{conj:count}).
+
+\medskip
+{\small
+\noindent\begin{tabular}{@{}p{0.13\textwidth}p{0.40\textwidth}p{0.27\textwidth}p{0.14\textwidth}@{}}
+\toprule
+Result & Statement & Status & Scope \\
+\midrule
+Thm~\ref{thm:C2} & two M\"obius images of algebraic sets on $S^{d-1}$ are Ramsey, every $d\ge2$
+ & \st{CERT}+glue for $d\le6$; \st{HAND} for all $d$; AI-reviewed & M\"obius orbits \\
+Thm~\ref{thm:C} & M\"obius invariance; published \cite{MR} & \st{LEAN}, Lean-checked \cite{MR} & any \\
+Thm~\ref{thm:A} & algebraic coordinates $\Rightarrow$ Ramsey (prior work) & \st{LEAN}, Lean-checked & algebraic \\
+Thm~\ref{thm:Ba} & $\le6$ points on a circle (prior work) & \st{LEAN}, Comparator-checked & any \\
+Thm~\ref{thm:Bb} & algebraic circle points $+\le3$ arbitrary & \st{LEAN}, Lean-checked & alg.\ $\cup$ 3 any \\
+Thm~\ref{thm:D} & radian 9-gon Ramsey iff $e^{i\theta}$ algebraic & \st{LEAN}, Lean-checked & transc.\ / alg. \\
+Thm~\ref{thm:NTG} & non-two-group Ramsey sets of 7 and 8 circle points & \st{CERT}+glue & transc.\ param. \\
+Thm~\ref{thm:rank} & rank criterion, one parameter, $n\le8$ & \st{HAND}, AI-reviewed & trdeg 1 \\
+Cor~\ref{cor:radian8} & radian 8-gon Ramsey for every $\theta$ & \st{HAND}, AI-reviewed, exact rank & any \\
+Thm~\ref{thm:rigid} & rigid-group absorption on the circle & \st{HAND}, AI-reviewed & regular field \\
+Prop~\ref{prop:PD} & circle phase diagram & \st{HAND}, AI-reviewed & generic \\
+Thm~\ref{thm:NR} & minimal non-Ramsey cells on $S^2$, $S^3$ & \st{CERT}+glue, AI-reviewed & generic \\
+Prop~\ref{prop:J2} & the 2-jet test is necessary & \st{HAND}, AI-reviewed & any \\
+Conj.~\ref{conj:C1} & the 2-jet test is sufficient & evidence \st{PROBE} & any \\
+Rem.~\ref{rem:definable} & Graham for o-minimal and polynomial-factor colourings & \st{HAND}, AI-reviewed & any \\
+\bottomrule
+\end{tabular}}
+
+\subsection{Prior work and credit}\label{sec:credit}
+
+\begin{itemize}
+\item \textbf{OpenAI \cite{OAI172}} is the foundation: Theorem~1.1 and Proposition~2.1
+(\S\ref{sec:prelim}), the examples ($\le5$ circle points Ramsey, Cor.~7.4; Leader--Russell--Walters
+kites with transcendental parameter Ramsey, Cor.~7.5; nine generic circle points and a 12-point
+three-squares set non-Ramsey, Props.~7.6 and 7.7), and the Lean proof on which all our Lean results
+build.
+\item \textbf{P\'alv\"olgyi \cite{Palvolgyi}} gave the seven-point non-Ramsey heptagon. By the arXiv
+comments and the disclosure in the paper itself, the whole manuscript was written by ChatGPT; its
+appendix, which he labels as unchecked, consists of further results by ChatGPT that he has not
+verified. Several appendix items bear on this note, all at the level of his derivation
+certificates: Lemma~A.1, a general non-Ramsey criterion from a derivation and real weights, which we
+re-derive and use in \S\ref{sec:nonramsey}; Theorem~A.3, its circle form, of which our exact
+instance J2-F7 is a special case; A.2, that no certificate exists for at most six circle
+points; Lemma~A.5, that the existence of a certificate is invariant under real M\"obius maps, with
+the explicit statement that it ``does not assert that the Ramsey property itself is M\"obius
+invariant''; Theorem~A.7, which has a M\"obius-invariant hypothesis without stating invariance of
+Ramsey-ness, and which with A.3 gives the non-Ramsey half of Proposition~\ref{prop:PD}; and Theorem~A.10, the certificate-level analogue of Theorem~\ref{thm:Bb} and of
+\cite[Cor.~1(c)]{MR} on the circle (a set that a M\"obius map sends to algebraic points, apart from at
+most three, admits no certificate), with the note that this does not decide Ramsey-ness.
+\item \textbf{Theorem~\ref{thm:A} is prior work.} JD-Jones-ASES/six-concyclic-lean \cite{JDJones}
+(root commit \texttt{0703d7d}, 2026-10-07) proved in Lean, at the level of OpenAI's field
+criterion, that algebraic coordinates satisfy the criterion, that any six concyclic points do (by the
+same two-triple certificate we use for Theorem~\ref{thm:Ba}), and that at most $m+4$ points with
+$m$-dimensional affine span do; its Ramsey conclusions are conditional on a hypothesis
+\texttt{hsuff} standing for OpenAI's sufficiency direction, and its paper text argues the sharpness
+($d+5$) that makes seven the minimum on a circle. Rogerhu12/openai-math-extensions \cite{Rogerhu}
+(commit \texttt{f8a2bb2}, 2026-10-07) proves Theorem~\ref{thm:A} in \TeX{} with the same
+separability-idempotent argument. eliottcassidy2000/math \cite{Eliott} (2026-10-07) restates it in
+an audit note, conditionally on \cite{OAI172}. atimics/math2 \cite{Atimics} (commit \texttt{8ab51fa},
+2026-10-08) proved it end to end in Lean on OpenAI's proof, for algebraic configurations with full
+affine span (its Lean statement carries a spanning hypothesis); its written derivation extends this
+to sets similar to algebraic ones, a reduction not formalized at that commit. Our Lean proofs of
+Theorems~\ref{thm:A} and \ref{thm:Ba} are verifications of these prior results; for
+Theorem~\ref{thm:Ba}, rope AV2 discharges \texttt{hsuff} with OpenAI's Lean sufficiency. Our Lean code was
+written without consulting theirs.
+\item \textbf{Searches.} For Theorems~\ref{thm:C}, \ref{thm:Bb}, \ref{thm:C2} and \ref{thm:D} and
+for Conjecture~\ref{conj:M1}, our literature and repository searches (four sweeps, 2026-10-12/13,
+over arXiv, GitHub, MathOverflow and bibliographic databases) found no prior statement; for
+Theorem~\ref{thm:C} the search log is published with \cite{MR}. The searches for
+Theorem~\ref{thm:C2} were made for its circle and two-group forms \TODO{posting-day sweep for C2 in
+every dimension, including the Clifford/Vahlen literature, and for Theorems~\ref{thm:NTG},
+\ref{thm:rank}, \ref{thm:rigid}, Corollary~\ref{cor:radian8} and Remark~\ref{rem:definable}; this is
+the gate for stating them publicly}. Mirabi \cite{Mirabi} shows that adding to a Ramsey set a point
+outside its affine hull keeps it Ramsey, and Moore \cite{Moore} that a pyramid over a Ramsey base is
+Ramsey; both add points off the affine hull and do not bear on cocircular sets.
+\item \textbf{Name collisions.} ``Two groups'' in this note always means two M\"obius maps, that is, a
+union of two M\"obius images of algebraic sets. It is unrelated to the established ``two-orbit''
+results in which a soluble group of symmetries acts on the set with at most two orbits (\Kriz{}
+\cite{Kriz91}; see Behague \cite{Behague}, who shows that nearly all known Ramsey sets are subsoluble).
+Gibbons and Luo's ``inversive Ramsey theory'' \cite{GibbonsLuo} colours spheres and asks for
+M\"obius copies, not congruent ones; Dam\'asdi, Frankl, Pach and P\'alv\"olgyi \cite{DFPP} study
+monochromatic configurations in colourings of a single circle, not Euclidean Ramsey sets in the sense
+used here.
+Leader--Russell--Walters \cite{LRW12,LRW11} and Graham's survey \cite{Graham94} contain no M\"obius
+or cross-ratio remark; \Kriz{} \cite{Kriz91} was read in full and has no M\"obius content;
+\cite{Kriz92} could not be obtained. Gibbons and Luo \cite{GibbonsLuo} do not relate the Euclidean
+Ramsey property to M\"obius images.
+\end{itemize}
+
+\section{Preliminaries}\label{sec:prelim}
+
+We quote OpenAI's classification verbatim from the \TeX{} source at commit \texttt{fd4aeeb2}
+(Apache-2.0), as in \cite{MR}; the only edits are cross-reference labels, printed as OpenAI's
+rendered numbers. From \cite[\S1.1]{OAI172}:
+
+{\small
+\begin{quote}
+A singleton is Ramsey. For any other set, let $d\ge1$ be its affine
+dimension, and choose a congruent representative
+$A=\{a_1,\ldots,a_s\}\subset\R^d$ whose affine span is $\R^d$.
+The points are distinct and $s\ge2$. Define
+\[
+ p_i=\begin{pmatrix}1\\a_i\end{pmatrix},\qquad
+ F=\Q\bigl((a_i)_\alpha:1\le i\le s,\ 1\le\alpha\le d\bigr),
+ \qquad B=F\otimes_{\Q}F.
+\]
+The commutative ring $B$ has a multiplication homomorphism
+\[
+ m_F:B\longrightarrow F,\qquad m_F(x\otimes y)=xy.
+\]
+An equality in $B$ is stronger than the equality obtained by applying
+$m_F$; this map need not be injective. Index the entries of $p_i$ and
+the rows and columns of a $(d+1)$-by-$(d+1)$ matrix by $0,1,\ldots,d$.
+Thus index $0$ is the constant coordinate.
+
+\begin{oaithm}[Classification]
+Let $A=\{a_1,\ldots,a_s\}\subset\R^d$ be a finite set of at least two
+points with affine span $\R^d$, and define $p_i,F,B,m_F$ as above.
+Then $A$ is Ramsey if and only if there is a matrix
+$P\in\operatorname{Mat}_{d+1}(B)$ such that
+\begin{align}
+ (p_i\otimes1)^T P(1\otimes p_i)&=0
+       &&(1\le i\le s),\tag{1}\\
+ m_F(P_{\alpha\beta})&=\delta_{\alpha\beta}
+       &&(1\le\alpha,\beta\le d).\tag{2}
+\end{align}
+Here the entries of $p_i\otimes1$ and $1\otimes p_i$ are formed
+componentwise. There are no separate conditions on the multiplied
+constant row or constant column of $P$.
+\end{oaithm}
+\end{quote}
+}
+
+\noindent\emph{Real form.} Proposition~2.1 of \cite{OAI172} shows that the matrix condition is
+equivalent to a tensor condition over $\BB=\R\otimes_\Q\R$. In the array form used in
+\cite[\S1]{MR} it reads: there is a $(d+1)\times(d+1)$ array $P$ over $\BB$ with $P^*=P$, where
+$P^*_{\alpha\beta}=\tau(P_{\beta\alpha})$ and $\tau$ is the flip, such that
+$(p_i\otimes1)^TP(1\otimes p_i)=0$ for all $i$ and the spatial block of $m(P)$ is $I_d$; here
+$m:\BB\to\R$ is multiplication. For any $P$ with vanishing evaluations, $\tfrac12(P+P^*)$ keeps them
+(apply $\tau$ to an evaluation), and $m(P^*)=m(P)^T$. In OpenAI's Lean proof the array form is
+\texttt{RealCriterion}; necessity is \texttt{ramsey\_realCriterion}, descent is
+\texttt{realCriterion\_fieldCriterion}, and sufficiency is \texttt{fieldCriterion\_ramsey}.
+\textbf{Descent and sufficiency carry no affine-span hypothesis} in Lean; sufficiency needs only
+$s\ge2$, $d\ge1$ and injectivity. We use this repeatedly: for a sufficiency argument the spanning
+condition never has to be checked.
+
+\noindent\emph{Normalization and scalars.} If $A$ spans and lies on the unit sphere centred at $0$,
+a symmetric solution has $m(P)=S:=\mathrm{diag}(-1,I_d)$: the quadratic function $(1,x)m(P)(1,x)^T$
+and $\|x\|^2-1$ both vanish on $A$ and differ by an affine function. \emph{Lemma~0}: if $P$ has
+vanishing evaluations and the spatial block of $m(P)$ is $cI$ with $c\in\R^\times$ (or
+$c\in F^\times$), then $(c^{-1}\otimes1)P$ satisfies the criterion. Ramsey-ness is invariant under
+similarities, so every sphere may be taken to be the unit sphere.
+
+\noindent\emph{Circle dictionary.} On the unit circle use the stereographic parameter
+$\circmap(t)=((1-t^2)/(1+t^2),\,2t/(1+t^2))$ from the pole $(-1,0)$; a rational rotation moves the
+pole off $A$ without changing $F$. Writing $x_i=t_i\otimes1$, $y_i=1\otimes t_i$, a $(2,2)$-form
+$f(s,s')=v(s)^TMv(s')$, $v=(1,s,s^2)$, defines $P$ with
+$(p_i\otimes1)^TP(1\otimes p_i)=f(x_i,y_i)/((1+x_i^2)(1+y_i^2))$, and $m(f)=\kappa(s-s')^2$ gives
+$m(P)=-(\kappa/2)S$. So a circle set is Ramsey iff some $(2,2)$-form over $B$ vanishes at all
+$(x_i,y_i)$ and degenerates on the diagonal to $\kappa(s-s')^2$, $\kappa\neq0$.
+
+\section{M\"obius invariance (published)}\label{sec:mobius}
+
+Let $S=\mathrm{diag}(-1,1,\dots,1)$ on $\R^{1+d}$ and $\Ort(1,d)=\{L:L^TSL=S\}$. For $x$ on the
+unit sphere $S^{d-1}$ and $L\in\Ort(1,d)$, write $L(1,x)^T=\lambda(1,\varphi_L(x))^T$; the
+$0$-th coordinate $\lambda$ is nonzero because $L(1,x)^T$ is a nonzero null vector. For $d\ge2$,
+$L\mapsto\varphi_L$ induces the classical isomorphism $\PO(1,d)\cong\Mob(S^{d-1})$,
+orientation-reversing maps included \cite{Ratcliffe,Beardon}; see \cite[\S2]{MR} for the exact
+locations. We cite this identification; it is not formalized.
+
+\begin{theorem}[Theorem C; published in \cite{MR}]\label{thm:C}
+Let $A$ be a finite subset of a sphere in $\R^d$, and let $\varphi$ be a M\"obius transformation of
+that sphere. Then $A$ is Ramsey if and only if $\varphi(A)$ is Ramsey. In particular, for points on
+a circle, Ramsey-ness depends only on cross-ratios.
+
+\smallskip\noindent\emph{Status:} \st{LEAN} for $s$ distinct points of the unit sphere and
+$\varphi=\varphi_L$, $L\in\Ort(1,d)$, with no spanning hypothesis:
+\texttt{OAI.EuclideanRamsey.Mobius.}\allowbreak\texttt{ramsey\_iff\_ramsey\_mobius\_full}
+(Appendix~\ref{app:lean}). Comparator-checked: rope AV4 (fresh-runner CI run
+\texttt{38493016252}, all 12 checks as expected; a fresh-agent reproduction also passed) and the
+published package \cite{MR} (three kernels; fresh-runner CI run \texttt{38336666705} on the staging copy, and run
+\texttt{38339951762} on the released commit). The package also passed a non-builder fidelity
+review and a fresh-agent reproduction (AI; \S\ref{sec:disclosure}), and was submitted to the
+Palomar registry (registration pending at the time of writing). The reduction from an arbitrary
+sphere to the unit sphere is a similarity \st{HAND} \cite[Remark~1]{MR}, and the identification of
+$\Mob(S^{d-1})$ with $\PO(1,d)$ is cited. Scope: \texttt{ANY}.
+\end{theorem}
+
+The proof is in \cite[\S2]{MR}. In outline: by Theorem~1.1, the real form and symmetrization, a
+Ramsey $A$ has a symmetric certificate $P$ over $\BB$ with $m(P)=S$. With $N=L^{-1}$, the array
+$P'=(N\otimes1)^TP(1\otimes N)$ has vanishing evaluations at the image points, because
+$Np_i'=\mu_i^{-1}p_i$ with $\mu_i\in\R^\times$, and $m(P')=N^TSN=S$. Descent then gives the field
+criterion for the image, whose coordinate field is in general different from $F$; the transport has
+to happen over $\BB$, since the entries of $L$ lie in neither field. The project owner read the
+hand proof line by line; he describes himself as not an expert in the area, so that read is an
+owner's sign-off, not expert review.
+
+\begin{corollary}[{\cite[Cor.~1]{MR}}]\label{cor:mobius}
+\begin{enumerate}
+\item[(a)] \st{HAND}, scope \texttt{ANY}. Ordered concyclic tuples with equal cross-ratios are both
+Ramsey or both not.
+\item[(b)] \st{HAND}. Every triangle is Ramsey. This agrees with \cite{FR86} and is immediate from
+\cite[Cor.~7.4]{OAI172}; it is not an independent proof.
+\item[(c)] \st{LEAN} for the unit sphere (\texttt{ramsey\_mobius\_of\_algebraic},
+Comparator-checked in \cite{MR}), \st{HAND} for other spheres and for polygons; scope
+\texttt{MOBIUS\_ORBIT\_OF(ALGEBRAIC)}. Every M\"obius image of a finite spherical set with real
+algebraic coordinates is Ramsey; in particular every M\"obius image of a regular polygon is.
+\item[(d)] \st{LEAN} (\texttt{ramsey\_circ\_mul\_rat}, \texttt{ramsey\_circ\_add\_rat},
+Comparator-checked in \cite{MR}). For distinct rationals $t_j$, every real $k\ne0$ and every real
+$c$, the sets $\{\circmap(kt_j)\}$ and $\{\circmap(t_j+c)\}$ are Ramsey.
+\end{enumerate}
+\end{corollary}
+
+For transcendental $k$ the sets in (d) have transcendental coordinate field and are Ramsey for every
+number of points, while nine points with algebraically independent parameters are not
+\cite[Prop.~7.6]{OAI172}: transcendence alone does not decide the question. Item (c) is the
+\emph{one-group} case. Theorem~\ref{thm:C2} below is the two-group case; it does not follow from
+Theorem~\ref{thm:C} (Remark~\ref{rem:beyond}).
+
+\section{Algebraic coordinates and circle certificates}\label{sec:algebraic}
+
+\begin{theorem}[Theorem A; prior work \cite{JDJones,Rogerhu,Atimics,Eliott}]\label{thm:A}
+A finite spherical set whose coordinates are real algebraic numbers is Ramsey.
+
+\smallskip\noindent\emph{Status:} \st{LEAN}, \textbf{Lean-checked}: rope AV1,
+\texttt{ramsey\_of\_algebraic}, with no spanning hypothesis. Stock Comparator under Landlock accepts
+all five challenges (including OpenAI's own \texttt{classification} and \texttt{ramsey\_cospherical}
+challenges, byte for byte) and refuses all five controls with the expected reasons, locally and on a
+fresh CI runner (run \texttt{38493016206}). A non-builder fidelity review found the statement
+faithful (its documentation fixes are applied in v1.1, the version in this release), and a
+fresh-agent reproduction reproduced it (exit 0, all ten checks as expected; its friction notes are
+fixed in the README). Scope:
+\texttt{ALGEBRAIC}.
+\end{theorem}
+
+\begin{proof}[Proof (as in \cite{JDJones,Rogerhu})]
+$F$ is a number field, hence formally unramified over $\Q$, so $B$ contains $e$ with $m(e)=1$ and
+$e(1\otimes x-x\otimes1)=0$ for all $x\in F$ (Mathlib
+\texttt{Algebra.}\allowbreak\texttt{FormallyUnramified.}\allowbreak\texttt{iff\_\allowbreak{}exists\_\allowbreak{}tensorProduct}). If $h$ is the matrix of the sphere
+equation over $F$, then $P=e(h\otimes1)$ satisfies (1), and $m(P)=h$.
+\end{proof}
+
+\begin{corollary}[A$'$]\label{cor:Aprime}
+\st{HAND}, scope \texttt{ALGEBRAIC} (distances). If all pairwise distances of a finite spherical set
+are algebraic, it is Ramsey: Gram--Schmidt over the real closed field $\R\cap\Qbar$ gives a
+congruent copy with algebraic coordinates. Hence every non-Ramsey spherical set has a transcendental
+distance. JD-Jones's paper text states a closely related remark \cite{JDJones}.
+\end{corollary}
+
+\noindent\emph{Graph forms.} A $(1,1)$-form $g(s,s')=\alpha+\beta s+\beta's'+\gamma ss'$ over $B$ is
+the graph of a M\"obius correspondence. For three points put
+$g_{123}(s,s')=\det\begin{psmallmatrix}ss'&s&s'&1\\ x_ay_a&x_a&y_a&1\end{psmallmatrix}_{a=1,2,3}$;
+it vanishes at $(x_a,y_a)$, and $m(g_{123})=\pm(s-s')V(t_1,t_2,t_3)$ with $V$ the Vandermonde.
+
+\begin{theorem}[B(a); prior work \cite{JDJones}]\label{thm:Ba}
+Any at most six distinct points on a circle form a Ramsey set. With P\'alv\"olgyi's heptagon,
+seven is the minimum size of a non-Ramsey set of concyclic points.
+
+\smallskip\noindent\emph{Status:} \st{LEAN}, Comparator-checked: rope AV2,
+\texttt{circle\_ramsey\_of\_le\_six} (fresh-runner CI run \texttt{38493016157}, all ten checks as
+expected); a fresh-agent reproduction passed (exit 0, all ten checks as expected), and the rope's
+non-builder fidelity review is still open. Also \st{CERT}
+(\texttt{certificates/cert\_mobius.py}). Scope: \texttt{ANY}. The certificate $f=g_{123}g_{456}$ is
+JD-Jones's two-triple certificate.
+\end{theorem}
+
+\begin{theorem}[B(b)]\label{thm:Bb}
+Let $A$ be a finite set of points on a circle in $\R^2$, all but at most three of which have real
+algebraic coordinates. Then $A$ is Ramsey. (The centre and radius are not assumed algebraic.)
+
+\smallskip\noindent\emph{Status:} \st{LEAN}, \textbf{Lean-checked}: rope AV5,
+\texttt{ramsey\_alg\_plus\_three} (fresh-runner CI run \texttt{38493016164}, all ten checks as
+expected). A non-builder fidelity review found the statement faithful (documentation fixes
+applied), and a fresh-agent reproduction reproduced it (exit 0, all ten checks as expected; its
+friction notes are fixed in the documentation). Scope: \texttt{ALGEBRAIC} $\cup$
+$3\cdot$\texttt{ANY}. The Lean statement is the theorem as stated: an injective family of points of
+some circle in $\R^2$ (centre and radius arbitrary), all but at most three of which have algebraic
+coordinates. No prior statement found in our searches. It settles the class that P\'alv\"olgyi's
+A.10 \cite{Palvolgyi} leaves undecided (A.10 shows only that derivation certificates cannot
+decide it). It is not of the form of \cite{Mirabi,Moore}, where the added points lie off the affine
+hull: here every point lies on the circle.
+\end{theorem}
+
+\begin{proof}[Idea]
+Take $f=(s-s')\,g_{123}\cdot e_K$, where $g_{123}$ passes through the three arbitrary points and
+$e_K\in K\otimes K$ is the separability idempotent of the number field $K$ generated by the
+algebraic parameters, so that $e_K(x_i-y_i)=0$ at every algebraic point. For $s\le6$ use
+Theorem~\ref{thm:Ba}; for $s\ge7$ at least four points are algebraic, which makes the centre and
+radius algebraic.
+\end{proof}
+
+The circle case of the two-group theorem is Theorem~\ref{thm:C2} with $d=2$; Theorems~\ref{thm:Ba} and \ref{thm:Bb} are special cases of it in which one group is a triple
+(every triple is a M\"obius image of $\{0,1,\infty\}$), although their Lean proofs are independent of
+it.
+
+\section{Two M\"obius groups in every dimension}\label{sec:twogroups}
+
+\begin{theorem}[Theorem C2, the two-group theorem]\label{thm:C2}
+Let $d\ge2$, let $A_1',A_2'\subset S^{d-1}\subset\R^d$ be finite sets whose coordinates are real
+algebraic numbers, and let $\nu_1,\nu_2$ be M\"obius transformations of $S^{d-1}$
+(orientation-reversing ones allowed). Then $\nu_1(A_1')\cup\nu_2(A_2')$ is Ramsey. There is no bound
+on $|A_1'|$ or $|A_2'|$.
+
+\smallskip\noindent\emph{Status:}
+\begin{itemize}
+\item $d\le6$ ($S^1$ to $S^5$): \st{CERT} plus written glue. The identity scripts were re-run
+independently with identical output; adversarial reviews (AI) found the glue correct, with wording fixes
+incorporated here: for $d\le5$ the complex and quaternionic forms (\S\ref{sec:lowdim}), for $d=6$
+the Clifford form of \S\S\ref{sec:clifford}--\ref{sec:seeds}.
+\item every $d\ge2$: \st{HAND}, reviewed (AI) as correct; the identity families are
+machine-checked symbolically for small $d$ and on exact random instances through $d=8$
+(\S\ref{sec:lowdim}).
+\item Coverage of every M\"obius map rests on two cited textbook facts: the decomposition of a
+M\"obius map into an inversion and a similarity \cite{Beardon}, and the Cartan--Dieudonn\'e
+theorem \cite{CartanDieudonne}.
+\end{itemize}
+Scope: \texttt{MOBIUS\_ORBIT\_OF(ALGEBRAIC)}$\times2$. No prior statement found in our searches (see
+\S\ref{sec:credit} for the posting-day sweep still required). ``Two groups'' means two M\"obius maps;
+the theorem is unrelated to the soluble ``two-orbit'' results of \cite{Kriz91,Behague}
+(\S\ref{sec:credit}).
+\end{theorem}
+
+\begin{remark}[What two groups add]\label{rem:beyond}
+\st{HAND} Theorem~\ref{thm:C2} is not a consequence of Theorem~\ref{thm:C} and
+Theorem~\ref{thm:A}. On a circle, any four points of a M\"obius image of an algebraic set have an
+algebraic cross-ratio. In stereographic parameters, the union of the rational set $\{0,1,\infty\}$
+(group~1, $\nu_1=\mathrm{id}$) and $\{c\}$ with $c$ transcendental (group~2, $\nu_2(t)=t+c$,
+$A_2'=\{0\}$) has the cross-ratio $c$ (up to the usual six substitutions, all transcendental), so it is not a
+M\"obius image of an algebraic set. So the two-group class is strictly larger than the one-group class
+of Corollary~\ref{cor:mobius}(c); it contains sets with arbitrarily many points and transcendental
+cross-ratios, whereas nine points with independent parameters are not Ramsey
+\cite[Prop.~7.6]{OAI172}.
+\end{remark}
+
+\begin{remark}[Relation to prior work]\label{rem:six}
+\st{HAND} M\"obius maps act transitively on ordered triples of distinct points of $S^{d-1}$, so
+any set of at most six points on a sphere is a union of two M\"obius images of rational triples, and
+Theorem~\ref{thm:C2} makes it Ramsey. This corollary is weaker than JD-Jones's $m+4$ theorem
+\cite{JDJones} together with OpenAI's sufficiency, and is not claimed.
+\end{remark}
+
+\begin{remark}[Three free points in every dimension]\label{rem:C4}
+At the level of Theorem~\ref{thm:C2} (\st{CERT}+glue for $d\le6$, \st{HAND} for all $d$). Let
+$A\subset S^{d-1}$, $d\ge2$, consist of finitely many points with real algebraic coordinates
+together with at most three further points, arbitrary. The algebraic points are one group
+($\nu_1=\mathrm{id}$), and the further points are the image of a rational set of the same size
+under a M\"obius map (M\"obius maps act transitively on ordered triples of distinct points), so $A$
+is Ramsey. This is the first half of Conjecture C4 (\S\ref{sec:conj}) on every unit sphere, and the
+spherical analogue of Theorem~\ref{thm:Bb}. Four free points can fail: on $S^1$ by
+Proposition~\ref{prop:PD}, on $S^2$ and $S^3$ by the cells $(6,4)$ and $(11,4)$ of
+Theorem~\ref{thm:NR}. The two-line derivation has had no separate review.
+\end{remark}
+
+\subsection{Clifford conventions and coordinates}\label{sec:clifford}
+
+Put $n=d-1$ (the dimension of the stereographic chart) and let $\Cl_n:=\Cl_{0,n-1}$ be the real
+associative algebra generated by $e_1,\dots,e_{n-1}$ with $e_ie_j+e_je_i=-2\delta_{ij}$; it has
+dimension $2^{n-1}$ and a basis of blades with structure constants $\pm1$. ($\Cl_1=\R$, $\Cl_2\cong\C$,
+$\Cl_3\cong\HH$.) For any commutative $\Q$-algebra $R$ let $\Cl_n(R)$ be the $R$-algebra with the
+same structure constants; every identity below is a polynomial identity with integer coefficients
+in blade coordinates, so it holds in $\Cl_n(R)$ for every such $R$. \emph{Paravectors} are the
+elements $x=x_0+x_1e_1+\dots+x_{n-1}e_{n-1}$; we identify them with $\R^n$. We use the reversion
+$a\mapsto a^*$ (the anti-automorphism fixing each $e_i$), the grade involution $a\mapsto\hat a$
+(the automorphism $e_i\mapsto-e_i$) and Clifford conjugation $\bar a=\hat a^{\,*}$. For a paravector
+$x$: $x^*=x$, $\hat x=\bar x$, and $x\bar x=\bar xx=|x|^2$. The scalar part $\Rea$ satisfies
+$\Rea(ab)=\Rea(ba)$ and $\Rea(a\bar b)=\langle a,b\rangle$, the Euclidean inner product in blade
+coordinates.
+
+\noindent\emph{Coordinates.} For a paravector $x$ put
+\[
+ a(x)=\frac{(2x,\ |x|^2-1)}{1+|x|^2}\in S^{d-1},\qquad
+ b(x)=(1,x_0,\dots,x_{n-1},|x|^2),\qquad q(x)=(1+|x|^2,\ 2x,\ |x|^2-1).
+\]
+This is the inverse stereographic projection from the pole $\omega=(0,\dots,0,1)$. Then $q=Cb$ for an
+invertible rational matrix $C$, the OAI vector of the point $a(x)$ is $p(x)=(1,a(x))=q(x)/(1+|x|^2)$,
+and $q(x)^TSq(y)=-2|x-y|^2$. A bilinear form $f(x,y)=b(x)^TMb(y)$ corresponds to the array
+$P=C^{-T}MC^{-1}$, with $p(x)^TPp(y)=f(x,y)/((1+|x|^2)(1+|y|^2))$; since the entries of $b$ are
+linearly independent polynomials, $M$ is determined by $f$.
+
+\begin{lemma}[Pairing]\label{lem:pairing}
+Let $R$ be a commutative $\Q$-algebra and, for $k=1,2$, let
+$h_k(x,y)=y\gamma_kx+y\delta_k+\alpha_kx+\beta_k$ with $\alpha_k,\beta_k,\gamma_k,\delta_k\in\Cl_n(R)$.
+Then $\Rea\bigl(h_1(x,y)\,\overline{h_2(x,y)}\bigr)=b(x)^TM\,b(y)$ for paravectors $x,y$ with
+coordinates in $R$, where $M\in\Mat_{d+1}(R)$ depends bilinearly on the coefficients of $h_1,h_2$ and
+not on $x,y$.
+\end{lemma}
+
+\begin{proof}
+\st{HAND}; machine-checked for $n=2,\dots,7$. Expand
+$h_1\bar h_2$ with $\bar h_2=\bar x\bar\gamma_2\bar y+\bar\delta_2\bar y+\bar x\bar\alpha_2+\bar\beta_2$.
+In each term $x$ is rightmost in its factor of $h_1$ and $\bar x$ leftmost in its factor of $\bar
+h_2$, so $x$ meets $\bar x$ only as $x\bar x=|x|^2$, which is central. The variable $y$ occurs at most
+once on each side, and $\Rea(y\,u\,\bar y)=|y|^2\Rea(u)$ by cyclicity. So every term is $\Rea$ of a
+product that is affine in $x$ (or contains $|x|^2$) and affine in $y$ (or contains $|y|^2$), and
+lies in $\mathrm{span}\{1,x_i,|x|^2\}\otimes\mathrm{span}\{1,y_j,|y|^2\}$.
+\end{proof}
+
+\subsection{Lipschitz elements and the Vahlen normal form}
+
+Vahlen matrices \cite{Vahlen,Ahlfors85} describe the M\"obius maps of $\R^n$ by $2\times2$ matrices over a
+Clifford algebra. We do not use their characterization, only the explicit normal form below, whose
+coverage we prove directly (Lemma~\ref{lem:coverage}).
+
+\begin{lemma}[Lipschitz]\label{lem:lipschitz}
+\st{HAND}; machine-checked for $n=1,\dots,7$. For paravectors $p,s$: $p\bar p=\bar pp=|p|^2$ and
+$psp=2\langle p,\bar s\rangle p-|p|^2\bar s$, a paravector. Hence for $w=p_1\cdots p_\ell$ a product of
+paravectors, $w\bar w=\bar ww=\hat ww^*=w^*\hat w=|w|^2:=\prod|p_i|^2$, a scalar, and $s\mapsto
+wsw^*$ maps paravectors to paravectors. If $\ell$ is even and $|w|\neq0$, then
+$R_w(s):=ws\hat w^{-1}=wsw^*/|w|^2$ is the composite of the $\ell$ reflections in the hyperplanes
+$p_1^\perp,\bar p_2^\perp,p_3^\perp,\dots$, an element of $\SO(n)$.
+\end{lemma}
+
+\begin{proof}
+Polarizing $x\bar x=|x|^2$ gives $s\bar p+p\bar s=2\langle s,p\rangle$; replacing $s$ by $\bar s$
+and multiplying by $p$ gives the formula for $psp$, which equals $-|p|^2\rho_p(\bar s)$ with $\rho_p$
+the reflection in $p^\perp$. Since $w^*=p_\ell\cdots p_1$ and $\hat w=\bar p_1\cdots\bar p_\ell$, the norm
+identities telescope, and $wsw^*$ is an iterated $psp$. Pairs of conjugations cancel, because
+conjugation $\kappa(s)=\bar s$ is orthogonal and $\kappa\rho_p\kappa=\rho_{\bar p}$.
+\end{proof}
+
+For $w$ as above with $\ell=2\lfloor n/2\rfloor$ factors, $\lambda\in\R^\times$ and paravectors $p,q$,
+put
+\[
+ N=\begin{pmatrix}q\hat w&\lambda w+q\hat wp\\ \hat w&\hat wp\end{pmatrix},\qquad
+ \nu(t)=(N_{11}t+N_{12})(N_{21}t+N_{22})^{-1}=q+\lambda\,w(t+p)^{-1}\hat w^{-1}.
+\]
+For a $2\times2$ matrix $G$ over $\Cl_n(R)$ put
+$\adj G=\begin{psmallmatrix}G_{22}^*&-G_{12}^*\\-G_{21}^*&G_{11}^*\end{psmallmatrix}$.
+
+\begin{lemma}[Vahlen identities]\label{lem:vahlen}
+\st{HAND}; machine-checked symbolically for $n=2,3,4,5$. With $u:=N_{21}t+N_{22}=\hat w(t+p)$:
+\begin{enumerate}
+\item[(V1)] $u\bar u=\bar uu=|t+p|^2|w|^2=:\mathrm n(t)$, a scalar;
+\item[(V2)] $\tilde X:=(N_{11}t+N_{12})\bar u=q\,\mathrm n(t)+\lambda\,w\,\overline{(t+p)}\,w^*$ is a
+paravector, so $\nu(t)=\tilde X/\mathrm n(t)$ lies in the chart;
+\item[(V3)] $\adj(N)N=N\adj(N)=\Delta I$ with $\Delta=-\lambda|w|^2\in\R^\times$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(V1) and (V2) follow from Lemma~\ref{lem:lipschitz}, since $\bar{\hat w}=w^*$ and $N_{11}t+N_{12}=qu+\lambda
+w$. For (V3) expand the eight entries; each collapses, by $\hat w^*=\bar w$ and the norm identities of
+Lemma~\ref{lem:lipschitz}, to $-\lambda w^*\hat w$, $0$, $0$, $-\lambda\bar ww$ (for $\adj(N)N$) and
+to $-\lambda w\bar w$, $0$, $0$, $-\lambda\hat ww^*$ (for $N\adj(N)$). For example
+$(\adj(N)N)_{12}=\lambda(p\,\bar ww-w^*\hat w\,p)=0$. Nothing uses $n$.
+\end{proof}
+
+\subsection{Graph spinors and vanishing}
+
+Let $R=\BB$. For a normal-form matrix $N$ with real entries write $N^{(1)}$ and $N^{(2)}$ for its
+images under $r\mapsto r\otimes1$ and $r\mapsto1\otimes r$, applied to blade coordinates. Put
+\[
+ \mu=N^{(2)}\adj(N^{(1)}),\qquad
+ h(x,y)=y\,\mu_{21}\,x+y\,\mu_{22}-\mu_{11}\,x-\mu_{12},
+\]
+the \emph{graph form} of the M\"obius map $\nu$ of $N$.
+
+\begin{lemma}[Vanishing]\label{lem:vanish}
+\st{HAND}; reviewed (AI) as correct. Let $t$ be a paravector with rational coordinates and
+$t\neq-p$. Then $h\bigl(\nu(t)\otimes1,\,1\otimes\nu(t)\bigr)=0$ in $\Cl_n(\BB)$.
+\end{lemma}
+
+\begin{proof}
+Because $t$ is rational, $\nu(t)\otimes1=\tilde X/\mathrm n$ and $1\otimes\nu(t)=\tilde Y/\mathrm n'$,
+where $\tilde X,\mathrm n$ are computed from $N^{(1)}$ and $\tilde Y,\mathrm n'$ from $N^{(2)}$ at the same
+$t$; $\mathrm n=\mathrm n(t)\otimes1$ and $\mathrm n'=1\otimes\mathrm n(t)$ are pure tensors of nonzero
+reals, hence central units. Expanding,
+\[
+ \mathrm n\,\mathrm n'\,h(\tilde X/\mathrm n,\tilde Y/\mathrm n')
+ =\begin{pmatrix}-\mathrm n'&\tilde Y\end{pmatrix}\mu\begin{pmatrix}\tilde X\\ \mathrm n\end{pmatrix}.
+\]
+With $u=N^{(1)}_{21}t+N^{(1)}_{22}$, the definitions and (V1) give $\begin{psmallmatrix}\tilde X\\ \mathrm n\end{psmallmatrix}
+=N^{(1)}\begin{psmallmatrix}t\\1\end{psmallmatrix}\bar u$, so by (V3)
+$\mu\begin{psmallmatrix}\tilde X\\ \mathrm n\end{psmallmatrix}
+=\Delta^{(1)}N^{(2)}\begin{psmallmatrix}t\\1\end{psmallmatrix}\bar u$, with $\Delta^{(1)}=\Delta\otimes1$
+central. Finally, with $u'=N^{(2)}_{21}t+N^{(2)}_{22}$,
+\[
+ \begin{pmatrix}-\mathrm n'&\tilde Y\end{pmatrix}N^{(2)}\begin{pmatrix}t\\1\end{pmatrix}
+ =-\mathrm n'(N^{(2)}_{11}t+N^{(2)}_{12})+(N^{(2)}_{11}t+N^{(2)}_{12})\,\bar u'u'=0,
+\]
+by the other order of (V1). All products are in the associative algebra $\Mat_2(\Cl_n(\BB))$.
+\end{proof}
+
+Applying $m$ coefficientwise (a ring map that commutes with the involutions) gives
+$m(\mu)=N\adj(N)=\Delta I$, so $m(h)(x,y)=\Delta\,(y-x)$.
+
+\subsection{Coverage}
+
+\begin{lemma}[Every M\"obius map, up to rational changes of seeds]\label{lem:coverage}
+\st{HAND}, reviewed (AI) as correct, modulo the two cited facts. Let $\nu$ be a M\"obius
+transformation of $\R^n\cup\{\infty\}$, of either orientation, and $A'\subset\R^n\cup\{\infty\}$ finite,
+with rational (respectively algebraic) points, such that $\infty\notin\nu(A')$. Then $\nu(A')=\nu'(A'')$
+for a finite $A''\subset\R^n$ with rational (respectively algebraic) points and a map $\nu'$ in the
+normal form above; and $\nu'(t)\neq\infty$ for $t\in A''$.
+\end{lemma}
+
+\begin{proof}
+If $\nu(\infty)=\infty$ or $\infty\in A'$, replace $(\nu,A')$ by $(\nu\circ\rho,\rho(A'))$, where $\rho$
+is the inversion in a sphere with rational centre $r\notin A'$, $r\ne\nu^{-1}(\infty)$, and rational
+radius; only finitely many $r$ are excluded, $\rho$ is an involution defined over $\Q$, $\rho(A')\subset\R^n$,
+and $\nu\circ\rho(\infty)=\nu(r)\ne\infty$. So assume $\nu(\infty)\neq\infty$ and let
+$c=\nu^{-1}(\infty)$. Then $\psi=\nu\circ T_c\circ\sigma$, with $\sigma(x)=x/|x|^2$ and $T_c$ the
+translation by $c$, fixes $\infty$ and is therefore a similarity $x\mapsto Lx+q$ with
+$L\in\CO(n)=\R_{>0}\cdot\Ort(n)$ \cite[\S3.5]{Beardon}; hence $\nu(x)=q+L\sigma(x-c)$. The normal form
+is $q+\lambda R_w\kappa\sigma(x+p)$, since $(x+p)^{-1}=\kappa\sigma(x+p)$; take $p=-c$. By
+Cartan--Dieudonn\'e every element of $\SO(n)$ is a product of an even number $\le n$ of reflections,
+hence (padding with $\rho\rho=1$) of exactly $2\lfloor n/2\rfloor$, so $\{R_w\}=\SO(n)$ by
+Lemma~\ref{lem:lipschitz}. Conjugation $\kappa$ negates $n-1$ coordinates. If $n$ is odd,
+$\kappa\in\SO(n)$ and $-I\notin\SO(n)$, so $\{\lambda R_w\kappa\}=\R^\times\SO(n)=\CO(n)$ and every
+$\nu$ is covered. If $n$ is even, $\det\kappa=-1$ and $-I\in\SO(n)$, so the family consists of exactly the
+$L\in\CO(n)$ with $\det L<0$; if $\det L>0$, replace $(\nu,A')$ by $(\nu\circ\varepsilon,\varepsilon(A'))$
+for a coordinate reflection $\varepsilon$, whose linear part is $L\varepsilon$. ($n=1$ is the degenerate case $w=1$,
+$\CO(1)=\R^\times$.)
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:C2}}\label{sec:proofC2}
+
+\st{HAND} for every $d$; \st{CERT} for $d\le6$ in the sense of \S\ref{sec:lowdim}. Let
+$A=\nu_1(A_1')\cup\nu_2(A_2')$.
+
+\emph{Step 1 (configuration).} Rational rotations are dense in $\SO(d)$ (Cayley transform), so
+choose one, $\rho_0$, with $\omega\notin\rho_0A$. Since $\rho_0A=(\rho_0\nu_1)(A_1')\cup(\rho_0\nu_2)(A_2')$ is
+congruent to $A$, we may assume $\omega\notin A$. Pass to the chart by stereographic projection from
+$\omega$, which is defined over $\Q$: rational points of $S^{d-1}$ other than $\omega$ correspond to
+rational chart points, a seed at $\omega$ to $\infty$, and the $\nu_k$ to M\"obius maps of $\R^n\cup\{\infty\}$. By
+Lemma~\ref{lem:coverage}, each $\nu_k$ may be taken in normal form, with finite rational seed sets
+$T_k\subset\R^n$, and $\nu_k(t)\neq\infty$ for $t\in T_k$. This step keeps rational seeds
+rational and algebraic seeds algebraic.
+
+\emph{Step 2 (certificate).} Let $h_k$ be the graph form of $\nu_k$, put
+$f=\Rea(h_1\bar h_2)=b(x)^TMb(y)$ by Lemma~\ref{lem:pairing} with $R=\BB$, and
+$P=C^{-T}MC^{-1}\in\Mat_{d+1}(\BB)$.
+
+\emph{Step 3 (evaluations).} A point of $A$ is $a(\nu_k(t))$ with $t\in T_k$; its OAI vector is
+$p=(1,a(\nu_k(t)))$, in OpenAI's coordinates on the unit sphere. Its evaluation is
+$(p\otimes1)^TP(1\otimes p)=f(x,y)/((1+|x|^2)\otimes(1+|y|^2))$ with $x=\nu_k(t)\otimes1$,
+$y=1\otimes\nu_k(t)$, where the denominator is a pure tensor of nonzero reals. By
+Lemma~\ref{lem:vanish}, $h_k(x,y)=0$, so $f(x,y)=0$ (for $k=2$ use $\overline{0}=0$).
+
+\emph{Step 4 (normalization).} Since $m$ is a ring map, $m(f)=\Rea\bigl(\Delta_1(y-x)\,\Delta_2\overline{(y-x)}\bigr)
+=\Delta_1\Delta_2|x-y|^2=-\tfrac12\Delta_1\Delta_2\,q(x)^TSq(y)$, so $m(P)=-\tfrac12\Delta_1\Delta_2\,S$
+with $\Delta_k=-\lambda_k|w_k|^2\in\R^\times$. Apply Lemma~0 with $c=-\tfrac12\Delta_1\Delta_2$ and then
+replace the result by its symmetrization $\tfrac12(P+P^*)$: this is OpenAI's real criterion for $A$. OpenAI's Lean descent and
+sufficiency (\S\ref{sec:prelim}) need no spanning hypothesis, so $A$ is Ramsey. \qed
+
+\subsection{Algebraic seeds}\label{sec:seeds}
+
+\st{CERT}+glue, reviewed (AI) as correct, and checked exactly on a $\Q(\sqrt2,\sqrt3)$ example on the
+circle (\texttt{certificates/g4\_test.py}). Let $K\subset\R$ be a number field containing every seed
+coordinate of both groups and $e_K\in K\otimes_\Q K\subset\BB$ its separability idempotent, so that
+$m(e_K)=1$ and $e_K(r\otimes1-1\otimes r)=0$ for $r\in K$. With $t_L,t_R$ independent paravector
+variables, $\Phi(t_L,t_R):=\mathrm n\,\mathrm n'\,h(\nu^{(1)}(t_L),\nu^{(2)}(t_R))$ is a polynomial in the
+coordinates of $t_L,t_R$ with coefficients in $\Cl_n(\BB)$, and Lemma~\ref{lem:vanish} (whose proof is
+an identity in a symbolic $t$) says that it vanishes on $t_L=t_R$. So $\Phi$ lies in the ideal
+generated by the $n$ coordinates of $t_L-t_R$, and $e_K\Phi(r\otimes1,1\otimes r)=0$ for every algebraic
+seed $r$; the denominators stay pure tensors. Hence $e_KP$ has vanishing evaluations at every point of
+both groups, and $m(e_KP)=m(P)$. Step~4 applies unchanged.
+
+\subsection{Exact certificates for $d\le6$, and cross-checks}\label{sec:lowdim}
+
+\noindent\emph{Circle and $S^2$ ($d=2,3$), complex form.} On $S^2$ the chart is $\C$ and the graph
+forms are $\C$-bilinear, $g_k=\bigl(\adj N_k^{(1)}(z,1)^T\bigr)\wedge\bigl(\adj N_k^{(2)}(w,1)^T\bigr)$ for
+$\nu_k\leftrightarrow N_k\in\PGL_2(\C)$ (orientation-reversing maps are $\nu_k$ composed with
+conjugation). The Hermitian product $H=g_1\,\overline{g_2}$ gives two real
+certificates $\Rea H$ and $\operatorname{Im}H$, with $m(H)=W_1\overline{W_2}|z-w|^2$, $W_k=\det N_k$;
+since the scalar $W_1\overline{W_2}$ is complex, the na\"ive choice $\Rea H$ alone can degenerate,
+and one of $\Rea H$, $\operatorname{Im}H$ (or $\overline{W_1}W_2\cdot H$) always works.
+\texttt{certificates/cert\_s2.py} checks the identities symbolically in a seed point, for generic complex
+parameters in each tensor factor, including an explicit $6+6$-point instance, and checks a third group
+as a control (nonzero). The circle case follows by specializing to real maps (imaginary parameters
+$0$, $v=0$).
+
+\noindent\emph{$S^3$, $S^4$ ($d=4,5$), quaternionic form.} \texttt{certificates/cert\_s2\_quat.py} checks
+Lemma~\ref{lem:pairing} over $\HH$, the diagonal, and the graph form of a general quaternionic
+M\"obius map $\nu(t)=(t+\beta)(\gamma t+\delta)^{-1}$ (with a general leading coefficient), whose
+diagonal is a positive multiple of $y-x$. Coverage there was argued through the surjectivity of
+$\PSL_2(\HH)$ onto the orientation-preserving M\"obius group of $S^4$ \cite{Wilker} (reviewed:
+correct, with that fact cited); $S^3$ is a great $3$-sphere of $S^4$. The Clifford route of this
+section covers $d=4,5$ as well, with coverage by Lemma~\ref{lem:coverage} instead.
+
+\noindent\emph{$S^5$ ($d=6$), Clifford form.} \texttt{certificates/cert\_clifford.py} checks in
+$\Cl_{0,4}$: the algebra axioms; Lemma~\ref{lem:pairing} with 128 free coefficient symbols; the
+diagonal; Lemma~\ref{lem:lipschitz}; Lemma~\ref{lem:vahlen} symbolically (36 symbols); and an
+end-to-end test at exact rationals with independent parameters on the two sides and five seeds per
+group, in OpenAI's coordinates, with a third group as a control (54--63 minutes).
+\texttt{cert\_clifford\_seed.py} checks the input to \S\ref{sec:seeds}.
+
+\noindent\emph{The naive route fails.} \st{CERT} $\Cl_{0,4}$ has zero divisors,
+$(1+e_{1234})(1-e_{1234})=0$, and the generic-entry recipe of the quaternionic case breaks there: the
+invertible non-Lipschitz element $2+e_{123}$ sends the paravector $1$ off the chart under $t\mapsto
+t(2+e_{123})^{-1}$, and used as $w$ it breaks (V1)--(V3) (\texttt{cert\_clifford\_obs.py}). This is
+why the normal form restricts $w$ to the Lipschitz group.
+
+\noindent\emph{Every $d$.} Only coverage depends on $n$ (the number of factors of $w$ and the parity
+of $\det\kappa=(-1)^{n-1}$). Lemma~\ref{lem:pairing} is machine-checked for $n=2,\dots,7$,
+Lemma~\ref{lem:lipschitz} for $n=1,\dots,7$, and Lemma~\ref{lem:vahlen} symbolically for $n=2,\dots,5$.
+An independent script with its own blade-sign table, exact fractions and inverses by linear solving
+(\texttt{certificates/cert\_clifford\_crosscheck.py}) checks (V1)--(V3), the vanishing of
+Lemma~\ref{lem:vanish} and the pairing identity on exact random instances for $n=2,\dots,7$
+($d=3,\dots,8$), and a floating-point test recovers every M\"obius map with $\nu(\infty)\ne\infty$ in
+the normal-form family for $n=2,\dots,7$, both orientations for odd $n$ and exactly one for even $n$.
+
+\begin{remark}[Why two]\label{rem:whytwo}
+\st{SKETCH} $f$ is bilinear and symmetric in $(\mu_1,\mu_2)$, so it is the polar form of the quadratic
+map $\mu\mapsto f(\mu,\mu)$, and for one Vahlen matrix $f(\mu,\mu)$ is, up to scale, the Lorentz
+matrix of $\mu$ in $\Ort(1,d)$ (tested on three rational instances on $S^5$,
+\texttt{cert\_clifford\_lorentz.py}). A polar form has exactly two slots. The words ``spinor'' and
+``Lorentz'' are heuristic here: $\mu$ is not a group element, and the matrix is Lorentz only up to
+scale. This explains why the construction stops at two groups; it is \emph{not} evidence that three
+groups fail. The evidence for that is separate: three M\"obius-algebraic groups fail the second-order
+test of \S\ref{sec:jet} in every tested case on $S^2$, $S^3$, $S^4$ (\st{PROBE}).
+\end{remark}
+
+\noindent\emph{Open.} Three groups (Conjecture~\ref{conj:R1} for the circle). A single Lean statement
+uniform in $d$, over Mathlib's \texttt{CliffordAlgebra}, would need the even-$n$ orientation step
+inside the family.
+
+\section{Radian progressions and transcendence}\label{sec:radian}
+
+\begin{theorem}[Theorem D]\label{thm:D}
+Let $\theta\in\R$ be such that the nine points $E_\theta=\{(\cos k\theta,\sin k\theta):0\le k\le8\}$
+are distinct. Then $E_\theta$ is Ramsey if and only if $e^{i\theta}$ is algebraic (equivalently,
+$\tan(\theta/2)$ is algebraic; equivalently, $\cos\theta$ and $\sin\theta$ are).
+
+\smallskip\noindent\emph{Status:} \st{LEAN}, \textbf{Lean-checked}: rope AV3 (fresh-runner CI run
+\texttt{38493016161}, all ten checks as expected), theorems \texttt{radian\_\allowbreak{}configuration} (if
+$\tan(\theta/2)$ is transcendental, the nine points are distinct, on the unit circle, and not Ramsey),
+\texttt{radian\_\allowbreak{}not\_\allowbreak{}ramsey}, \texttt{radian\_\allowbreak{}ramsey\_\allowbreak{}iff} and \texttt{radian\_\allowbreak{}ramsey\_\allowbreak{}iff\_\allowbreak{}tan};
+a non-builder fidelity review found the statements faithful (documentation fixes applied), and a
+fresh-agent reproduction reproduced them (exit 0, all ten checks as expected). The equivalence with $e^{i\theta}$ is a one-line
+\st{HAND} step. Scope: \texttt{TRANSCENDENTAL\_\allowbreak{}PARAM}$(\tan\theta/2)$ / \texttt{ALGEBRAIC}. No prior
+statement found in our searches; \cite[Prop.~7.6]{OAI172} is the case of nine independent
+parameters.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+($\Leftarrow$) Theorem~\ref{thm:A}. ($\Rightarrow$) If $t=\tan(\theta/2)$ is transcendental then
+$F=\Q(t)$ and $B$ embeds in $\Q(T,U)$. The $9\times9$ evaluation matrix of condition (1) has nonzero
+determinant in $\Q(T,U)$ (nonzero at the rational points $(1/3,2/7)$ and $(-5/11,3/13)$, \texttt{certificates/radian\_det.py}; the Lean proof certifies the denominator-cleared determinant at $(T,U)=(2,3)$ by an integer triangular factorization), so (1)
+forces $P=0$, contradicting (2). This is the argument of \cite[Prop.~7.6]{OAI172}, and the Lean proof
+mirrors OpenAI's \texttt{EuclideanRamseyNine}.
+\end{proof}
+
+\begin{corollary}\label{cor:radian}
+\begin{enumerate}
+\item \st{HAND} (Theorem~\ref{thm:D} plus Lindemann), scope \texttt{TRANSCENDENTAL\_}\allowbreak\texttt{PARAM}$(\tan\tfrac12)$.
+The nine points at $0,1,\dots,8$ radians are not Ramsey, since $e^{i}$ is transcendental.
+(Lindemann--Weierstrass is not in Mathlib \texttt{d13f23b7}, so this instance is not in Lean.)
+\item \st{HAND} (Theorem~\ref{thm:D}; distinctness below), scope as in Theorem~\ref{thm:D}.
+The nine points at $0,e,\dots,8e$ radians are Ramsey iff $e^{ie}$ is algebraic. (The points are
+distinct because $ke\notin2\pi\mathbb Z$ for $1\le k\le8$: since $ke\le8e<4\cdot2\pi$, this only
+excludes the finitely many values $e/\pi=2j/k$ with $1\le j\le3$, $1\le k\le8$, which a numerical
+evaluation of $e/\pi$ does.) We know no
+proof that $e^{ie}$ is transcendental and found none in the literature; that the question is open is
+our inference, from the fact that Schanuel's conjecture implies it \cite[\S3.1]{Waldschmidt}: if
+$e^{ie}$ were algebraic, then $\Q(1,ie,e,e^{ie})$ would have transcendence degree at most $1<2$
+(literature re-checked on 2026-10-14). So explicit Euclidean Ramsey questions can be as hard as open
+transcendence problems (Conjecture~\ref{conj:T1}).
+\item \st{HAND} (Theorem~\ref{thm:D} plus Gelfond--Schneider \cite{Baker}; not reviewed), scope
+\texttt{ALGEBRAIC} in $\beta$. If $\theta=\pi\beta$ with $\beta$ real algebraic and the nine points
+distinct, they are Ramsey iff $\beta\in\Q$: then $e^{i\theta}$ is a root of unity, while for irrational
+algebraic $\beta$ the number $e^{i\pi\beta}=(-1)^\beta$ is transcendental by Gelfond--Schneider.
+\end{enumerate}
+\end{corollary}
+
+Eight consecutive multiples are Ramsey for every $\theta$ (Corollary~\ref{cor:radian8} below), so nine is
+the exact threshold for radian progressions with transcendental $e^{i\theta}$.
+
+\section{Beyond two groups on the circle}\label{sec:beyond}
+
+On the circle, a set of at least four points is a M\"obius image of a set with algebraic coordinates if
+and only if all its four-point cross-ratios are algebraic (cross-ratios are invariant under M\"obius maps
+of the circle, i.e.\ $\mathrm{PGL}_2(\R)$ on the parameter; for the converse send three of its points to
+$0,1,\infty$). A subset of such an image is again one, so a union of two such images with overlap is
+also a union of two disjoint ones, and it suffices to test partitions.
+Call a finite cyclic set \emph{two-group} if it is a union of two such images; two-group sets are Ramsey
+(Theorem~\ref{thm:C2} with $d=2$). Throughout this section points are given by their stereographic
+parameters (\S\ref{sec:prelim}, after a rational rotation off the pole), and a \emph{one-parameter
+rational} set has parameters $r_i(t)$ with $r_i\in\Q(t)$ and $t$ transcendental, so that $F=\Q(t)$ and
+$B=\Q(t)\otimes_\Q\Q(t)\subset\Q(T,U)$, with $x_i=r_i(T)$, $y_i=r_i(U)$. A non-constant element of $\Q(t)$
+is transcendental, so cross-ratios of such a set are algebraic exactly when they are constant in $t$.
+
+\begin{theorem}[Non-two-group Ramsey sets]\label{thm:NTG}
+Let $t\in\R$ be transcendental. The cyclic sets with stereographic parameters
+\[
+ W_7=\{0,\tfrac12,\tfrac13,\ t,\ t+1,\ 2t,\ 1/t\},\qquad
+ W_8=\{0,\tfrac12,\tfrac13,\tfrac23,\ t,\ t+1,\ 2t,\ 1/t\}
+\]
+are Ramsey and are not two-group. So is the radian $7$-gon $\{(\cos k\theta,\sin k\theta):0\le k\le6\}$
+whenever $e^{i\theta}$ is transcendental (its parameters are $\tan(k\theta/2)\in\Q(\tan\tfrac\theta2)$).
+
+\smallskip\noindent\emph{Status:} \st{CERT} plus glue. For each set an explicit $(2,2)$-form
+$g(s,s')=\sum_{a,b\le2}g_{ab}s^as'^b$ with $g_{ab}\in\Q(T)[U]\subset B$ is printed in full by
+\texttt{certificates/cert\_nontwogroup.py} (about 36\,s for $W_7,W_8$; with \texttt{--slow}, 37--47
+minutes for the radian $7$-gon). The script checks exactly that $g(x_i,y_i)=0$ identically for every
+point and that $g|_{U=T}=(s-s')^2$, and re-checks each certificate with a separate verification routine
+in the same code; a non-builder re-check that parses the printed certificates and imports no code
+from this project (sympy for $W_7,W_8$ in OpenAI's Cartesian form; python-flint for all three) also passes. The
+glue is the circle dictionary of \S\ref{sec:prelim} and Lemma~0, exactly as for Theorem~\ref{thm:Ba};
+it was reviewed (AI) as correct for these instances.
+Not two-group (exact, same script): for $W_7$ and the radian $7$-gon none of the $35$ four-point
+cross-ratios is constant in $t$, and every split of seven points into two parts has a part with at least
+four points; for $W_8$ only the cross-ratio of the four rational points is constant, so a part with at
+least four points lies in the four rational points, and two parts cover at most $4+3=7<8$ points; the
+script also checks all splits. Scope \texttt{TRANSCENDENTAL\_PARAM}$(t)$, respectively
+$(\tan\tfrac\theta2)$.
+
+\smallskip\noindent\emph{What is not claimed.} The only structural claim is ``not two-group''. Ramsey
+sets that are not subtransitive are already known (the Leader--Russell--Walters kites with
+transcendental parameter, \cite[Cor.~7.5]{OAI172}), so we claim nothing about subtransitivity; and we
+do not claim that these sets are not subsoluble, which is open (\cite[Question~6.1]{Behague}).
+\end{theorem}
+
+\noindent So the two-group class of Theorem~\ref{thm:C2} is not the whole Ramsey class on the circle,
+already at seven points. $W_8$ also shows that the phase diagram of Proposition~\ref{prop:PD} is a
+statement about \emph{independent} points: four rational points plus four independent points are not
+Ramsey, while four rational points plus four points on the rational curve $t\mapsto(t,t+1,2t,1/t)$ are.
+The certificates were found by an exact decision procedure for one-parameter cyclic sets (kernel of the
+evaluation map over $\Q(T,U)$, saturation at the diagonal, and a membership test for $(s-s')^2$;
+\texttt{certificates/exact\_circle\_cert.py}), which reproduces five known exact verdicts as controls.
+
+\medskip
+\noindent\emph{The one-parameter criterion.} Let $A$ be a finite cyclic set whose coordinate field $F$ has
+transcendence degree $1$ and is regular over $\Q$ ($\Q$ is algebraically closed in $F$), so that $B=F\otimes_\Q F$
+is a domain; let $K$ be its fraction field and $\mathfrak p=\ker m$. Since $F$ has transcendence degree $1$,
+$\mathcal O:=B_{\mathfrak p}$ is a discrete valuation ring with residue field $F$ (via $m$). Let
+$V\subset K^9$ be the space of $(2,2)$-forms over $K$ that vanish at all pairs $(x_i,y_i)$, let
+$L=V\cap\mathcal O^9$ (a saturated lattice, free of rank $\dim_KV$), and let $W=L/\mathfrak pL\subset F^9$ be its
+reduction, an $F$-space of dimension $\dim_KV$.
+
+\begin{lemma}[Limit criterion]\label{lem:limit}
+\st{HAND}, reviewed (AI) as correct. $A$ is Ramsey if and only if $(s-s')^2\in W$.
+\end{lemma}
+
+\begin{proof}
+If $A$ is Ramsey, the circle dictionary gives a $(2,2)$-form $f$ over $B$ vanishing at all $(x_i,y_i)$ with
+$m(f)=\kappa(s-s')^2$, $\kappa\ne0$; then $f\in L$ and its reduction is $\kappa(s-s')^2$. Conversely, if
+$g\in L$ reduces to $(s-s')^2$, write $g=f/c$ with $f\in B^9$ and $c\in B\setminus\mathfrak p$; then $f$
+vanishes at all pairs and $m(f)=m(c)(s-s')^2$ with $m(c)\ne0$, so $A$ is Ramsey by the circle dictionary
+and Lemma~0.
+\end{proof}
+
+\begin{theorem}[Rank criterion]\label{thm:rank}
+Let $A$ be as above, with $5\le n=|A|\le8$. Fix $t\in F$ transcendental, let $\delta=d/dt$ on $F$, let
+$s_i\in F$ be the stereographic parameters and $\delta_i=\delta(s_i)$, and let $N$ be the $n\times8$
+matrix over $F$ with rows $(\delta_i,\ \delta_is_i,\ \delta_is_i^2,\ 1,\ s_i,\ s_i^2,\ s_i^3,\ s_i^4)$. If
+$\operatorname{rank}_FN=n$, then $A$ is Ramsey.
+
+\smallskip\noindent\emph{Status:} \st{HAND}, reviewed (AI; one non-author review, which found every step
+correct and supplied the simplification used below). Scope: transcendence degree $1$, $F$ regular over
+$\Q$.
+\end{theorem}
+
+\begin{proof}
+$\dim_KV\ge9-n$, since $V$ is cut out by $n$ linear conditions on nine coefficients. Let $g_0\in W$. Reducing
+$g(x_i,y_i)=0$ modulo $\mathfrak p$ gives $g_0(s_i,s_i)=0$; $g_0(s,s)$ is a polynomial of degree $\le4$ with
+$n\ge5$ roots, so it vanishes and $g_0=(s-s')h_0$ with $h_0$ of bidegree $\le(1,1)$. The element
+$\pi=1\otimes t-t\otimes1$ generates $\mathfrak p\mathcal O$, and $\mathcal O/\pi^2\mathcal O\cong F[\pi]/(\pi^2)$
+with $F$ embedded as $F\otimes1$; in it $1\otimes s_i=s_i+\pi\delta_i$. Lift $g_0$ to $g\in L$ and write
+$g\equiv g_0+\pi g_1$ modulo $\pi^2$. The coefficient of $\pi$ in $g(x_i,y_i)=0$ is
+$\partial_{s'}g_0(s_i,s_i)\,\delta_i+g_1(s_i,s_i)=-h_0(s_i,s_i)\,\delta_i+g_1(s_i,s_i)=0$. So the coefficient
+vector of $(-h_0(s,s),\,g_1(s,s))$, a quadratic and a quartic, lies in $\ker N$. Let
+$\Phi:W\to F^3$ send $g_0$ to the coefficients of $h_0(s,s)$, which depend only on $g_0$. Then
+$\Phi(W)\subset\pi_h(\ker N)$, the projection to the first three coordinates, and $\ker\Phi$ consists of the
+$g_0=(s-s')h_0$ with $h_0$ vanishing on the diagonal, that is $\ker\Phi=W\cap F(s-s')^2$. If
+$\operatorname{rank}N=n$, then $\dim\pi_h(\ker N)\le8-n<9-n\le\dim W$, so $\ker\Phi\ne0$, $(s-s')^2\in W$, and $A$ is
+Ramsey by Lemma~\ref{lem:limit}.
+\end{proof}
+
+\noindent The criterion is consistent with the known failure: every point of P\'alv\"olgyi's heptagon
+\cite{Palvolgyi} satisfies $\delta_i=-s_i(1+s_i^2)/(2r)$ in his parametrization, which puts two explicit
+vectors in $\ker N$, so $\operatorname{rank}N\le6$ for every $r$ (\st{CERT}, an exact identity checked in
+\texttt{certificates/rankN\_check.py}). On a seeded sample of $185$ one-parameter rational sets with
+$6\le n\le8$ (including $40$ mirror-symmetric ones), $N$ has full rank, computed exactly at a rational
+point (\texttt{certificates/rankN\_sweep.py}; the accompanying full-criterion passes are \st{PROBE}).
+
+\begin{corollary}[The radian $8$-gon]\label{cor:radian8}
+For every $\theta$ such that the eight points are distinct, $\{(\cos k\theta,\sin k\theta):0\le k\le7\}$ is
+Ramsey.
+
+\smallskip\noindent\emph{Status:} \st{HAND}, reviewed (AI), plus an exact rank computation: it
+depends on Theorem~\ref{thm:rank} and on $\operatorname{rank}N=8$ at one rational value of $t$ (we
+computed two). Scope \texttt{ANY}. This proves that a certificate exists; it does not exhibit one.
+With Theorem~\ref{thm:NTG} (the radian $7$-gon) and Theorem~\ref{thm:D}, it shows that Theorem~\ref{thm:D}
+is sharp: for transcendental $e^{i\theta}$ the radian progression is Ramsey with seven and eight points
+and not with nine.
+\end{corollary}
+
+\begin{proof}
+If $e^{i\theta}$ is algebraic, Theorem~\ref{thm:A}. Otherwise $t=\tan(\theta/2)$ is transcendental, $F=\Q(t)$
+is regular over $\Q$, and $s_k=\tan(k\theta/2)$ and $\delta_k$ are explicit rational functions of $t$. The
+matrix $N$ has rank $8$ at $t=2/7$ and at $t=-5/11$, computed exactly (\texttt{certificates/rankN\_check.py};
+all denominators are nonzero there). Specialization does not raise rank, so $\operatorname{rank}N=8$ over
+$\Q(t)$, and Theorem~\ref{thm:rank} applies.
+\end{proof}
+
+\noindent The reviewer re-verified the rank at three rational points and, by an
+independent $\pi$-adic computation at $T=2/7$, found a kernel element whose reduction is proportional to
+$(s-s')^2$.
+
+\medskip
+\noindent\emph{One rigid group.} For a cyclic set $A$ and $G\subset A$, say that $G$ has \emph{rational
+cross-ratios} if all four-point cross-ratios within $G$ are rational.
+
+\begin{theorem}[Rigid-group absorption]\label{thm:rigid}
+Let $A$ be a finite subset of the unit circle whose coordinate field $F$ is regular over $\Q$, and suppose
+some five points of $A$ have rational cross-ratios. Then $A$ is Ramsey if and only if $A=G\cup H$ with $G$
+and $H$ each having rational cross-ratios, that is, if and only if $A$ is a union of two M\"obius images of
+rational sets.
+
+\smallskip\noindent\emph{Status:} \st{HAND}, reviewed (AI; the same non-author review as
+Theorem~\ref{thm:rank}, which found every step correct). Scope: regular coordinate field
+(\texttt{GENERIC\_OF} and \texttt{TRANSCENDENTAL\_PARAM} fields without algebraic irrationals).
+The extension to algebraic seeds is open.
+\end{theorem}
+
+\begin{proof}
+``If'' is Theorem~\ref{thm:C2} with $d=2$ (or Theorem~\ref{thm:Ba} with Theorem~\ref{thm:C}). For ``only
+if'', let $f$ be a $(2,2)$-form over $B$ vanishing at all $(x_i,y_i)$ with $m(f)=\kappa(s-s')^2$,
+$\kappa\ne0$ (circle dictionary); $B$ is a domain with fraction field $K$. We use that $c\otimes1=1\otimes c$
+in $B$ forces $c\in\Q$. Fix three of the five given points, $g_1,g_2,g_3$, and let $G$ be the set of
+$a\in A$ with $\mathrm{CR}(t_a,t_{g_1},t_{g_2},t_{g_3})\in\Q$; it contains the five points and has rational
+cross-ratios. Let $\mu_G\in\PGL_2(K)$ send $x_{g_k}$ to $y_{g_k}$ ($k=1,2,3$). For $g\in G$ the cross-ratio
+$c=\mathrm{CR}(t_g,t_{g_1},t_{g_2},t_{g_3})$ is rational, so $\mathrm{CR}(x_g,\dots)=c\otimes1=1\otimes c=\mathrm{CR}(y_g,\dots)$ and
+$\mu_G(x_g)=y_g$. Let $g_G$ be the $(1,1)$-form of the graph of $\mu_G$ (irreducible).
+(1) $f(s,\mu_G(s))$, cleared of denominators, has degree $\le4$ in $s$ and at least five roots $x_g$, so it
+vanishes, and $f=g_G\,h$ in $K[s,s']$ with $h$ of bidegree $\le(1,1)$.
+(2) For $a\in H:=A\setminus G$, $g_G(x_a,y_a)\neq0$: otherwise $\mu_G(x_a)=y_a$, so
+$c=\mathrm{CR}(t_a,t_{g_1},t_{g_2},t_{g_3})$ satisfies $c\otimes1=1\otimes c$, hence $c\in\Q$ and $a\in G$. Since
+$B$ is a domain, $h(x_a,y_a)=0$ for all $a\in H$.
+(3) If $|H|\ge3$, $h$ is irreducible, because a reducible form of bidegree $\le(1,1)$ is a product of linear
+forms in $s$ and in $s'$ and vanishes at no more than two pairs with distinct first and distinct second
+coordinates. So $h$ is the graph of some $\mu\in\PGL_2(K)$ with $\mu(x_a)=y_a$ on $H$, and every four-point
+cross-ratio $c$ of $H$ satisfies $c\otimes1=1\otimes c$, hence is rational. If $|H|\le3$ there is nothing to
+prove.
+\end{proof}
+
+\noindent For five rational points plus $\mathrm{circ}(r_i(t))$, $r_i\in\Q(t)$, the theorem says: Ramsey iff at
+most three of the $r_i$ are non-constant or all cross-ratios of the non-constant ones are constant in $t$.
+On a seeded sample of $139$ such sets with four one-parameter points, the $119$ that are not two-group have
+an exactly nonzero $9\times9$ evaluation determinant, hence are not Ramsey by the argument of
+Theorem~\ref{thm:D} (\st{CERT} per instance), and the other $20$ are two-group, hence Ramsey
+(\texttt{probes/c14\_rigid.py}).
+
+\section{The non-Ramsey side}\label{sec:nonramsey}
+
+\begin{lemma}[P\'alv\"olgyi's Lemma~A.1, re-derived]\label{lem:A1}
+\st{HAND}. Let $A=\{a_i\}\subset\R^d$ be finite, $p_i=(1,a_i)$, and suppose there are real $\lambda_i$ and a
+$\Q$-derivation $\partial$ of $\R$ (applied coordinatewise) such that $\sum_i\lambda_ip_ip_i^T=0$,
+$\sum_i\lambda_i\partial a_i=0$, the matrix $\sum_i\lambda_i(\partial a_i)a_i^T$ is symmetric, and
+$E:=\sum_i\lambda_i|\partial a_i|^2\ne0$. Then $A$ is not Ramsey.
+\end{lemma}
+
+\begin{proof}
+Let $a_i'=v+Qa_i$ be a congruent copy in $\R^D$, $Q^TQ=I$. Then
+$\partial a_i'=\partial v+(\partial Q)a_i+Q\,\partial a_i$. The moment conditions $\sum\lambda_i=0$,
+$\sum\lambda_ia_i=0$, $\sum\lambda_ia_ia_i^T=0$ kill the weighted sum of $|\partial v+(\partial Q)a_i|^2$;
+$\sum\lambda_i\partial a_i=0$ kills the cross term with $\partial v$; and
+$2\sum_i\lambda_i\langle(\partial Q)a_i,Q\,\partial a_i\rangle=2\operatorname{tr}\bigl(K\sum_i
+\lambda_i(\partial a_i)a_i^T\bigr)=0$, since $K=(\partial Q)^TQ$ is skew ($\partial(Q^TQ)=0$) and the other
+factor is symmetric. So $z_i:=|\partial a_i'|^2$ satisfies $\sum_{i\ge2}\lambda_i(z_i-z_1)=E$. By
+\cite[Lemma~15]{EGMRSS} there is a finite colouring $c$ of $\R$ with no monochromatic solution of this
+equation; the colouring $x\mapsto c(|\partial x|^2)$ of $\R^D$ uses the same number of colours for every $D$
+and has no monochromatic copy of $A$.
+\end{proof}
+
+\noindent The re-derivation was reviewed (AI) as correct, and the statement and proof of
+\cite[Lemma~15]{EGMRSS} (pp.~349--350, proved in \S4, pp.~351--354, for any field) were read by a
+reviewer; Rado's integer-variable Satz~XIII$'$ does not cover real coefficients. A derivation of the
+coordinate field $F$ extends to $\R$ (transcendence-basis extension).
+
+Consider $m$ rational points plus $j$ algebraically independent points on a circle, that is, $j$
+points whose stereographic parameters are algebraically independent over $\Q$ (scope
+\texttt{GENERIC\_OF}).
+
+\begin{proposition}[PD, the circle phase diagram]\label{prop:PD}
+Such a configuration is non-Ramsey if and only if $j\ge4$ and $m+j\ge7$.
+
+\smallskip\noindent\emph{Status:} \st{HAND}, reviewed (AI) as correct. Ramsey side:
+Theorem~\ref{thm:A} ($j=0$), Theorem~\ref{thm:Bb} ($j\le3$), Theorem~\ref{thm:Ba} ($m+j\le6$).
+Non-Ramsey side: P\'alv\"olgyi's Theorems~A.3 and A.7 \cite{Palvolgyi}, plus closure of non-Ramsey sets
+under supersets; the non-Ramsey half is his. Our write-up uses A.3, an instance of
+Lemma~\ref{lem:A1} on the circle, in its stated general-triple form (and a rational rotation if a
+rational point sits at the pole). His Theorem~A.3 is stated for an arbitrary real base triple
+$t_1,t_2,t_3$ with $t_4,\dots,t_7$ algebraically independent over $\Q(t_1,t_2,t_3)$, so it covers every
+cell $m+j=7$, $j\ge4$, including $m<3$ (take the base to be the $m$ rational points and $3-m$
+independent ones). His Theorem~A.7 (seven points, every six of which have three algebraically
+independent projective moduli, are not Ramsey) also covers $(0,7),(1,6),(2,5)$ and $(3,4)$: a
+six-point subset has at most three rational points, and sending three of its points, all its rational
+ones among them, to $\infty,0,1$ leaves three algebraically independent moduli. A.7 rests on his A.5
+and A.6 as well, so we cite A.3. (This check of A.3's and A.7's hypotheses was reviewed (AI), with an
+exact Jacobian-rank check; A.3 and A.7 are in his appendix, which he labels as unchecked, and our route
+rests on our re-derivation of Lemma~A.1.)
+\end{proposition}
+
+\noindent\emph{Exact instance (J2-F7).} \st{CERT}, scope
+\texttt{GENERIC\_OF}(3 rational $+$ 4 independent). For the rational parameters $0,\tfrac12,\tfrac13$
+and four independent parameters $T_1,\dots,T_4$, the scalar certificate with the derivation $\partial=\sum_mg(T_m)\,\partial/\partial T_m$,
+$g(t)=t(t-\tfrac12)(t-\tfrac13)$, satisfies the hypotheses of Lemma~\ref{lem:A1} exactly, with $E=4$
+(\texttt{certificates/dual\_cert.py}), so the configuration is non-Ramsey. A concrete member is
+$(T_m)=(e^{\sqrt2},e^{\sqrt3},e^{\sqrt5},e^{\sqrt7})$, by Lindemann--Weierstrass. This is an instance of
+P\'alv\"olgyi's Theorem~A.3, which is prior.
+
+\noindent\emph{Credit summary for the circle.} Seven points: P\'alv\"olgyi's heptagon \cite{Palvolgyi}
+is the first non-Ramsey cyclic set; Theorem~\ref{thm:Ba} (prior, \cite{JDJones}) gives the minimum. The
+non-Ramsey half of Proposition~\ref{prop:PD} is P\'alv\"olgyi's (A.3, A.7); the Ramsey half combines
+prior work with Theorem~\ref{thm:Bb}.
+
+\begin{theorem}[NR-S23]\label{thm:NR}
+The following configurations are not Ramsey: on $S^2$, the first $m$ of the rational points $R_2$
+below plus $j$ points with algebraically independent stereographic coordinates, for
+$(m,j)=(6,4),(5,5),(4,6),(3,7)$, and ten points with all coordinates independent; on $S^3$, the
+first $m$ of the rational points $R_3$ below plus $j$ independent points, for $(m,j)=(11,4),(10,5)$.
+Hence so is every superset, which covers all sixteen failing cells of the $S^2$ scan and both
+failing threshold cells on $S^3$.
+
+The rational points, as stereographic coordinates $u$ from the pole $(0,\dots,0,1)$ (the point is
+$(2u,|u|^2-1)/(1+|u|^2)$), in order:
+\begin{align*}
+R_2:\ &(\tfrac59,\tfrac58),\ (\tfrac74,-\tfrac49),\ (2,-\tfrac34),\ (0,-\tfrac79),\ (-\tfrac87,\tfrac53),\
+(-1,-7);\\
+R_3:\ &(-\tfrac15,-1,-\tfrac54),\ (-\tfrac43,-\tfrac79,-\tfrac35),\ (-\tfrac97,-5,-\tfrac13),\
+(-\tfrac75,\tfrac57,-1),\ (\tfrac12,\tfrac23,\tfrac97),\ (\tfrac27,\tfrac12,\tfrac25),\\
+&(\tfrac59,-\tfrac58,\tfrac59),\ (-\tfrac45,-1,\tfrac76),\ (-\tfrac16,1,-\tfrac17),\
+(-\tfrac58,2,\tfrac94),\ (-\tfrac12,-\tfrac52,\tfrac12).
+\end{align*}
+For example the first point of $R_2$ is $(5760,6480,-1559)/8809\in S^2$.
+
+\smallskip\noindent\emph{Status:} \st{CERT} identities plus glue, reviewed (AI) as correct. The
+scalar certificates are exact (\texttt{certificates/scalar\_exact.py}; replay byte-identical): cofactor
+vectors give $\lambda$ and $\partial$ identically in the free coordinates, and at one rational specialization
+$\tau$ both systems have full rank and $E(\tau)\ne0$, so $E\ne0$ in $F$. Two valid routes, in every
+dimension: Lemma~\ref{lem:A1} (no Lean, no J2), or the 2-jet dual and Proposition~\ref{prop:J2}. A code
+check: the script verifies $\tilde\lambda_i(\tau)\ne0$ for every point that carries the derivation; for the
+other points whose weight is not identically zero the released script checks the same, and passes in
+all seven cells. Scope:
+\texttt{GENERIC\_OF}(independent free coordinates, with the rational points $R_2$, $R_3$ above).
+\end{theorem}
+
+\noindent\emph{$S^4$.} The analogous threshold cell $(17,4)$ is not yet certified: the $(P)$ system has a
+second, identically vanishing row relation (an infinitesimal M\"obius rotation fixing the 2-sphere through
+the four free points), so one more row must be dropped. With that change the reviewer's scratch run gives
+an exact $E(\tau)\neq0$; that computation is not part of this release. A scalar certificate exists modulo
+$p$ \st{PROBE}.
+
+\section{A second-order necessary test}\label{sec:jet}
+
+Let $F$ have transcendence degree $k$ over $\Q$, with commuting derivations $D_1,\dots,D_k$ dual to a
+transcendence basis. Expanding condition (1) to second order along the diagonal of $B$ gives a linear
+system in $c,P_j,Q_{jl}$ (the ``2-jet system''): $p_i^TP_jp_i=0$ and
+$-c\langle D_ja_i,D_la_i\rangle+p_i^TP_jD_lp_i+p_i^TP_lD_jp_i+p_i^TQ_{jl}p_i=0$.
+
+\begin{proposition}[J2]\label{prop:J2}
+\st{HAND}, scope \texttt{ANY}. If $A$ is Ramsey, the 2-jet system is solvable with $c=1$. Proof: the
+Taylor map $f\otimes g\mapsto f\cdot\sum_\alpha D^\alpha g\,e^\alpha/\alpha!$ is a ring map
+$B\to F[e]/(e)^3$ compatible with $m$; apply it to a symmetrized solution. Equivalently, the 2-jet test
+is the field criterion over $B/\mathfrak m^3$, where $\mathfrak m=\ker m$, so it does not depend on the
+transcendence basis. This proof was found and written by an AI cold reviewer of our original derivation,
+who confirmed the order-1 and order-2 coefficients, signs and normalization; there has been no human
+review.
+\end{proposition}
+
+\noindent\emph{Dual form (corrected).} By the Fredholm alternative over $F$, non-solvability is
+witnessed by symmetric $k\times k$ weights $\Lambda_i$ with $\sum_i(\Lambda_i)_{jl}p_ip_i^T=0$, with
+$\sum_i\sum_l(\Lambda_i)_{jl}\,p_i(D_lp_i)^T\in\mathrm{span}_F\{p_ip_i^T\}$ for each $j$ as an equality of
+full matrices, and with $\sum_i\operatorname{tr}(\Lambda_iG_i)\neq0$, where $G_i$ is the Gram matrix of the
+$D_ja_i$. The version with ``$=0$'' in the middle condition, as first written, is sound but incomplete: it
+misses real failures (exact check on the J2-F7 configuration). P\'alv\"olgyi's conditions
+(Lemma~\ref{lem:A1}) are the case $\Lambda_i=\lambda_iC$, and his appendix reduces a general $C$ to a
+single derivation. An earlier claim of ours that matrix weights are strictly stronger is
+\textbf{withdrawn}: its witness has a scalar certificate (J2-F7).
+
+\noindent\emph{Evidence for sufficiency.} \st{PROBE} For one parameter ($k=1$) the full criterion is
+computable, because the local ring at the diagonal is a discrete valuation ring. On 702 real
+one-parameter configurations where both tests gave a verdict (635 pass/pass, 67 fail/fail), the 2-jet
+test and the full criterion agree in every case, at two primes near $2^{31}$. ``Real'' means an open
+parameter interval on which every radicand is positive, decided exactly; an earlier sample that included
+non-real configurations is not used. These are random specializations modulo a prime; they are evidence
+for Conjecture~\ref{conj:C1}, not theorems. The test also reproduces every known verdict
+\cite{OAI172,Palvolgyi}.
+
+\noindent\emph{Scalar certificates.} \st{PROBE} In every tested failing cell (all sixteen on $S^2$, both
+$S^3$ threshold cells, the $S^4$ threshold, and ten generic points on $S^2$) a scalar single-derivation
+certificate exists, at two primes; seven of them are exact (Theorem~\ref{thm:NR}). So we have no witness
+that the 2-jet test is stronger than P\'alv\"olgyi's method (ledger entries SR-C11 and SR-C12:
+whether a 2-jet failure without a scalar certificate exists, and the working hypothesis that none exists
+on configurations of rational plus independent points). A random fixed direction is not a test for this:
+it misses certificates that exist.
+
+\section{Conjectures}\label{sec:conj}
+
+\begin{conjecture}[C1, second-order completeness; ledger SR-C1]\label{conj:C1}
+A finite spherical set is Ramsey iff its 2-jet system is solvable with $c=1$. Evidence:
+\S\ref{sec:jet}, \st{PROBE}.
+\end{conjecture}
+
+\begin{conjecture}[C3, generic thresholds; ledger SR-C3]\label{conj:C3}
+A generic $n$-subset of $S^{d-1}$ is non-Ramsey iff $n\ge N(d)$, with $N(2)=7$ and $N(d)=(d+1)(d+2)/2$ for
+$d\ge3$. Evidence \st{PROBE}: circle $6/7$, $S^2$ $9/10$; first failures at $15$ ($S^3$) and $21$ ($S^4$)
+with four or five free points. On the failing side the $S^2$ boundary cells are certified (Theorem~\ref{thm:NR}, \st{CERT}),
+and the circle boundary cell is proved by hand (Proposition~\ref{prop:PD}, \st{HAND}, reviewed (AI)). Related (C4): algebraic points plus at most three
+arbitrary points are Ramsey on every sphere, and four can fail. The first half follows from
+Theorem~\ref{thm:C2} (Remark~\ref{rem:C4}); four free points fail on $S^1$, $S^2$, $S^3$
+(Remark~\ref{rem:C4}), and \st{PROBE} for $5\le d\le9$. Ledger entry SR-C17 merges C3 and C4 into one
+phase-diagram conjecture for $m$ rational points in general position plus $j$ independent points on
+$S^{d-1}$, $d\ge3$: non-Ramsey iff $j\ge4$ and $m+j\ge(d+1)(d+2)/2$.
+\end{conjecture}
+
+\begin{conjecture}[R1, rigidity; ledger SR-C6]\label{conj:R1}
+For $n\ge9$ points on a circle, every positive-dimensional family of Ramsey configurations lies in a
+two-M\"obius family (Theorem~\ref{thm:C2}, $d=2$). Theorem~\ref{thm:rigid} proves this for families
+with regular coordinate field that contain a five-point group with rational cross-ratios, and
+Conjecture~\ref{conj:count}(ii) predicts it for rational families. The bound $n\ge9$ is needed:
+Theorem~\ref{thm:NTG} and Corollary~\ref{cor:radian8} give non-two-group families with $7$ and $8$ points.
+\end{conjecture}
+
+\begin{conjecture}[Expected-dimension law on the circle]\label{conj:count}
+Let $A\subset S^1$, $|A|=n$, have a purely transcendental coordinate field, and let $k$ be the transcendence
+degree of the field generated by its four-point cross-ratios (a M\"obius invariant).
+\begin{enumerate}
+\item[(i$'$)] If $(n-5)(k+1)\le6$ and $A$ is non-degenerate, then $A$ is Ramsey. For $k=1$ non-degenerate
+means $\operatorname{rank}N=n$, and (i$'$) is Theorem~\ref{thm:rank}; for $k=2$ it means that the 2-jet system is
+solvable, and (i$'$) is then an instance of Conjecture~\ref{conj:C1}.
+\item[(ii)] If $(n-5)(k+1)>6$, then $A$ is Ramsey if and only if it is two-group.
+\end{enumerate}
+For $n=7$ this would say: Ramsey iff two-group or ($k\le2$ and non-degenerate). Evidence: the count is that of
+the reduced 2-jet system ($n\,k(k+1)/2$ equations against $3k+5\,k(k+1)/2$ unknowns), and is derived, not
+fitted, for $k=1$. (ii): $0$ mismatches on $263$ fresh seeded configurations \st{PROBE}, and $176$
+one-parameter $9$-point sets that are not two-group have an exactly nonzero $9\times9$ evaluation determinant,
+hence are not Ramsey (\st{CERT} per instance). The first form of (i), without the non-degeneracy hypothesis,
+is refuted at probe level: the mirror-symmetric rational family $\{0,\pm a,\pm b,\pm c\}$ has $k=2$ and fails
+the 2-jet test (\st{PROBE}, via Proposition~\ref{prop:J2}). Square-root fields are excluded: P\'alv\"olgyi's
+heptagon has $n=7$, $k=1$ and is not Ramsey. Ledger entry SR-C23.
+\end{conjecture}
+
+\begin{conjecture}[T1; ledger SR-C9]\label{conj:T1}
+Ramsey-ness of explicit configurations can be equivalent to open transcendence problems
+(Corollary~\ref{cor:radian}); conversely, Schanuel's conjecture would make Ramsey-ness decidable for
+exponential-algebraic configurations.
+\end{conjecture}
+
+\begin{conjecture}[M1, measurable Graham; ledger SR-C5]\label{conj:M1}
+Let $A$ be a finite spherical set.
+\begin{enumerate}
+\item[(M1)] For every $r$ there is $D$ such that every Lebesgue-measurable $r$-colouring of $\R^D$ is
+constant on some congruent copy of $A$.
+\item[(M1w)] Moreover the monochromatic copies have positive measure: for every $r$ there is $D$ such that,
+for every Lebesgue-measurable $r$-colouring $\chi$ of $\R^D$, the set of $(v,g)\in\R^D\times\Ort(D)$ for
+which $\chi$ is constant on $v+gA$ has positive measure (Lebesgue times Haar).
+\item[(M1cat)] (Category twin.) For every $r$ there is $D$ such that whenever $U_1,\dots,U_r$ are disjoint
+open subsets of $\R^D$ with dense union, some $U_j$ contains a congruent copy of $A$.
+\end{enumerate}
+\end{conjecture}
+
+\noindent\st{SKETCH} (not reviewed). M1w is unchanged by null modifications of $\chi$, so it
+reduces to Borel colourings, and it is a $\Pi^1_2$ statement; if ZFC proves it, Shoenfield absoluteness
+gives Graham's conjecture in Solovay's model, where every set is measurable, although the conjecture fails
+in ZFC \cite{Palvolgyi}. (Graham in Solovay's model does not obviously imply M1w.) M1cat would give
+Graham's conjecture in Shelah's model of ZF$+$DC$+$BP, with no inaccessible cardinal. A counterexample to
+M1w would be some $r$ and, for every $D$, a Borel $r$-colouring of $\R^D$ whose monochromatic copies of
+$E_1$ (Corollary~\ref{cor:radian}) form a null set. \cite{OAI172} explicitly assumes no measurability. We
+found no statement of M1 in our searches. Zapletal \cite{Zapletal} works in choiceless models
+(ZF$+$DC) with countable chromatic numbers of triangle hypergraphs and says nothing about finite
+colourings, Graham's conjecture or M1. The nearest literature: measurable chromatic numbers \cite{Falconer},
+\cite{ShelahSoifer,Payne}; density theorems for simplices and related configurations
+\cite{Bourgain,CastroSilva} and on spheres \cite{GuruswamiLi}; density Graham over $\mathbb F_p$ for all
+spherical configurations \cite{Sun}; P\'alv\"olgyi's question about a density version
+\cite[\S7]{Palvolgyi-ncs}; and \cite{OAI158}, where measurability does not matter. Current Euclidean density
+theory covers simplices, their products and inductive configurations, so we see no route to M1 now.
+
+\begin{remark}[Three lemmas around M1]\label{rem:M1lemmas}
+\begin{enumerate}
+\item[(L1)] \st{HAND} A Lebesgue-measurable $\Q$-quadratic map $\R\to\R$ is $x\mapsto cx^2$, and a
+Lebesgue-measurable $\Q$-derivation of $\R$ is $0$: measurable additive maps are linear, and $D(x^2)=2xD(x)$
+then forces $c=0$. \st{SKETCH} So the separating data in OpenAI's necessity argument \cite[\S2]{OAI172}
+cannot be measurable for a spherical set; restricted to measurable data, that mechanism detects only
+non-sphericity.
+\item[(L3)] \st{HAND} (via Theorem~\ref{thm:A}). ``Robust Graham'' holds in ZFC: for every finite spherical
+$A$, every $\varepsilon>0$ and every $r$ there is $D$ such that every $r$-colouring of $\R^D$ is constant on a
+congruent copy of some spherical $A'$ within $\varepsilon$ of $A$, because spherical sets with algebraic
+coordinates are dense. So a counterexample to M1 cannot be robust under perturbation.
+\item[(L4)] \st{HAND} (compactness; not reviewed). Let $r_0$ be a number of colours for which $E_1$ is not
+Ramsey, and let $\theta_n\to1$ with $e^{i\theta_n}$ algebraic, so that $E_{\theta_n}$ is Ramsey. Let $N_n$ be
+the least size of a finite set $W$ in some $\R^D$ such that every $r_0$-colouring of $W$ is constant on a
+congruent copy of $E_{\theta_n}$. Then $N_n\to\infty$. Otherwise, along a subsequence the witnesses have a
+fixed size, a fixed family of index tuples forming copies, and (minimal witnesses are connected, so after
+translation they are bounded) convergent points; the limit set is a finite witness for $E_1$, because
+limits of copies of $E_{\theta_n}$ are copies of $E_1$ and a colouring of the limit pulls back. So any proof of
+M1 for $E_1$ cannot pass through bounded finite witnesses for nearby Ramsey sets.
+\end{enumerate}
+\end{remark}
+
+\begin{remark}[Zero--one law]
+\st{SKETCH}, scope \texttt{GENERIC\_OF}. In an irreducible family of spherical configurations, generic
+members share one verdict (their coordinate fields are isomorphic compatibly with the coordinates), and
+Ramsey members are dense (Theorem~\ref{thm:A}).
+\end{remark}
+
+\begin{remark}[Definable and polynomial-factor colourings]\label{rem:definable}
+These statements test candidate counterexamples to Conjecture~\ref{conj:M1} and do not approach it.
+\begin{enumerate}
+\item[(a)] \st{HAND}, reviewed (AI); o-minimal folklore \cite{vdDries}, recorded here as an observation, not
+as a result. \emph{Big-ball lemma.} Let $\mathcal R$ be an o-minimal expansion of the
+real field (semialgebraic sets with arbitrary real parameters, $\R_{\exp}$, $\R_{\mathrm{an}}$, \dots), $D\ge2$,
+and $\R^D=C_1\sqcup\dots\sqcup C_r$ with every $C_j$ definable in $\mathcal R$. Then some single $C_j$ contains
+balls of every radius, hence a congruent copy of every bounded subset of $\R^D$, spherical or not.
+\emph{Proof.} The union $\mathrm{Bd}$ of the boundaries $\partial C_j$ is definable of dimension $\le D-1$
+\cite[Ch.~4]{vdDries}. Under $\varphi(x)=x/\sqrt{1+|x|^2}$, which maps $\R^D$ onto the open unit ball, the
+points of $\overline{\varphi(\mathrm{Bd})}$ on the unit sphere lie in the frontier of $\varphi(\mathrm{Bd})$,
+of dimension $\le D-2$, so some $\omega$ on the unit sphere has a neighbourhood missing
+$\overline{\varphi(\mathrm{Bd})}$. Then a truncated cone $\{x:|x|>R_0,\ |x/|x|-\omega|<\epsilon\}$ misses
+$\mathrm{Bd}$; it is connected ($D\ge2$), so it lies in one class, and it contains balls of every radius.
+For semialgebraic classes there is an elementary variant: $\mathrm{Bd}\subset Z(g)$ for a nonzero polynomial
+$g$, and if the top-degree form of $g$ does not vanish at $\omega$, a truncated cone around $\omega$ misses
+$Z(g)$. So for definable colourings the Ramsey property holds trivially for every bounded
+configuration, and this class cannot tell spherical sets from non-spherical ones.
+\item[(b)] \st{HAND} modulo two cited theorems, reviewed (AI). \emph{Polynomial factors.} For all $d,m,k$ there
+is $N(d,m,k)$ such that for $D\ge N$, any $P_1,\dots,P_m\in\R[x_1,\dots,x_D]$ of degree $\le d$ are
+simultaneously radial (functions of $|x|$) on some $k$-dimensional linear subspace $V$. Hence every colouring
+$f\circ(P_1,\dots,P_m)$, with $f:\R^m\to[r]$ arbitrary (not even measurable) and any $r$, is constant on every
+sphere of $V$ centred at $0$, and contains a monochromatic congruent copy of every finite spherical set of
+affine dimension $\le k$. \emph{Proof.} Apply Dol'nikov and Karasev's Theorem~1 (an even-degree form is
+proportional to $|x|^{\deg}$ on a subspace of prescribed dimension, given enough variables) and their
+Theorem~5 (an odd polynomial map to $\R^m$ vanishes on such a subspace) \cite{DolnikovKarasev} to the
+homogeneous components one at a time, inside a decreasing chain of subspaces; both conclusions pass to
+subspaces. The cited theorems are read at the level of their statements; $N$ is not effective. The same
+holds, with a bound $N(d,s,m,k)$, for $m$ bracket-polynomial expressions built with at most $s$ gates
+$+,\times,\lfloor\cdot\rfloor$ over polynomial leaves of degree $\le d$, by induction on the floor depth; it
+does not cover families whose number of brackets grows with $D$. The ingredients are Dol'nikov and
+Karasev's \cite{DolnikovKarasev}; Bukh and Karasev \cite[\S2]{BukhKarasev} already link
+Dvoretzky- and Knaster-type theorems to Euclidean Ramsey problems, and Gromov's ``Hilbert
+symmetrization'' and ``Ramsey--Dvoretzky'' discussion \cite[\S1.12]{Gromov} is prior art for this
+radialisation idea. Our contribution is only the observation that it disposes of this class of
+candidate colourings.
+\item[(c)] \st{HAND}, reviewed (AI). \emph{Cube lemma.} For $D\ge3$ the vectors with coordinates
+$u_i=\sqrt{2/D}\cos(2\pi i/D)$, $v_i=\sqrt{2/D}\sin(2\pi i/D)$ are orthonormal, so every coordinate of
+$c+u\cos\phi+v\sin\phi$ stays within $\sqrt{2/D}$ of $c_i$, and a unit circle fits in a closed cube of side
+$2\sqrt{2/D}$. Hence a colouring with a class containing such a cube has a monochromatic copy of every finite
+subset of a unit circle, and a colouring constant on the (half-open) cells of a cubical grid of side $h$ is
+defeated once $D>8/h^2$.
+\item[(d)] \textbf{Open} (ledger SR-C28). Graham's conjecture for \emph{locally semialgebraic} colourings,
+whose classes meet every ball in a semialgebraic set. This class contains the colourings
+$x\mapsto\lfloor c|x|^2\rfloor\bmod r$ of \cite{EGMRSS}, which defeat every non-spherical set, so it does see
+sphericity; Conjecture~\ref{conj:M1} implies it. By (b) and (c), a counterexample family needs factor
+complexity growing with $D$ and cells finer than $D^{-1/2}$. \st{SKETCH}: in density form the question is
+equivalent to the density form of M1 for Borel colourings.
+\end{enumerate}
+A literature search found no statement of Graham's conjecture for definable colourings
+(ledger SR-C25 to SR-C28).
+\end{remark}
+
+\section{Tailings}\label{sec:tailings}
+
+Killed ideas and harness lessons, recorded so that others need not repeat them.
+\begin{itemize}
+\item Poncelet chains are not special: they fail at seven points like random three-parameter families
+\st{PROBE}. ``Two groups only on Hopf spheres'' is refuted by $S^3$, and now by
+Theorem~\ref{thm:C2}. A naive count predicting that the free-point threshold grows with $d$ is refuted (it
+is $3$ for $d=2,\dots,9$, \st{PROBE}).
+\item ``Matrix weights are strictly stronger than scalar ones'': withdrawn (\S\ref{sec:jet}).
+\item ``A $7$-point cyclic set is Ramsey iff it is two-group'': refuted (Theorem~\ref{thm:NTG}). Its
+refinement to cross-ratio transcendence degree $\ge2$ is refuted at probe level (the threshold is $3$;
+Conjecture~\ref{conj:count}). ``One-parameter cyclic sets of at most eight points are Ramsey'' is false as
+stated: P\'alv\"olgyi's heptagon is a one-parameter set; the rank condition of Theorem~\ref{thm:rank} is
+what fails there.
+\item A predicted Ramsey generic member of the mirror family $\{0,\pm a,\pm b,\pm c\}$, which would have
+shown that Ramsey-ness is not closed under specialization on the circle, failed the 2-jet test
+\st{PROBE}; off the circle the question is ledger entry SR-C16.
+\item The generic-entry quaternionic recipe for M\"obius graph forms does not extend to $\Cl_{0,4}$
+(\S\ref{sec:lowdim}); the Lipschitz normal form is needed.
+\item Three probe traps: integer division producing floats, and a point at the stereographic pole, each
+produced false passes before being fixed; a retry routine whose ``no verdict'' return was counted as
+agreement inflated an agreement count (corrected; no pass/fail flip was found).
+\item A random sampler of one-parameter configurations with square roots produced non-real configurations
+($507$ of $1557$); all evidence above is restricted to real ones, decided exactly.
+\end{itemize}
+
+\section{AI use and review disclosure}\label{sec:disclosure}
+
+The author, Will Strinz, is the only human contributor. He directed the work and
+made its decisions; he is not an expert in Euclidean Ramsey theory. The statements, proofs and probes
+first came out of an exploratory conversation with Claude Opus~5.5 (Anthropic, in claude.ai) on
+2026-10-11/12. The campaign was then coordinated by Claude Opus~5.5 in Claude Code, which dispatched
+Claude Opus~5.5 agents (the Lean proofs and ropes, the exact certificates and probes including the
+Clifford construction of \S\ref{sec:twogroups}, the reviews below, and this note) and Claude Sonnet~5.5
+agents (the literature searches, hygiene checks of the probes, and three fresh reproductions). Every
+machine check was run by these agents; the author did not re-run them.
+
+All reviews are AI reviews, each by a fresh agent that had not built what it reviewed: a cold review of the
+second-order test (Proposition~\ref{prop:J2}); adversarial reviews of the certificate glue for $S^1$--$S^4$
+and the circle phase diagram, for $S^5$ and every $d$ (Theorem~\ref{thm:C2}), and for the $S^2$/$S^3$
+certificates with the colouring lemma (Theorem~\ref{thm:NR}, Lemma~\ref{lem:A1}); non-builder fidelity
+reviews of ropes AV1, AV3 and AV5 and of the Theorem~C package; fresh reproductions of rope AV1, of the
+Theorem~C package, and of all five ropes of this release with its certificates (fast and slow sets)
+and probes; a non-author review of Theorems~\ref{thm:rank} and \ref{thm:rigid}; and a skeptical
+review of the statements of Remark~\ref{rem:definable}. The certificates of
+Theorem~\ref{thm:NTG} were re-verified by a non-builder with independent code, and their glue was
+reviewed (AI), as was the hypothesis check for P\'alv\"olgyi's Theorems~A.3 and A.7 in
+Proposition~\ref{prop:PD}. The author read
+the hand proof of Theorem~\ref{thm:C} line by line, and reviewed this note and the ledger before
+release (not line by line); both are an owner's sign-off, not expert review. \textbf{No human expert has reviewed any part of this note.} Machine checks:
+Lean and Comparator (Theorems~\ref{thm:A}, \ref{thm:Ba}, \ref{thm:Bb}, \ref{thm:C} with
+Corollary~\ref{cor:mobius}(c),(d), and \ref{thm:D}); exact sympy identities and exact ranks (\st{CERT}
+items, and the rank computation in Corollary~\ref{cor:radian8}); random
+specializations modulo primes (\st{PROBE} items only). This follows the spirit of the disclosures in
+\cite{Palvolgyi}, \cite{MR} and the vibemathed catalogue \cite{vibemathed}.
+
+\appendix
+\section{Verification}\label{app:lean}
+
+\noindent\textbf{Ropes.} Each rope is a standalone Lean package (OpenAI's files vendored unmodified,
+Apache-2.0, with NOTICE) checked by stock Comparator, under Landlock, against OpenAI's challenge
+definitions, with negative controls (\texttt{sorry}, an extra axiom, a weaker statement, a redefined
+constant, a weaker Mathlib-vocabulary statement). ``GR1'' is the release gate: a fresh-runner CI run, a
+non-builder fidelity review, and a fresh-agent reproduction. The CI runs are this release's own
+workflows on a private staging copy of the release repository, on a tree identical to the released
+one; the release repository re-runs them on every push.
+
+\medskip
+{\small\noindent\begin{tabular}{@{}p{0.07\textwidth}p{0.1\textwidth}p{0.28\textwidth}p{0.22\textwidth}p{0.25\textwidth}@{}}
+\toprule
+Rope & Result & Lean theorems & Fresh-runner CI & GR1 \\
+\midrule
+AV1 & Thm~\ref{thm:A} & \texttt{ramsey\_of\_algebraic} & run \texttt{38493016206}: 5 accepted, 5 controls
+refused & complete (v1.1 documentation fixes applied) \\
+AV2 & Thm~\ref{thm:Ba} & \texttt{circle\_ramsey\_of\_le\_six} & run \texttt{38493016157}: all 10 as expected &
+CI and fresh-agent reproduction passed; fidelity self-assessed, review open \\
+AV3 & Thm~\ref{thm:D} & \texttt{radian\_configuration}, \texttt{radian\_not\_ramsey},
+\texttt{radian\_ramsey\_iff}, \texttt{radian\_ramsey\_iff\_tan} & run \texttt{38493016161}: all 10 as expected &
+complete (fidelity: faithful, documentation fixes applied; reproduction: reproduced, friction fixed) \\
+AV4 & Thm~\ref{thm:C}, Cor.~\ref{cor:mobius} & \texttt{ramsey\_\allowbreak{}iff\_\allowbreak{}ramsey\_\allowbreak{}mobius\_\allowbreak{}full},
+\texttt{ramsey\_\allowbreak{}mobius\_\allowbreak{}of\_\allowbreak{}algebraic}, \texttt{ramsey\_\allowbreak{}circ\_\allowbreak{}*} & run \texttt{38493016252}: all 12 as expected
+& CI and fresh-agent reproduction passed for the rope; fidelity self-assessed; see the package \\
+AV5 & Thm~\ref{thm:Bb} & \texttt{ramsey\_alg\_plus\_three} & run \texttt{38493016164}: all 10 as expected &
+complete (fidelity: faithful, documentation fixes applied; reproduction: reproduced, friction fixed) \\
+\cite{MR} & Thm~\ref{thm:C}, Cor.~\ref{cor:mobius} & the AV4 statements, ported to v4.35.0-rc2 & staging run
+\texttt{38336666705}; released commit run \texttt{38339951762} & complete for the package (fidelity: faithful,
+fixes applied; reproduction: reproduced, friction fixed) \\
+\bottomrule
+\end{tabular}}
+
+\medskip\noindent All theorems build at the root with axioms \texttt{propext}, \texttt{Classical.choice},
+\texttt{Quot.sound} only. The published package \cite{MR} checks with \texttt{lake comparator} and three
+kernels (Lean, NanoDa, con-ron) and refuses five controls.
+
+\noindent\textbf{Theorem C in Lean} (ASCII transliteration; the Unicode source is quoted verbatim in
+\cite[\S3]{MR}; \texttt{Ramsey} and \texttt{Space} are OpenAI's):
+\begin{verbatim}
+theorem ramsey_iff_ramsey_mobius_full {s d : N} (a : Fin s -> Space d)
+    (L : Matrix (Option (Fin d)) (Option (Fin d)) R)
+    (hL : L^T * lorentzForm d * L = lorentzForm d) (ha : Function.Injective a)
+    (hsph : forall i, a i in Metric.sphere (0 : Space d) 1) :
+    Ramsey a <-> Ramsey (mobiusMap L o a)
+\end{verbatim}
+
+\noindent\textbf{Exact scripts} (Python 3.10, sympy 1.14; in \texttt{certificates/}, with expected logs):
+\texttt{cert\_\allowbreak{}mobius.py} (Theorems~\ref{thm:Ba}, \ref{thm:Bb});
+\texttt{cert\_\allowbreak{}s2.py} (about 2.3 min), \texttt{cert\_\allowbreak{}s2\_\allowbreak{}quat.py} (1--2 min), \texttt{g4\_\allowbreak{}test.py},
+\texttt{cert\_\allowbreak{}clifford.py} (54--63 min), \texttt{cert\_\allowbreak{}clifford\_\allowbreak{}obs.py}, \texttt{cert\_\allowbreak{}clifford\_\allowbreak{}seed.py},
+\texttt{cert\_\allowbreak{}clifford\_\allowbreak{}lorentz.py}, \texttt{cert\_\allowbreak{}clifford\_\allowbreak{}crosscheck.py} (corroboration; its coverage test is floating point) (Theorem~\ref{thm:C2});
+\texttt{radian\_\allowbreak{}det.py} (Theorem~\ref{thm:D}); \texttt{dual\_\allowbreak{}cert.py} (J2-F7); \texttt{scalar\_\allowbreak{}exact.py}
+(Theorem~\ref{thm:NR}); \texttt{cert\_\allowbreak{}nontwogroup.py} and \texttt{exact\_\allowbreak{}circle\_\allowbreak{}cert.py}
+(Theorem~\ref{thm:NTG}); \texttt{rankN\_\allowbreak{}check.py} and \texttt{rankN\_\allowbreak{}sweep.py} (Theorem~\ref{thm:rank}, Corollary~\ref{cor:radian8});
+\texttt{definable\_\allowbreak{}bigball.py}, \texttt{definable\_\allowbreak{}polyphase.py}, \texttt{definable\_\allowbreak{}crosscheck.py} and \texttt{exact\_\allowbreak{}intervals.py} (exact sanity checks for Remark~\ref{rem:definable}).
+Modulo-$p$ probes, in \texttt{probes/}: \texttt{probe2.py}, \texttt{scalar\_\allowbreak{}cert.py}, the \texttt{e*.py}
+experiments and the scripts behind the conjecture ledger (for example \texttt{c14\_\allowbreak{}rigid.py},
+\texttt{c23\_\allowbreak{}count\_\allowbreak{}law.py}); the \texttt{validate.py} controls must pass before any
+probe output is cited. They are \st{PROBE} evidence, not proof.
+
+\noindent\textbf{Replay.} \texttt{REPRODUCE.md} of this release: each rope under \texttt{ropes/av1}--\texttt{av5}
+is a standalone Lean package with its own \texttt{REPRODUCE} script (Comparator under Landlock on Linux); the
+exact scripts run with \texttt{python -I certificates/<script>} and their output is compared with the
+expected logs. The Theorem~C package: \texttt{REPRODUCE.md} of \cite{MR}. Repository and archive for this
+note: \url{https://github.com/wstrinz/spherical-ramsey}, archived on Zenodo (the DOI is given in
+the repository's \texttt{README.md} and \texttt{CITATION.cff}).
+
+\begin{thebibliography}{99}
+\bibitem{OAI172} OpenAI, \emph{A classification of finite Euclidean Ramsey configurations},
+OpenAI Math Release preprint, September 23, 2026; github.com/openai/math, commit
+\texttt{fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb},
+\texttt{preprints/A-classification-of-finite-Euclidean-Ramsey-configurations-September-23-2026/}.
+\bibitem{OAI158} OpenAI, \emph{The Euclidean plane is not five-colorable}, OpenAI Math Release preprint, September 23,
+2026 (release \#158); github.com/openai/math, commit \texttt{fd4aeeb2},
+\texttt{preprints/The-Euclidean-plane-is-not-five-colorable-September-23-2026/}.
+\bibitem{MR} W.~Strinz, \emph{mobius-ramsey: M\"obius invariance of the Ramsey property for finite
+spherical sets (Lean~4)}, version 1.0.0, Zenodo, 2026, doi:10.5281/zenodo.23339523 (all versions:
+doi:10.5281/zenodo.23339522); \url{https://github.com/wstrinz/mobius-ramsey}, release v1.0.0 at commit
+\texttt{52284dd}. Includes the note \emph{Ramsey-ness of finite spherical sets is M\"obius invariant}.
+\bibitem{Palvolgyi} D.~P\'alv\"olgyi, \emph{A cyclic non-Ramsey heptagon}, arXiv:2609.23327 (v1,
+2026-09-20; no later version as of 2026-10-13).
+\bibitem{Palvolgyi-ncs} D.~P\'alv\"olgyi, \emph{A nearcircumsphere-Ramsey theorem for solvable transitive
+configurations}, arXiv:2608.10865.
+\bibitem{JDJones} JD-Jones-ASES, \emph{six-concyclic-lean}, GitHub repository,
+\url{https://github.com/JD-Jones-ASES/six-concyclic-lean}, root commit \texttt{0703d7d}, 2026-10-07.
+\bibitem{Atimics} atimics, \emph{math2}, GitHub repository, \url{https://github.com/atimics/math2},
+\texttt{EndToEnd/AlgebraicRamsey.lean}, commit \texttt{8ab51fa}, 2026-10-08.
+\bibitem{Rogerhu} Rogerhu12, \emph{openai-math-extensions},
+\texttt{papers/172-euclidean-ramsey/algebraic\_spherical\_configurations.tex}, commit \texttt{f8a2bb2},
+2026-10-07, \url{https://github.com/Rogerhu12/openai-math-extensions}.
+\bibitem{Eliott} eliottcassidy2000, \emph{math}, GitHub repository, \url{https://github.com/eliottcassidy2000/math},
+audit note \texttt{04-computation/experiments/oai2\_20261006\_audits/audit\_A.md}, \S2 (theorem
+THM-4559, conditional on \cite{OAI172}), commit \texttt{9cbd9ad}, 2026-10-07.
+\bibitem{EGMRSS} P.~Erd\H{o}s, R.~L.~Graham, P.~Montgomery, B.~L.~Rothschild, J.~Spencer, E.~G.~Straus,
+\emph{Euclidean Ramsey theorems I}, J. Combin. Theory Ser. A \textbf{14} (1973), no.~3, 341--363.
+doi:10.1016/0097-3165(73)90011-3.
+\bibitem{Graham94} R.~L.~Graham, \emph{Recent trends in Euclidean Ramsey theory}, Discrete Math. \textbf{136}
+(1994), no.~1--3, 119--127. doi:10.1016/0012-365X(94)00110-5.
+\bibitem{FR86} P.~Frankl, V.~R\"odl, \emph{All triangles are Ramsey}, Trans. Amer. Math. Soc.
+\textbf{297} (1986), no.~2, 777--779. doi:10.1090/S0002-9947-1986-0854099-6.
+\bibitem{FR90} P.~Frankl, V.~R\"odl, \emph{A partition property of simplices in Euclidean space}, J. Amer.
+Math. Soc. \textbf{3} (1990), no.~1, 1--7. doi:10.1090/S0894-0347-1990-1020148-2.
+\bibitem{Kriz91} I.~\Kriz, \emph{Permutation groups in Euclidean Ramsey theory}, Proc. Amer. Math. Soc.
+\textbf{112} (1991), no.~3, 899--907. doi:10.1090/S0002-9939-1991-1065087-9.
+\bibitem{Kriz92} I.~\Kriz, \emph{All trapezoids are Ramsey}, Discrete Math. \textbf{108} (1992), 59--62.
+doi:10.1016/0012-365X(92)90660-8.
+\bibitem{Cantwell} K.~Cantwell, \emph{All regular polytopes are Ramsey}, J. Combin. Theory Ser. A \textbf{114}
+(2007), no.~3, 555--562. doi:10.1016/j.jcta.2006.08.001.
+\bibitem{LRW12} I.~Leader, P.~A.~Russell, M.~Walters, \emph{Transitive sets in Euclidean Ramsey theory},
+J. Combin. Theory Ser. A \textbf{119} (2012), no.~2, 382--396. doi:10.1016/j.jcta.2011.09.005.
+\bibitem{LRW11} I.~Leader, P.~A.~Russell, M.~Walters, \emph{Transitive sets and cyclic quadrilaterals},
+J. Comb. \textbf{2} (2011), no.~3, 457--462. doi:10.4310/JOC.2011.v2.n3.a6. arXiv:1012.5468.
+\bibitem{GibbonsLuo} J.~C.~Gibbons, Y.~Luo, \emph{Colorings of the $n$-sphere and inversive geometry},
+arXiv:1307.5351 (2013).
+\bibitem{Ratcliffe} J.~G.~Ratcliffe, \emph{Foundations of Hyperbolic Manifolds}, 3rd ed., Graduate Texts in
+Mathematics \textbf{149}, Springer, Cham, 2019. doi:10.1007/978-3-030-31597-9.
+\bibitem{Beardon} A.~F.~Beardon, \emph{The Geometry of Discrete Groups}, Graduate Texts in Mathematics
+\textbf{91}, Springer, New York, 1983. doi:10.1007/978-1-4612-1146-4.
+\bibitem{CartanDieudonne} E.~Artin, \emph{Geometric Algebra}, Interscience, New York, 1957, Chapter~III, Theorem~3.20
+(p.~129), the Cartan--Dieudonn\'e theorem: every isometry of a non-singular $n$-dimensional quadratic
+space is a product of at most $n$ reflections. For the Euclidean case see also J.~Gallier,
+\emph{Geometric Methods and Applications}, 2nd ed., Springer, 2011, Theorem~8.1.
+\bibitem{Wilker} J.~B.~Wilker, \emph{The quaternion formalism for M\"obius groups in four or fewer
+dimensions}, Linear Algebra Appl. \textbf{190} (1993), 99--136. doi:10.1016/0024-3795(93)90222-A.
+\bibitem{Vahlen} K.~Th.~Vahlen, \emph{Ueber Bewegungen und complexe Zahlen}, Math. Ann. \textbf{55} (1902),
+no.~4, 585--593. doi:10.1007/BF01450354. (Context only: our normal form does not use the Vahlen
+characterization.)
+\bibitem{Ahlfors85} L.~V.~Ahlfors, \emph{M\"obius transformations and Clifford numbers}, in \emph{Differential
+Geometry and Complex Analysis} (I.~Chavel, H.~M.~Farkas, eds.), Springer, Berlin, 1985, 65--73.
+doi:10.1007/978-3-642-69828-6\_5. (Context only.)
+\bibitem{Waldschmidt} M.~Waldschmidt, \emph{Open Diophantine problems}, Mosc. Math. J. \textbf{4}
+(2004), no.~1, 245--305; doi:10.17323/1609-4514-2004-4-1-245-305; arXiv:math/0312440.
+\bibitem{Baker} A.~Baker, \emph{Transcendental Number Theory}, Cambridge University Press, 1975,
+Chapter~2 (the Gelfond--Schneider theorem).
+\bibitem{Falconer} K.~J.~Falconer, \emph{The realization of distances in measurable subsets covering $\R^n$},
+J. Combin. Theory Ser. A \textbf{31} (1981), no.~2, 184--189. doi:10.1016/0097-3165(81)90014-5.
+\bibitem{ShelahSoifer} S.~Shelah, A.~Soifer, \emph{Axiom of choice and chromatic number of the plane}, J. Combin.
+Theory Ser. A \textbf{103} (2003), no.~2, 387--391. doi:10.1016/S0097-3165(03)00102-X.
+\bibitem{Payne} M.~S.~Payne, \emph{Unit distance graphs with ambiguous chromatic number}, Electron. J. Combin.
+\textbf{16} (2009), no.~1, Note~31. doi:10.37236/269.
+\bibitem{Bourgain} J.~Bourgain, \emph{A Szemer\'edi type theorem for sets of positive density in $\R^k$}, Israel
+J. Math. \textbf{54} (1986), no.~3, 307--316. doi:10.1007/BF02764959.
+\bibitem{CastroSilva} D.~Castro-Silva, F.~M.~de Oliveira Filho, L.~Slot, F.~Vallentin, \emph{A recursive Lov\'asz
+theta number for simplex-avoiding sets}, Proc. Amer. Math. Soc. \textbf{150} (2022), no.~8,
+3307--3322. doi:10.1090/proc/15940. arXiv:2106.09360.
+\bibitem{GuruswamiLi} V.~Guruswami, S.~Li, \emph{Density Frankl--R\"odl on the sphere}, arXiv:2505.09839 (2025).
+\bibitem{Sun} W.~Sun, \emph{Spherical higher order Fourier analysis over finite fields IV: an application to the
+Geometric Ramsey Conjecture}, arXiv:2312.06649 (2023).
+\bibitem{Zapletal} J.~Zapletal, \emph{Coloring equilateral triangles}, arXiv:2503.18295 (2025).
+\bibitem{Behague} N.~Behague, \emph{Nearly all known Euclidean Ramsey sets are subsoluble},
+arXiv:2510.15677 (2025).
+\bibitem{Moore} K.~Moore, \emph{A pyramid with a Ramsey base is Ramsey}, arXiv:2608.09649 (2026).
+\bibitem{Mirabi} M.~Mirabi, \emph{One-point extensions of Euclidean Ramsey sets}, arXiv:2608.11736 (2026).
+\bibitem{DFPP} G.~Dam\'asdi, N.~Frankl, J.~Pach, D.~P\'alv\"olgyi, \emph{Monochromatic configurations
+on a circle}, arXiv:2504.10687 (2025).
+\bibitem{BukhKarasev} B.~Bukh, R.~Karasev, \emph{Suborbits in Knaster's problem}, Bull. Lond. Math. Soc.
+\textbf{46} (2014), no.~2, 269--278; arXiv:1212.5351.
+\bibitem{DolnikovKarasev} V.~L.~Dol'nikov, R.~N.~Karasev, \emph{Dvoretzky type theorems for multivariate
+polynomials and sections of convex bodies}, Geom. Funct. Anal. \textbf{21} (2011), no.~2, 301--318.
+doi:10.1007/s00039-011-0109-8. arXiv:1009.0392.
+\bibitem{Gromov} M.~Gromov, \emph{Number of questions}, preprint, 26 April 2014, \S1.12;
+\url{https://www.ihes.fr/~gromov/recent/}.
+\bibitem{vdDries} L.~van den Dries, \emph{Tame Topology and O-minimal Structures}, London Math. Soc.
+Lecture Note Ser. \textbf{248}, Cambridge University Press, 1998.
+\bibitem{Comparator} leanprover/comparator: stock Comparator built at tag v4.34.0 and rebuilt with Lean
+v4.34.1, run under Landlock (ropes AV1--AV5); and \texttt{lake comparator} as bundled in
+\texttt{leanprover/lean4:v4.35.0-rc2}, with the NanoDa and con-ron kernels (the package \cite{MR}).
+\bibitem{vibemathed} VibeMathed, a catalogue of AI-produced mathematical results, \url{https://vibemathed.com/}
+(data at \url{https://github.com/mrconter1/vibemathed}).
+\end{thebibliography}
+
+\end{document}

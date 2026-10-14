@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+/probes/out/
+/certificates/out/
+/ropes/*/.lake/

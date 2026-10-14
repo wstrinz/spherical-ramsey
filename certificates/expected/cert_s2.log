@@ -1,0 +1,17 @@
+[0] coordinates: |a(z)| = 1: True | p = q/q0 = (1, a): True | q = C b: True | e = K b: True
+    q(z)^T S q(w) = -2|z-w|^2: True | q^T (C^-T M C^-1) q' = b^T M b' for symbolic M: True
+[1] any 6 points on S^2, split 3+3; H = g123 * conj(g456).  terms: P_r 93312, P_i 93312
+    point 1: (1+|x|^2)(1+|y|^2) p(x)^T P_r p(y) = 0: True;  same for P_i: True
+    point 2: (1+|x|^2)(1+|y|^2) p(x)^T P_r p(y) = 0: True;  same for P_i: True
+    point 3: (1+|x|^2)(1+|y|^2) p(x)^T P_r p(y) = 0: True;  same for P_i: True
+    point 4: (1+|x|^2)(1+|y|^2) p(x)^T P_r p(y) = 0: True;  same for P_i: True
+    point 5: (1+|x|^2)(1+|y|^2) p(x)^T P_r p(y) = 0: True;  same for P_i: True
+    point 6: (1+|x|^2)(1+|y|^2) p(x)^T P_r p(y) = 0: True;  same for P_i: True
+    m(P_r) = c_r S and m(P_i) = c_i S: True;  c_r + i c_i = -(1/2) W123 conj(W456) (W = Vandermonde of the triple's complex coordinates): True
+    lambda = conj(W123) W456 (x) 1:  m(lam_r P_r - lam_i P_i) = -(1/2)|W123|^2|W456|^2 S: True
+[2] great-circle control (all v = 0): the (1, a1, a3) block of P_i vanishes: True;  the (1, a1, a3) block of P_r equals L^T P_circle L from cert_mobius.py's g123*g456: True
+[3] PRIMARY: two Mobius images nu_1(A1) u nu_2(A2), nu_k(t) = (t+b_k)/(c_k t+d_k) generic (6 real params per map per factor, symbols for th (x) 1 and 1 (x) th in R (x) R):
+    generic seed point t (symbolic, same in both factors), groups 1 and 2, P_r and P_i: (q~ . P . q~') = 0 identically in t: True
+    explicit 6+6 = 12-point instance (rational seeds), 24 evaluation identities: True;  m(P_r), m(P_i) = c S: True;  c_r + i c_i = -(1/2) det N1 conj(det N2): True
+    3-group control: H = Re/Im(g1 conj g2) is nonzero at all 4 points of a third group nu_3(A3): True;  a triple product g1 g2 conj(g3) has a nonzero z^2-coefficient (not bilinear in p): True
+ALL CHECKS PASS: True  (sympy)

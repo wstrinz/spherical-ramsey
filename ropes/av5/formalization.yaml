@@ -1,0 +1,110 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "AV5: algebraic concyclic points plus at most three arbitrary points are Euclidean Ramsey"
+  description: >-
+    Claim B(b): finitely many distinct points on a
+    circle in EuclideanSpace R (Fin 2), all of whose coordinates are algebraic
+    over Q except for the points with indices in a set T of at most three, form
+    a Euclidean Ramsey configuration. The centre and radius are not assumed
+    algebraic. For at most six points this is the six-concyclic-points
+    theorem (AV2); otherwise three algebraic points make the circle algebraic, a
+    rational rotation and a scaling normalize it, and an explicit certificate
+    (separability idempotent times a graph form through the three exceptional
+    points) proves OpenAI's field criterion, after which OpenAI's sufficiency
+    theorem (openai/math fd4aeeb2, result 172, vendored unmodified) concludes.
+    Stated in OpenAI's challenge vocabulary (verbatim) and again in Mathlib
+    vocabulary. The checked theorems depend on propext, Classical.choice and
+    Quot.sound only. The only sorries are the placeholders in the Comparator
+    challenges and the deliberate sorry in the control AV5Control/SorryMain.
+  authors:
+    - "Will Strinz"
+  license: "MIT for this project's files (the repository's LICENSE); Apache-2.0 for the vendored OpenAI files (vendor/OAI-LICENSE). See NOTICE."
+
+sources:
+  - title: "A classification of finite Euclidean Ramsey configurations (result 172)"
+    authors:
+      - "OpenAI"
+    id: "https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb"
+    type: "repository"
+    location: "lean/OAI/Combinatorics/EuclideanRamsey (proof, vendored unmodified); lean/ComparatorChallenges/EuclideanRamsey.lean and EuclideanRamseySpherical.lean (vocabulary, verbatim)"
+    relationship: "builds-on"
+    license: "Apache-2.0"
+    author_endorsement: "not-contacted"
+
+related_formalizations:
+  - id: "https://github.com/leanprover-community/mathlib4/blob/d13f23b723b8a846827a245b89c10fc7d3f11612/Mathlib/Topology/MetricSpace/Congruence.lean"
+    relationship: "builds-on"
+    note: "Mathlib's Congruent, used in the Mathlib-vocabulary statement."
+
+classification:
+  arxiv: ["math.CO", "math.MG"]
+  msc2020: ["05D10", "52C10"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["claude-opus-5-5"]
+      framework: "Claude Code"
+      tool_setup: "AI agents (Claude Opus 5.5, in Claude Code), directed by the author, wrote Rope/SixPoint*.lean (as in rope AV2) and Rope/AlgPlusThree*.lean on top of OpenAI's vendored proof; assembled this package, wrote Rope/MathlibStatement.lean, the Comparator challenges and controls, reused rope AV1's bridge (Rope/MathlibBridge.lean), and ran the checks in WSL Ubuntu with Landlock and on a fresh GitHub runner."
+  notes: "Agent-produced. No human has reviewed the Lean or this file."
+
+status:
+  scope: "Claim B(b) and its Mathlib-vocabulary restatement; no hypotheses beyond each theorem's own."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - declaration: "OAI.EuclideanRamsey.ramsey_alg_plus_three"
+      file: "Rope/AlgPlusThree.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "SphericalRamsey.ramsey_alg_plus_three_mathlib"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/mathlib.json"
+    - declaration: "SphericalRamsey.ramsey_alg_plus_three_nonvacuous"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/mathlib.json"
+    - declaration: "SphericalRamsey.oai_congruent_iff"
+      file: "Rope/MathlibBridge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/equiv.json"
+    - declaration: "SphericalRamsey.oai_ramsey_iff"
+      file: "Rope/MathlibBridge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/equiv.json"
+    - declaration: "OAI.EuclideanRamsey.classification"
+      file: "OAI/Combinatorics/EuclideanRamsey/Main.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/oai-classification.json"
+      note: "OpenAI's theorem and OpenAI's challenge, byte for byte; checked here, not ours."
+    - declaration: "OAI.EuclideanRamsey.ramsey_cospherical"
+      file: "OAI/Combinatorics/EuclideanRamsey/Spherical.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/oai-spherical.json"
+      note: "OpenAI's theorem and OpenAI's challenge, byte for byte; shows Ramsey is not vacuous."
+
+fidelity:
+  divergences: >-
+    No formal-conjectures statement exists, so the vocabulary is OpenAI's public
+    Comparator challenge (Space, Congruent, Ramsey), copied verbatim and checked
+    by cmp in REPRODUCE; the statement adds no definitions. OpenAI's Congruent
+    and Mathlib's are proved equivalent. "Algebraic coordinates" is
+    frame-dependent; Ramsey is congruence-invariant. The theorem is stated for
+    the plane. See FIDELITY.md.
+
+review:
+  status: "agent-reviewed"
+  notes: "Self-assessed by the assembling agent (FIDELITY.md), then reviewed by a non-builder AI agent (Claude Opus 5.5, read-only): faithful; its fixes to FIDELITY.md are applied. Fresh-agent reproduction done: reproduced (Claude Sonnet 5.5, exit 0, all 10 as expected), so the rope is Lean-checked (fresh-runner Comparator, non-builder fidelity review, fresh-agent reproduction). No human review."
+
+acknowledgements: "OpenAI (the classification and its Lean proof); Mathlib; leanprover/comparator."

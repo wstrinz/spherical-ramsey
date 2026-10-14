@@ -1,0 +1,12 @@
+{
+ "challenge_module": "AV3Challenge.OAIClassification",
+ "solution_module": "OAI.Combinatorics.EuclideanRamsey.Main",
+ "theorem_names": [
+  "OAI.EuclideanRamsey.classification"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

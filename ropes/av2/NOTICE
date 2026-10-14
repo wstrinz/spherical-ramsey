@@ -1,0 +1,26 @@
+Rope AV2 contains, unmodified, the Lean sources of "A classification of finite Euclidean
+Ramsey configurations" (result 172 of the OpenAI math release):
+
+  https://github.com/openai/math, commit fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb
+  lean/OAI/Combinatorics/EuclideanRamsey/*.lean  ->  OAI/Combinatorics/EuclideanRamsey/*.lean
+  lean/ComparatorChallenges/EuclideanRamseyCircle.lean
+                                                  ->  vendor/OAI-ComparatorChallenge-EuclideanRamseyCircle.lean
+                                                      and AV2Challenge/OAICircle.lean
+  lean/ComparatorChallenges/EuclideanRamseySpherical.lean
+                                                  ->  vendor/OAI-ComparatorChallenge-EuclideanRamseySpherical.lean
+                                                      and AV2Challenge/OAISpherical.lean
+  LICENSE                                         ->  vendor/OAI-LICENSE
+
+These files are licensed under the Apache License, Version 2.0 (vendor/OAI-LICENSE). They are
+byte-identical to the upstream blobs at that commit (MANIFEST; `AV2_UPSTREAM=1 bash REPRODUCE`
+re-checks this against GitHub). AV2Challenge/Main.lean, AV2Challenge/Equiv.lean and the
+AV2Control/*Main.lean files repeat the upstream challenge's definitions of Space, Congruent and
+Ramsey verbatim.
+
+Modified file: Rope/SixPointCircle.lean contains `extend_to_six`, an adaptation of OpenAI's
+`CircleConsequence.extend_to_five` (lean/OAI/Combinatorics/EuclideanRamsey/CircleExtension.lean,
+Apache License 2.0, Copyright OpenAI). The modification replaces the target size 5 by 6 and changes
+nothing else (REPRODUCE's preflight checks this with a diff). The file's header says so.
+
+Everything else in this directory was written for this project and is under the MIT License
+(the repository's LICENSE; see also the repository's NOTICE).

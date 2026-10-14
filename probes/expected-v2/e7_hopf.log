@@ -1,0 +1,10 @@
+S^2: Mobius-algebraic groups (6, 6) (n=12): 2-jet PASS  (3s)
+S^3: Mobius-algebraic groups (8, 8) (n=16): 2-jet PASS  (53s)
+S^2: Mobius-algebraic groups (4, 4, 4) (n=12): 2-jet FAIL  (31s)
+S^3: Mobius-algebraic groups (6, 6, 6) (n=18): 2-jet FAIL  (389s)
+S^4: Mobius-algebraic groups (11, 11) (n=22): 2-jet PASS  (341s)
+# retry tally: jet2 PASS=3 FAIL=2 NO_VERDICT=0 MIXED=0
+
+real	13m37.785s
+user	0m0.326s
+sys	0m0.872s

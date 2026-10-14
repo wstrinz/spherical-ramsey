@@ -1,0 +1,14 @@
+[0] S^4 coordinates: |a(x)| = 1: True | q = C b: True | q^T S q' = -2|x-y|^2: True | q^T (C^-T M C^-1) q' = b^T M b' (symbolic M): True
+[I] universal: Re(h1 conj h2) = b(x)^T M b(y) with M bilinear in the 32 coefficient symbols, no x,y: True  (f has 676 terms)
+[III] at C=B=0, D=kappa, A=-kappa (both forms): P = C^-T M C^-1 = -(kappa1 kappa2 / 2) S: True
+[II] three-point quaternionic graph form (generic x1,x2,x3 / y1,y2,y3 in H, 24 symbols; term counts [7760, 17216, 19376, 42944]):
+     h(x_a, y_a) = 0 for a = 1, 2, 3: [True, True, True];  m(C) = m(B) = 0, m(D) = -m(A) = |x3-x1|^2 |x2-x1|^2 |x2-x3|^2: True
+[II'] one generic quaternionic Mobius map nu (12 params per factor), generic seed point t in H: h(nu^(1) t, nu^(2) t) = 0 identically in t: [True];
+      m(C) = m(B) = 0, m(D) = -m(A) = |delta - gamma beta|^2: True
+[V] general leading coefficient alpha: n'(yCx + yD + Ax + B) = alpha' [n n' h0(alpha^-1 x, alpha'^-1 y)]: True
+[IV] end-to-end at exact rationals, S^4: (1,a_i)^T P (1,a_i') = 0 for all 6 (left != right): True;  on the diagonal P = c S_5, c != 0: True
+[IV] end-to-end at exact rationals, S^3: (1,a_i)^T P (1,a_i') = 0 for all 6 (left != right): True;  on the diagonal P = c S_4, c != 0: True
+[IV] end-to-end at exact rationals, S^2: (1,a_i)^T P (1,a_i') = 0 for all 6 (left != right): True;  on the diagonal P = c S_3, c != 0: True
+[IV] end-to-end at exact rationals, S^1: (1,a_i)^T P (1,a_i') = 0 for all 6 (left != right): True;  on the diagonal P = c S_2, c != 0: True
+[IV'] end-to-end at exact rationals, S^4, two Mobius maps x 5 rational seeds (left != right): all 10 evaluations 0: True;  diagonal P = c S_5, c != 0: True
+ALL CHECKS PASS: True  (sympy)

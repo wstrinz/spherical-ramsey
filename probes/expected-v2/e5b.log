@@ -1,0 +1,8 @@
+Palvolgyi heptagon, identity re-projection (sanity)                      expect FAIL  | 2-jet FAIL  | curve FAIL
+Palvolgyi heptagon under transcendental Mobius (3 new params)            expect FAIL  | 2-jet FAIL  | curve FAIL
+Palvolgyi heptagon under RATIONAL Mobius s->(2s+1)/(s+3)                 expect FAIL  | 2-jet FAIL  | curve FAIL
+# retry tally: curve_probe PASS=0 FAIL=3 NO_VERDICT=0 MIXED=0; jet2 PASS=0 FAIL=3 NO_VERDICT=0 MIXED=0
+
+real	0m3.657s
+user	0m0.061s
+sys	0m0.185s

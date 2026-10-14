@@ -1,0 +1,12 @@
+{
+ "challenge_module": "AV3Challenge.Mathlib",
+ "solution_module": "AV3Control.WeakerMathlib",
+ "theorem_names": [
+  "SphericalRamsey.radian_configuration_mathlib"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

@@ -1,0 +1,12 @@
+{
+ "challenge_module": "AV4Challenge.Main",
+ "solution_module": "AV4Control.AxiomMain",
+ "theorem_names": [
+  "OAI.EuclideanRamsey.Mobius.ramsey_iff_ramsey_mobius_full"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

@@ -1,0 +1,14 @@
+{
+ "challenge_module": "AV3Challenge.Mathlib",
+ "solution_module": "Rope",
+ "theorem_names": [
+  "SphericalRamsey.radian_configuration_mathlib",
+  "SphericalRamsey.radian_ramsey_iff_mathlib",
+  "SphericalRamsey.radian_ramsey_iff_tan_mathlib"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

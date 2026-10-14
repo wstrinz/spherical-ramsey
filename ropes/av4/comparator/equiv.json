@@ -1,0 +1,13 @@
+{
+ "challenge_module": "AV4Challenge.Equiv",
+ "solution_module": "Rope",
+ "theorem_names": [
+  "SphericalRamsey.oai_congruent_iff",
+  "SphericalRamsey.oai_ramsey_iff"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

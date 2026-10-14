@@ -1,0 +1,13 @@
+{
+ "challenge_module": "AV4Challenge.Mathlib",
+ "solution_module": "Rope",
+ "theorem_names": [
+  "SphericalRamsey.ramsey_iff_ramsey_mobius_mathlib",
+  "SphericalRamsey.ramsey_iff_ramsey_mobius_nonvacuous"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

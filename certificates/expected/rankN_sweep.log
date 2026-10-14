@@ -1,0 +1,6 @@
+  mirror | n=7 | N full rank | curve PASS: 40
+  random | n=6 | N full rank | curve PASS: 28
+  random | n=7 | N full rank | curve PASS: 57
+  random | n=8 | N full rank | curve PASS: 60
+C-24 violations (full-rank N with a non-PASS full criterion): 0
+# retry tally: curve_probe PASS=185 FAIL=0 NO_VERDICT=0 MIXED=0

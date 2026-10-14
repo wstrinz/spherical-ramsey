@@ -1,0 +1,9 @@
+S^4, 4 free + 14 rational (n=18): PASS (5s)
+S^4, 4 free + 15 rational (n=19): PASS (7s)
+S^4, 4 free + 16 rational (n=20): PASS (7s)
+S^4, 4 free + 17 rational (n=21): FAIL (9s)
+# retry tally: jet2 PASS=3 FAIL=1 NO_VERDICT=0 MIXED=0
+
+real	0m29.428s
+user	0m0.061s
+sys	0m0.184s

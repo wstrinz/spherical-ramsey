@@ -1,0 +1,13 @@
+{
+ "challenge_module": "AV2Challenge.Mathlib",
+ "solution_module": "Rope",
+ "theorem_names": [
+  "SphericalRamsey.circle_ramsey_of_le_six_mathlib",
+  "SphericalRamsey.circle_ramsey_of_le_six_nonvacuous"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

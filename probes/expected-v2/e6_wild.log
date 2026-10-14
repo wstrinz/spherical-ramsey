@@ -1,0 +1,29 @@
+== (A) arithmetic progressions of angles (one transcendental parameter)
+angles 0, th, ..., 5th                                                   expect ?     | 2-jet PASS  | curve PASS
+angles 0, th, ..., 6th                                                   expect ?     | 2-jet PASS  | curve PASS
+angles 0, th, ..., 7th                                                   expect ?     | 2-jet PASS  | curve PASS
+angles 0, th, ..., 8th                                                   expect ?     | 2-jet FAIL  | curve FAIL
+angles 0, th, ..., 9th                                                   expect ?     | 2-jet FAIL  | curve FAIL
+angles 0, th, ..., 10th                                                  expect ?     | 2-jet FAIL  | curve FAIL
+angles 0, th, ..., 11th                                                  expect ?     | 2-jet FAIL  | curve FAIL
+angles 0, th, ..., 12th                                                  expect ?     | 2-jet FAIL  | curve FAIL
+== (B) Poncelet chains, circle D (3 transcendental params: a, t0, t1)
+Poncelet chain, 6 vertices                                               expect ?     | 2-jet PASS  | curve PASS
+Poncelet chain, 7 vertices                                               expect ?     | 2-jet FAIL  | curve PASS
+Poncelet chain, 8 vertices                                               expect ?     | 2-jet FAIL  | curve PASS
+Poncelet chain, 9 vertices                                               expect ?     | 2-jet FAIL  | curve FAIL
+Poncelet chain, 10 vertices                                              expect ?     | 2-jet FAIL  | curve FAIL
+Poncelet chain, 11 vertices                                              expect ?     | 2-jet FAIL  | curve FAIL
+Poncelet chain, 12 vertices                                              expect ?     | 2-jet FAIL  | curve FAIL
+Poncelet chain, 13 vertices                                              expect ?     | 2-jet FAIL  | curve FAIL
+Poncelet chain, 14 vertices                                              expect ?     | 2-jet FAIL  | curve FAIL
+== control: random 3-parameter families of the same sizes
+random 3-param family, 7 pts                                             expect FAIL? | 2-jet FAIL  | curve PASS
+random 3-param family, 9 pts                                             expect FAIL? | 2-jet FAIL  | curve FAIL
+random 3-param family, 11 pts                                            expect FAIL? | 2-jet FAIL  | curve FAIL
+random 3-param family, 13 pts                                            expect FAIL? | 2-jet FAIL  | curve FAIL
+# retry tally: curve_probe PASS=7 FAIL=14 NO_VERDICT=0 MIXED=0; jet2 PASS=4 FAIL=17 NO_VERDICT=0 MIXED=0
+
+real	0m10.739s
+user	0m0.062s
+sys	0m0.201s

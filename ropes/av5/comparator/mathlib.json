@@ -1,0 +1,13 @@
+{
+ "challenge_module": "AV5Challenge.Mathlib",
+ "solution_module": "Rope",
+ "theorem_names": [
+  "SphericalRamsey.ramsey_alg_plus_three_mathlib",
+  "SphericalRamsey.ramsey_alg_plus_three_nonvacuous"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

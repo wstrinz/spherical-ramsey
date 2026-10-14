@@ -1,0 +1,41 @@
+name: note
+
+# Builds note/spherical-ramsey.tex with TeX Live from the Ubuntu archive on a fresh runner (three
+# pdflatex passes via latexmk) and uploads the PDF. Fails on any LaTeX error or undefined reference.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "note/**"
+      - ".github/workflows/note.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  note:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install TeX Live
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends latexmk texlive-latex-base \
+            texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended \
+            texlive-fonts-extra texlive-science
+      - name: Build
+        working-directory: note
+        run: latexmk -pdf -interaction=nonstopmode -halt-on-error spherical-ramsey.tex
+      - name: Check for undefined references and citations
+        working-directory: note
+        run: |
+          if grep -E "undefined|Citation .* undefined|Reference .* undefined" spherical-ramsey.log; then
+            echo "undefined references or citations"; exit 1
+          fi
+          grep -c "Overfull" spherical-ramsey.log || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: spherical-ramsey-note
+          path: note/spherical-ramsey.pdf

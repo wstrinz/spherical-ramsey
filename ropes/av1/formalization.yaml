@@ -1,0 +1,134 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "AV1: finite spherical configurations with algebraic coordinates are Euclidean Ramsey"
+  description: >-
+    Theorem A: a finite configuration of at least two
+    distinct points of EuclideanSpace R (Fin d), d >= 1, lying on a sphere and
+    with every coordinate algebraic over Q, is Euclidean Ramsey (for every
+    r >= 2 there is D >= 1 such that every r-colouring of EuclideanSpace R
+    (Fin D) has a monochromatic congruent copy). It builds on OpenAI's complete
+    Lean proof of the classification of finite Euclidean Ramsey configurations
+    (openai/math fd4aeeb2, result 172), vendored unmodified: the new step shows
+    that algebraic spherical configurations satisfy OpenAI's field criterion
+    (a separability idempotent of F (x)_Q F for the number field F), and OpenAI's
+    fieldCriterion_ramsey concludes. Stated in OpenAI's challenge vocabulary
+    (verbatim) and again in Mathlib vocabulary (Metric.sphere, Mathlib's
+    Congruent), with the equivalence of the two Congruent notions and of the two
+    Ramsey conclusions proved in the rope. The checked theorems depend on
+    propext, Classical.choice and Quot.sound only. The only sorries are the
+    placeholders in the Comparator challenges and the deliberate sorry in the
+    control AV1Control/SorryMain, which Comparator must refuse.
+  authors:
+    - "Will Strinz"
+  license: "MIT for this project's files (the repository's LICENSE); Apache-2.0 for the vendored OpenAI files (vendor/OAI-LICENSE). See NOTICE."
+
+sources:
+  - title: "A classification of finite Euclidean Ramsey configurations (result 172)"
+    authors:
+      - "OpenAI"
+    id: "https://github.com/openai/math/tree/fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb"
+    type: "repository"
+    location: "lean/OAI/Combinatorics/EuclideanRamsey (proof, vendored unmodified); lean/ComparatorChallenges/EuclideanRamsey.lean and EuclideanRamseySpherical.lean (vocabulary, verbatim)"
+    relationship: "builds-on"
+    license: "Apache-2.0"
+    author_endorsement: "not-contacted"
+  - title: "six-concyclic-lean (algebraic spherical sets satisfy the criterion; Ramsey conclusions conditional on the sufficiency hypothesis hsuff)"
+    authors:
+      - "JD-Jones-ASES"
+    id: "https://github.com/JD-Jones-ASES/six-concyclic-lean"
+    type: "repository"
+    location: "root commit 0703d7d (2026-10-07), Lean v4.35.0-rc2"
+    relationship: "background"
+    note: "Prior statement of Theorem A (criterion level, unconditional; Ramsey level, conditional on hsuff). Not consulted; no code shared. AV1 discharges hsuff by building on OpenAI's proof."
+    license: "MIT"
+    author_endorsement: "not-contacted"
+  - title: "openai-math-extensions (Theorem A in TeX, same idempotent proof)"
+    authors:
+      - "Rogerhu12"
+    id: "https://github.com/Rogerhu12/openai-math-extensions"
+    type: "repository"
+    location: "2026-10-07/08"
+    relationship: "background"
+    note: "Prior statement of Theorem A. Not consulted."
+    author_endorsement: "not-contacted"
+
+related_formalizations:
+  - id: "https://github.com/leanprover-community/mathlib4/blob/d13f23b723b8a846827a245b89c10fc7d3f11612/Mathlib/Topology/MetricSpace/Congruence.lean"
+    relationship: "builds-on"
+    note: "Mathlib's Congruent, used in the Mathlib-vocabulary statement."
+
+classification:
+  arxiv: ["math.CO", "math.MG"]
+  msc2020: ["05D10", "52C10"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["claude-opus-5-5"]
+      framework: "Claude Code"
+      tool_setup: "AI agents (Claude Opus 5.5, in Claude Code), directed by the author, wrote Rope/AlgebraicRamsey.lean on top of OpenAI's vendored proof, assembled this package (Rope/MathlibStatement.lean, the Comparator challenges and controls), and ran the checks in WSL Ubuntu with Landlock and on a fresh GitHub runner."
+  notes: "Agent-produced. FIDELITY.md had a non-builder AI review (fixes applied in v1.1) and a fresh AI agent reproduced the rope from its README. No human expert has reviewed the proofs or this file."
+
+status:
+  scope: "Theorem A and its Mathlib-vocabulary restatement; no hypotheses beyond each theorem's own."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - declaration: "OAI.EuclideanRamsey.ramsey_of_algebraic"
+      file: "Rope/AlgebraicRamsey.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/main.json"
+    - declaration: "SphericalRamsey.ramsey_of_algebraic_mathlib"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/mathlib.json"
+    - declaration: "SphericalRamsey.ramsey_of_algebraic_nonvacuous"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/mathlib.json"
+    - declaration: "SphericalRamsey.oai_congruent_iff"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/equiv.json"
+    - declaration: "SphericalRamsey.oai_ramsey_iff"
+      file: "Rope/MathlibStatement.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/equiv.json"
+    - declaration: "OAI.EuclideanRamsey.classification"
+      file: "OAI/Combinatorics/EuclideanRamsey/Main.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/oai-classification.json"
+      note: "OpenAI's theorem and OpenAI's challenge, byte for byte; checked here, not ours."
+    - declaration: "OAI.EuclideanRamsey.ramsey_cospherical"
+      file: "OAI/Combinatorics/EuclideanRamsey/Spherical.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator/oai-spherical.json"
+      note: "OpenAI's theorem and OpenAI's challenge, byte for byte; shows Ramsey is not vacuous."
+
+fidelity:
+  divergences: >-
+    No formal-conjectures statement of Graham's spherical conjecture exists, so
+    the vocabulary is OpenAI's public Comparator challenge (Space, Congruent,
+    Ramsey), copied verbatim and checked by cmp in REPRODUCE. OpenAI's Congruent
+    compares dist with arguments b-then-a; Mathlib's compares edist a-then-b; the
+    two are proved equivalent (SphericalRamsey.oai_congruent_iff), as are OpenAI's Ramsey
+    and its Mathlib-vocabulary unfolding (SphericalRamsey.oai_ramsey_iff). The theorem
+    has no affine-span hypothesis (OpenAI's classification has one). "Algebraic
+    coordinates" is frame-dependent; Ramsey is congruence-invariant. See
+    FIDELITY.md.
+
+review:
+  status: "agent-reviewed"
+  notes: "Self-assessed by the assembling agent (FIDELITY.md), then reviewed by a non-builder AI agent (Claude Opus 5.5): faithful; its fixes to FIDELITY.md are applied in v1.1. No human review."
+
+acknowledgements: "OpenAI (the classification and its Lean proof); Mathlib; leanprover/comparator. Prior statements of Theorem A: JD-Jones-ASES/six-concyclic-lean, Rogerhu12/openai-math-extensions."

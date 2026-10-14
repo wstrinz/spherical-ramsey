@@ -1,0 +1,18 @@
+== (1) FALSIFIER: Palvolgyi heptagon (known non-Ramsey).  Sketch predicts rank N < 7.
+   stereographic parameters: ['0', '1/sqrt(2*t - 1)', '-1/sqrt(2*t - 1)', 'sqrt(3)/sqrt(2*t - 3)', '-sqrt(3)/sqrt(2*t - 3)', 'sqrt(2)/sqrt(t - 2)', '-sqrt(2)/sqrt(t - 2)']
+   r = 23/6: singular values ['3.441e+00', '2.674e+00', '1.327e+00', '4.439e-01', '2.047e-01', '2.130e-02', '6.640e-53']  (numerical rank 6)
+   r = 5: singular values ['2.861e+00', '1.784e+00', '7.649e-01', '2.412e-01', '9.267e-02', '4.967e-03', '2.267e-52']  (numerical rank 6)
+   r = 23/3: singular values ['2.698e+00', '1.204e+00', '3.691e-01', '9.939e-02', '2.880e-02', '6.456e-04', '1.040e-52']  (numerical rank 6)
+   r = 11: singular values ['2.666e+00', '9.410e-01', '2.250e-01', '5.045e-02', '1.170e-02', '1.374e-04', '1.301e-53']  (numerical rank 6)
+== (1b) EXACT (from the cold review): every heptagon point satisfies delta_i = -s_i (1 + s_i^2) / (2r),
+        so (1,0,0,0,-c,0,-c,0) and (0,1,0,0,0,-c,0,-c), c = -1/(2r), lie in ker N: rank N <= 6 for every r.
+   identity residuals: [0, 0, 0, 0, 0, 0, 0] => all zero: True
+   N k1 == 0: True ; N k2 == 0: True
+== (2) exact ranks at a rational point (full rank there => full rank over Q(t))
+   radian 7-gon                                       n = 7  exact rank N at t = 2/7, -5/11: [7, 7]
+   radian 8-gon (C-10)                                n = 8  exact rank N at t = 2/7, -5/11: [8, 8]
+   radian 9-gon (control: n = 9 > 8, sketch silent)   n = 9  exact rank N at t = 2/7, -5/11: [8, 8]
+   W7 (exact Ramsey cert exists)                      n = 7  exact rank N at t = 2/7, -5/11: [7, 7]
+   W8 (exact Ramsey cert exists)                      n = 8  exact rank N at t = 2/7, -5/11: [8, 8]
+   control: 4 rat + t, t+1, t+2, t+3 (two-group)      n = 8  exact rank N at t = 2/7, -5/11: [8, 8]
+   control: 3 rat + 4 'independent' (n/a: k = 4)

@@ -1,0 +1,4 @@
+[OBS-a] s = 1 + e1e2e3e4: s (1 - e1e2e3e4) = 0 with both factors nonzero: True;  s sbar = 2 + 2 e1234 is not a scalar: True
+[OBS-b] delta = 2 + e1e2e3 is invertible (delta^-1 = (2 - e1e2e3)/3): True;  1 * delta^-1 is not a paravector: True;  delta deltabar not scalar: True
+[OBS-c] normal form with w = 2 + e1e2e3 (invertible, not Lipschitz): w^ w* scalar, u ubar scalar, w sbar w* paravector = [False, False, False] (all False);  with w = product of 4 rational paravectors: [True, True, True] (all True)
+OBSTRUCTION-TO-NAIVE-ROUTE CHECKS PASS: True

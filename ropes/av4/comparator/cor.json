@@ -1,0 +1,18 @@
+{
+ "challenge_module": "AV4Challenge.Cor",
+ "solution_module": "Rope",
+ "theorem_names": [
+  "OAI.EuclideanRamsey.Mobius.exists_mobius_circ_mul",
+  "OAI.EuclideanRamsey.Mobius.exists_mobius_circ_add",
+  "OAI.EuclideanRamsey.Mobius.ramsey_mobius_of_algebraic",
+  "OAI.EuclideanRamsey.Mobius.ramsey_circ_mul",
+  "OAI.EuclideanRamsey.Mobius.ramsey_circ_add",
+  "OAI.EuclideanRamsey.Mobius.ramsey_circ_mul_rat",
+  "OAI.EuclideanRamsey.Mobius.ramsey_circ_add_rat"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}

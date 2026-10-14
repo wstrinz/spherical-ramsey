@@ -1,0 +1,19 @@
+S^2: rows m = #rational points, cols j = #independent generic points (2-jet)
+      j= 1  2  3  4  5  6  7
+m= 0    .  .  .  P  P  P  P
+m= 1    .  .  P  P  P  P  P
+m= 2    .  P  P  P  P  P  P
+m= 3    P  P  P  P  P  P  F
+m= 4    P  P  P  P  P  F  F
+m= 5    P  P  P  P  F  F  F
+m= 6    P  P  P  F  F  F  F
+m= 7    P  P  P  F  F  F  .
+m= 8    P  P  P  F  F  .  .
+m= 9    P  P  P  F  .  .  .
+m=10    P  P  P  .  .  .  .
+m=11    P  P  .  .  .  .  .
+# retry tally: jet2 PASS=47 FAIL=16 NO_VERDICT=0 MIXED=0
+
+real	0m28.106s
+user	0m0.092s
+sys	0m0.170s

@@ -1,0 +1,167 @@
+#!/usr/bin/env bash
+# Rope AV3: one command, from the rope directory, on Linux (Landlock kernel, non-root user; elan, git,
+# Go >= 1.24 and sha256sum on PATH):
+#   bash REPRODUCE
+# Preflight: tools present; every file matches MANIFEST; the challenges' definitions are OpenAI's
+# challenge text verbatim and the statement definitions are the solution's verbatim. Then it builds
+# pinned Comparator, lean4export and landrun for the rope's toolchain, fetches the Mathlib cache,
+# builds the rope (OpenAI's EuclideanRamsey sources, about 20 min to 2.5 h the first time, depending on machine load), prints the
+# axioms of the 11 checked theorems, and runs stock Comparator on the 5 challenges (OpenAI's own
+# two #172 challenges and the rope's 3; each must print "Your solution is okay") and the 5
+# controls (each must be refused with its expected reason). Exit 0 iff all of that behaves.
+# Tools go to $AV3_TOOLS (default ./.lake/av3-tools); logs go to ./.lake/av3-logs.
+# Optional: AV3_UPSTREAM=1 also re-fetches openai/math at the pinned commit and compares the
+# vendored OAI/ tree and challenge files with it byte for byte. AV3_SKIP_OAI_CHALLENGES=1 skips
+# Comparator on OpenAI's own two challenges (used only for a quicker local check; the final line
+# then reports them as skipped).
+set -u
+cd "$(dirname "$0")"
+step() { echo "[$(date -u +%H:%M:%S)] $*"; }
+die() { echo "REPRODUCE: $*" >&2; exit 2; }
+
+step "preflight: tools"
+command -v elan >/dev/null || die "elan not found on PATH (install: https://github.com/leanprover/elan)"
+command -v lake >/dev/null || die "lake not found on PATH (it comes with elan: add ~/.elan/bin to PATH)"
+command -v git >/dev/null || die "git not found on PATH"
+command -v go >/dev/null || die "Go not found on PATH (https://go.dev/dl/, version 1.24 or later; needed for landrun)"
+command -v sha256sum >/dev/null || die "sha256sum not found on PATH (coreutils)"
+[ "$(uname -s)" = Linux ] || die "Comparator's sandbox (landrun) needs Linux with Landlock"
+[ "$(id -u)" != 0 ] || die "run as a non-root user (Comparator's README)"
+if [ -r /sys/kernel/security/lsm ] && ! grep -q landlock /sys/kernel/security/lsm; then
+  die "Landlock is not enabled (/sys/kernel/security/lsm does not list landlock)"
+fi
+
+step "preflight: MANIFEST"
+grep -v '^#' MANIFEST | sha256sum --quiet -c - || die "a file differs from MANIFEST"
+
+step "preflight: challenge definitions are verbatim"
+defs() { sed -n '/^namespace OAI$/,/Congruent a b ∧ ∃ k : Fin r, ∀ i, c (b i) = k$/p' "$1"; }
+rdefs() { sed -n '/^def radianConfig/,/^  WithLp.toLp 2/p' "$1"; }
+for f in AV3Challenge/Main.lean AV3Challenge/Equiv.lean; do
+  for ref in vendor/OAI-ComparatorChallenge-EuclideanRamseySpherical.lean \
+             vendor/OAI-ComparatorChallenge-EuclideanRamsey.lean; do
+    cmp -s <(defs "$f") <(defs "$ref") || die "$f: preamble and Space/Congruent/Ramsey differ from $ref"
+  done
+done
+cmp -s <(defs AV3Challenge/Main.lean) <(defs OAI/Combinatorics/EuclideanRamsey/Model.lean) \
+  || die "the challenge definitions differ from OpenAI's Model.lean"
+echo "  Space, Congruent, Ramsey: identical to OpenAI's challenge files and to OAI/.../Model.lean"
+cmp -s <(rdefs AV3Challenge/Main.lean) <(rdefs Rope/Radian.lean) && [ -n "$(rdefs Rope/Radian.lean)" ] \
+  || die "AV3Challenge/Main.lean: radianConfig differs from Rope/Radian.lean"
+echo "  radianConfig (2 lines): identical to the solution's Rope/Radian.lean"
+cmp -s AV3Challenge/OAIClassification.lean vendor/OAI-ComparatorChallenge-EuclideanRamsey.lean \
+  || die "AV3Challenge/OAIClassification.lean is not OpenAI's EuclideanRamsey challenge byte for byte"
+cmp -s AV3Challenge/OAISpherical.lean vendor/OAI-ComparatorChallenge-EuclideanRamseySpherical.lean \
+  || die "AV3Challenge/OAISpherical.lean is not OpenAI's EuclideanRamseySpherical challenge byte for byte"
+echo "  AV3Challenge/OAIClassification.lean, OAISpherical.lean: OpenAI's challenges, byte for byte"
+
+TOOLCHAIN=$(cat lean-toolchain)                           # leanprover/lean4:v4.34.1
+OAI_COMMIT=fd4aeeb2ee4fc729c18d98444fed42fd0529eeeb       # openai/math, the vendored release
+COMPARATOR_REV=d03acab154d269c06e60e4de7e4cc85deebff94b   # leanprover/comparator tag v4.34.0
+LEAN4EXPORT_REV=076e8e57707e813375e8f9da8bf989799ace9680  # leanprover/lean4export tag v4.34.0
+LANDRUN_REV=811cfff51ceaf3d9843708aa6d22e9b84ccac8b4      # Zouuup/landrun main, as Comparator's README asks
+T=${AV3_TOOLS:-$PWD/.lake/av3-tools}
+LOGS=$PWD/.lake/av3-logs
+mkdir -p "$T/src" "$T/bin" "$LOGS"
+
+if [ "${AV3_UPSTREAM:-0}" = 1 ]; then
+  step "upstream: fetching openai/math $OAI_COMMIT (sparse) and comparing the vendored files"
+  up=$(mktemp -d)
+  ( git -C "$up" init -q && git -C "$up" config core.autocrlf false \
+    && git -C "$up" remote add origin https://github.com/openai/math.git \
+    && git -C "$up" sparse-checkout set --no-cone lean/OAI/Combinatorics/EuclideanRamsey \
+         lean/ComparatorChallenges/EuclideanRamsey.lean lean/ComparatorChallenges/EuclideanRamseySpherical.lean /LICENSE \
+    && git -C "$up" fetch -q --depth 1 --filter=blob:none origin "$OAI_COMMIT" \
+    && git -C "$up" checkout -q FETCH_HEAD ) || die "fetching openai/math failed"
+  diff -r "$up/lean/OAI/Combinatorics/EuclideanRamsey" OAI/Combinatorics/EuclideanRamsey >/dev/null \
+    || die "OAI/Combinatorics/EuclideanRamsey differs from openai/math $OAI_COMMIT"
+  cmp -s "$up/LICENSE" vendor/OAI-LICENSE || die "vendor/OAI-LICENSE differs from upstream"
+  cmp -s "$up/lean/ComparatorChallenges/EuclideanRamsey.lean" vendor/OAI-ComparatorChallenge-EuclideanRamsey.lean \
+    || die "vendor/OAI-ComparatorChallenge-EuclideanRamsey.lean differs from upstream"
+  cmp -s "$up/lean/ComparatorChallenges/EuclideanRamseySpherical.lean" vendor/OAI-ComparatorChallenge-EuclideanRamseySpherical.lean \
+    || die "vendor/OAI-ComparatorChallenge-EuclideanRamseySpherical.lean differs from upstream"
+  rm -rf "$up"
+  echo "  vendored OAI sources, LICENSE and both challenge files are byte-identical to upstream"
+fi
+
+step "fetching comparator, lean4export, landrun"
+for spec in "comparator https://github.com/leanprover/comparator.git $COMPARATOR_REV" \
+            "lean4export https://github.com/leanprover/lean4export.git $LEAN4EXPORT_REV" \
+            "landrun https://github.com/Zouuup/landrun.git $LANDRUN_REV"; do
+  set -- $spec
+  [ -d "$T/src/$1" ] || git clone --quiet "$2" "$T/src/$1" || die "cloning $1 failed"
+  git -C "$T/src/$1" checkout --quiet "$3" || die "checking out $1 $3 failed"
+done
+# No v4.34.1 tag exists for comparator or lean4export: build the v4.34.0 sources with the rope's toolchain.
+for t in comparator lean4export; do
+  step "building $t with $TOOLCHAIN"
+  echo "$TOOLCHAIN" > "$T/src/$t/lean-toolchain"
+  (cd "$T/src/$t" && lake build "$t" >"$LOGS/build-$t.log" 2>&1) || die "building $t failed (see $LOGS/build-$t.log)"
+  ln -sf "$T/src/$t/.lake/build/bin/$t" "$T/bin/$t"
+done
+step "building landrun"
+(cd "$T/src/landrun" && go build -o "$T/bin/landrun" cmd/landrun/main.go) >"$LOGS/build-landrun.log" 2>&1 \
+  || die "building landrun failed (see $LOGS/build-landrun.log)"
+export PATH="$T/bin:$PATH"
+
+step "fetching the Mathlib cache"
+lake exe cache get >"$LOGS/cache.log" 2>&1 || die "lake exe cache get failed (see $LOGS/cache.log)"
+step "building the rope: OAI sources, solution, challenges, controls (first time: about 20 min to 2.5 h, depending on machine load)"
+lake build OAI Rope AV3Challenge AV3Control >"$LOGS/build-rope.log" 2>&1 || die "rope build failed (see $LOGS/build-rope.log)"
+
+step "axioms of the 11 checked theorems"
+ax=$LOGS/axioms.lean
+{ echo "import Rope"; echo "import OAI.Combinatorics.EuclideanRamsey.Spherical"
+  for n in "OAI.EuclideanRamsey.classification" "OAI.EuclideanRamsey.ramsey_cospherical" "OAI.EuclideanRamsey.Radian.radian_configuration" \
+           "OAI.EuclideanRamsey.Radian.radian_not_ramsey" "OAI.EuclideanRamsey.Radian.radian_ramsey_iff" "OAI.EuclideanRamsey.Radian.radian_ramsey_iff_tan" \
+           "SphericalRamsey.oai_congruent_iff" "SphericalRamsey.oai_ramsey_iff" "SphericalRamsey.radian_configuration_mathlib" \
+           "SphericalRamsey.radian_ramsey_iff_mathlib" "SphericalRamsey.radian_ramsey_iff_tan_mathlib"; do
+    echo "#print axioms $n"; done; } > "$ax"
+lake env lean "$ax" >"$LOGS/axioms.log" 2>&1 || die "printing axioms failed (see $LOGS/axioms.log)"
+good=$(grep -c "depends on axioms: \[propext, Classical.choice, Quot.sound\]" "$LOGS/axioms.log")
+[ "$good" -eq 11 ] || die "expected 11 theorems on [propext, Classical.choice, Quot.sound], got $good (see $LOGS/axioms.log)"
+echo "  11/11 depend on exactly [propext, Classical.choice, Quot.sound]"
+# Textual backstop to the axiom check (a `sorry` quoted in backticks in a docstring is not a use).
+if grep -rnwE "sorry|native_decide|ofReduceBool|admit" OAI Rope Rope.lean --include='*.lean' | grep -vF '`sorry`' >"$LOGS/grep-sorry.log"; then
+  die "sorry/native_decide/ofReduceBool/admit in the solution sources (see $LOGS/grep-sorry.log)"
+fi
+echo "  no sorry, admit, native_decide or ofReduceBool in OAI/ or Rope/"
+
+run() {  # Comparator under systemd-run --user when available (Comparator's README), else directly
+  if systemd-run --user --wait --pipe -q true 2>/dev/null; then
+    systemd-run --property=RestrictAddressFamilies=~AF_UNIX --user --wait --pipe -q \
+      -E PATH="$PATH" -E HOME="$HOME" --working-directory "$PWD" -- lake env comparator "$1"
+  else
+    lake env comparator "$1"
+  fi
+}
+fail=0
+: > "$LOGS/runs.tsv"   # config, exit code, seconds, as expected, last message line
+record() { printf '%s\t%s\t%s\t%s\t%s\n' "$1" "$2" "$3" "$4" \
+  "$(grep -E 'Your solution is okay|uncaught exception|error' "$LOGS/$1.log" | tail -n 1)" >> "$LOGS/runs.tsv"; }
+skipped=0
+for n in oai-classification oai-spherical main equiv mathlib; do
+  case $n in oai-*) if [ "${AV3_SKIP_OAI_CHALLENGES:-0}" = 1 ]; then
+    step "comparator $n: SKIPPED (AV3_SKIP_OAI_CHALLENGES=1)"; skipped=$((skipped + 1)); continue; fi;; esac
+  step "comparator $n"
+  t0=$(date +%s); run "comparator/$n.json" >"$LOGS/$n.log" 2>&1; code=$?; secs=$(( $(date +%s) - t0 ))
+  if grep -q "Your solution is okay" "$LOGS/$n.log"; then echo "  accepted  $n"; record "$n" $code $secs true
+  else echo "  FAILED    $n (expected acceptance; see $LOGS/$n.log)"; fail=1; record "$n" $code $secs false; fi
+done
+# A control counts as refused only when Comparator ran and gave the expected reason.
+for spec in "ctl-sorrymain|Illegal axiom detected: 'sorryAx'" \
+            "ctl-axiommain|Illegal axiom detected: 'OAI.EuclideanRamsey.cheat'" \
+            "ctl-weakermain|statement do not match: 'OAI.EuclideanRamsey.Radian.radian_configuration'" \
+            "ctl-redeframsey|Const does not match between challenge and target 'OAI.EuclideanRamsey.Ramsey'" \
+            "ctl-weakermathlib|statement do not match: 'SphericalRamsey.radian_configuration_mathlib'"; do
+  n=${spec%%|*}; reason=${spec#*|}
+  step "comparator $n (control)"
+  t0=$(date +%s); run "comparator/$n.json" >"$LOGS/$n.log" 2>&1; code=$?; secs=$(( $(date +%s) - t0 ))
+  if grep -q "Your solution is okay" "$LOGS/$n.log"; then echo "  FAILED    $n (control accepted)"; fail=1; record "$n" $code $secs false
+  elif grep -qF "$reason" "$LOGS/$n.log"; then echo "  refused   $n: $reason"; record "$n" $code $secs true
+  else echo "  FAILED    $n (no expected refusal reason; see $LOGS/$n.log)"; fail=1; record "$n" $code $secs false; fi
+done
+if [ $fail -ne 0 ]; then step "FAILURES above"
+elif [ $skipped -ne 0 ]; then step "all $(( 10 - skipped )) runs as expected; $skipped skipped"
+else step "all 10 as expected"; fi
+exit $fail

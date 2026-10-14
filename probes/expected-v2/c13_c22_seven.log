@@ -1,0 +1,60 @@
+== Part A (EXACT): radian 7-gon cross-ratios as functions of z = e^{i theta}
+  non-constant: 35/35  => radian 7-gon has no algebraic 4-point cross-ratio: True
+== Part B ([PROBE]): radian n-gons, k = 1 (curve probe = full criterion mod p)
+  radian 6-gon: 2-jet PASS       curve PASS
+  radian 7-gon: 2-jet PASS       curve PASS
+  radian 8-gon: 2-jet PASS       curve PASS
+  radian 9-gon: 2-jet FAIL       curve FAIL
+== Part C (C-22): two-parameter 7-sets: trdeg(CR field) EXACT, two-group, 2-jet / curve [PROBE]
+  L1 {0,th,2th,ph,th+ph,2th+ph,2ph}                lattice=[(0, 0), (1, 0), (2, 0), (0, 1), (1, 1), (2, 1), (0, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  L2 {0..3}th u ph+{0..2}th                        lattice=[(0, 0), (1, 0), (2, 0), (3, 0), (1, 1), (2, 1), (0, 1)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  L3 radian 6-gon + ph                             lattice=[(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (0, 1)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  L4 {0..3}th u {1..3}ph                           lattice=[(0, 0), (1, 0), (2, 0), (3, 0), (0, 1), (0, 2), (0, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  L5 radian 5-gon + {ph, ph+th}                    lattice=[(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (0, 1), (1, 1)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  L6 {0,th,ph,th+ph,2th,2ph,2th+2ph}               lattice=[(0, 0), (1, 0), (0, 1), (1, 1), (2, 0), (0, 2), (2, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R00 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (0, 1), (1, 0), (1, 3), (2, 1), (2, 2), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R01 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (0, 2), (1, 1), (2, 0), (2, 1), (3, 1), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R02 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 1), (1, 0), (1, 3), (2, 1), (2, 2), (3, 0), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R03 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 1), (0, 2), (0, 3), (1, 1), (2, 1), (2, 2), (3, 1)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R04 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (0, 1), (1, 2), (2, 0), (2, 1), (2, 3), (3, 1)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R05 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 1), (0, 2), (1, 0), (2, 1), (2, 2), (3, 1), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R06 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 2), (0, 3), (1, 1), (1, 3), (2, 1), (2, 2), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R07 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (0, 3), (1, 0), (1, 2), (1, 3), (2, 0), (3, 1)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R08 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 1), (1, 1), (2, 1), (2, 3), (3, 0), (3, 1), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R09 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (0, 1), (0, 2), (2, 1), (2, 2), (2, 3), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R10 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (1, 0), (1, 3), (2, 0), (2, 2), (3, 0), (3, 1)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R11 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 2), (1, 0), (1, 2), (1, 3), (2, 0), (3, 2), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R12 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 1), (1, 0), (1, 1), (1, 2), (2, 0), (2, 3), (3, 0)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R13 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 2), (1, 1), (1, 2), (1, 3), (2, 0), (3, 2), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R14 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 2), (0, 3), (1, 3), (2, 1), (2, 3), (3, 1), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R15 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (0, 2), (1, 1), (2, 0), (2, 1), (2, 3), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R16 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 2), (1, 1), (1, 2), (1, 3), (3, 0), (3, 2), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R17 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (0, 3), (1, 1), (1, 3), (2, 0), (2, 2), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R18 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 1), (0, 3), (1, 0), (2, 0), (3, 0), (3, 1), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R19 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 1), (0, 2), (0, 3), (1, 3), (2, 0), (3, 2), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R20 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 1), (0, 2), (1, 0), (2, 2), (2, 3), (3, 0), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R21 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (0, 3), (1, 0), (1, 1), (1, 3), (2, 0), (2, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R22 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 1), (0, 2), (0, 3), (1, 0), (1, 1), (1, 3), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R23 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (0, 1), (0, 3), (1, 3), (2, 3), (3, 0), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R24 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 2), (0, 3), (1, 1), (2, 0), (2, 2), (3, 0), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R25 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 3), (1, 1), (1, 2), (1, 3), (2, 1), (3, 1), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R26 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (1, 0), (1, 1), (1, 2), (1, 3), (2, 2), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R27 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (1, 2), (1, 3), (2, 1), (2, 2), (2, 3), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R28 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (1, 0), (1, 2), (2, 1), (2, 2), (2, 3), (3, 1)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R29 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (0, 2), (1, 1), (2, 1), (2, 2), (3, 1), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R30 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (0, 1), (0, 2), (2, 0), (3, 0), (3, 1), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R31 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (0, 1), (0, 3), (1, 0), (2, 1), (2, 2), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R32 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 0), (1, 1), (1, 3), (2, 0), (2, 1), (2, 3), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R33 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 2), (0, 3), (1, 1), (2, 1), (2, 2), (2, 3), (3, 1)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R34 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 1), (0, 2), (2, 0), (2, 1), (2, 2), (3, 2), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R35 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 3), (1, 1), (2, 1), (2, 3), (3, 1), (3, 2), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R36 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 1), (0, 3), (1, 0), (2, 0), (2, 1), (3, 0), (3, 1)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R37 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 1), (0, 3), (1, 0), (1, 1), (1, 3), (2, 0), (2, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R38 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 3), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2), (3, 2)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  R39 random 7-subset of {a th + b ph : a,b <= 3}  lattice=[(0, 3), (1, 2), (1, 3), (2, 3), (3, 1), (3, 2), (3, 3)] trdeg=2 two-group=False | 2-jet PASS       curve PASS  <== C-22 COUNTER-CANDIDATE
+  summary (trdeg, two-group, 2-jet) -> count: {(2, False, 'PASS'): 46}
+# retry tally: curve_probe PASS=49 FAIL=1 NO_VERDICT=0 MIXED=0; jet2 PASS=49 FAIL=1 NO_VERDICT=0 MIXED=0
+
+real	0m36.392s
+user	0m0.077s
+sys	0m0.184s

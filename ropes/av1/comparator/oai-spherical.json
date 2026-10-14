@@ -1,0 +1,12 @@
+{
+ "challenge_module": "AV1Challenge.OAISpherical",
+ "solution_module": "OAI.Combinatorics.EuclideanRamsey.Spherical",
+ "theorem_names": [
+  "OAI.EuclideanRamsey.ramsey_cospherical"
+ ],
+ "permitted_axioms": [
+  "propext",
+  "Quot.sound",
+  "Classical.choice"
+ ]
+}
