@@ -1,0 +1,6 @@
+== C-32: S^2, (kappa,k) = (3,4) and (4,3): exact 2-jet dual and scalar (Lemma A.1) locus
+  N=12 k=4 seed=0: kappa=3 dimDelta=6 lower=6 pairing!=0=True -> 2-jet FAIL(exact); scalar locus: 15 minors, homogeneous ideal zero-dimensional (only y=0) = True
+  N=12 k=4 seed=1: kappa=3 dimDelta=6 lower=6 pairing!=0=True -> 2-jet FAIL(exact); scalar locus: 15 minors, homogeneous ideal zero-dimensional (only y=0) = True
+  N=13 k=3 seed=0: kappa=4 dimDelta=6 lower=6 pairing!=0=True -> 2-jet FAIL(exact); scalar locus: 20 minors, homogeneous ideal zero-dimensional (only y=0) = True
+  N=13 k=3 seed=1: kappa=4 dimDelta=6 lower=6 pairing!=0=True -> 2-jet FAIL(exact); scalar locus: 20 minors, homogeneous ideal zero-dimensional (only y=0) = True
+  C-32 check: PASS (prediction holds at every seed)

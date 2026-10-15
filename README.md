@@ -4,6 +4,13 @@
 
 Archived on Zenodo. Cite all versions with the concept DOI [10.5281/zenodo.23366343](https://doi.org/10.5281/zenodo.23366343); v1.0.0 specifically is [10.5281/zenodo.23366344](https://doi.org/10.5281/zenodo.23366344).
 
+**Version 1.1.0** corrects the credit in v1.0.0. OpenAI's quadric-independence criterion (result 172,
+Prop. 7.3) and Pálvölgyi's appendix Theorems A.11–A.13 had been overlooked. Several ledger statuses
+change (SR-C3, SR-C7, SR-C11, SR-C16), and a v1.0.0 sentence calling a certificate for seven generic
+points of S² "the first certified Ramsey set beyond the two-group mechanism" is withdrawn. The release
+also adds ledger entries SR-C29 to SR-C35, including first-order rigidity (SR-C34), and a frontier
+document, [`FRONTIER.md`](FRONTIER.md). Every change is listed in [`CHANGELOG.md`](CHANGELOG.md).
+
 **Which finite sets of points on a sphere are Euclidean Ramsey?** Lean 4 proofs, exact
 certificates, numerical probes, a note and a conjecture ledger, each result labelled with how it
 was verified.
@@ -23,6 +30,8 @@ here builds on that classification and **trusts OpenAI's Lean proof**; the deep 
 | [`certificates/`](certificates/) | Exact certificate scripts (Python, sympy; exact arithmetic only) with their expected output |
 | [`probes/`](probes/) | The 2-jet probe harness (arithmetic mod a prime). **[PROBE] evidence, not proof** |
 | [`ledger/`](ledger/) | The public conjecture ledger: open, proved and refuted conjectures, each with a replay command |
+| [`FRONTIER.md`](FRONTIER.md) | The ranked open frontier: entry points by audience and a first step for each problem |
+| [`CHANGELOG.md`](CHANGELOG.md) | Corrections and additions since v1.0.0 |
 
 ## Verification levels
 
@@ -58,7 +67,8 @@ The note is authoritative for wording; this table is a map.
 | **Theorem C.** The Ramsey property of a finite spherical set is Möbius invariant (no spanning hypothesis), with corollaries: Möbius images of algebraic spherical sets, and the circle families `circ(k tᵢ)`, `circ(tᵢ + c)`, are Ramsey. **Published** in mobius-ramsey v1.0.0 ([doi:10.5281/zenodo.23339523](https://doi.org/10.5281/zenodo.23339523)) | [LEAN], Comparator-checked on a fresh runner | `ropes/av4` |
 | **B(b).** Algebraic concyclic points plus at most three arbitrary points on the same circle are Ramsey | [LEAN], Lean-checked (fresh-runner Comparator, non-builder fidelity review, fresh-agent reproduction); [CERT] `cert_mobius.py` (rational case) | `ropes/av5` |
 | **The two-group theorem (C2).** For every `d ≥ 2`, a union of two Möbius images of finite algebraic subsets of `S^{d-1}` is Ramsey (any sizes, both orientations) | every `d ≥ 2`: [HAND], AI-reviewed. Exact certificates plus glue: `S¹` and `S²` [CERT] (`cert_s2.py`, with `g4_test.py` for algebraic seeds); `S³`, `S⁴` [CERT] (`cert_s2_quat.py`); `S⁵` [CERT] (`cert_clifford*.py`); instance cross-checks through `d = 8` | note; `certificates/` |
-| **Not only two groups.** Explicit 7- and 8-point Ramsey sets on a circle that are not unions of two Möbius images of algebraic sets, and the radian 7-gon | [CERT] plus glue, reviewed (AI) (`cert_nontwogroup.py`; non-two-group-ness by an exact cross-ratio check) | `certificates/` |
+| **OpenAI's quadric-independence criterion** (prior work; ledger SR-C29): up to (d+1)(d+2)/2 − 1 generic points of S^{d−1} are Ramsey; on S² this gives non-two-group Ramsey sets | [LEAN] (OpenAI's theorem) + [HAND] genericity step, AI-reviewed; exact ranks `corank_exact.py` | note; ledger |
+| **Not only two groups on the circle.** Explicit 7- and 8-point Ramsey sets on a circle that are not unions of two Möbius images of algebraic sets, and the radian 7-gon (on the circle the quadric criterion reaches at most five points) | [CERT] plus glue, reviewed (AI) (`cert_nontwogroup.py`; non-two-group-ness by an exact cross-ratio check) | `certificates/` |
 | An exact decision procedure for one-parameter cyclic sets; it reproduces the known exact verdicts | [CERT] per instance (`exact_circle_cert.py`) | `certificates/` |
 | **The rank criterion** (ledger SR-C24): a one-parameter cyclic set with `5 ≤ n ≤ 8` is Ramsey if its `n × 8` 2-jet matrix has rank `n` | [HAND], AI-reviewed; exact ranks by `rankN_check.py`, `rankN_sweep.py` | note; ledger |
 | **The radian 8-gon** (ledger SR-C10): the points `k = 0, …, 7` are Ramsey for every θ | [HAND] (the rank criterion plus an exact rank 8), AI-reviewed | note; ledger |
@@ -71,8 +81,9 @@ The note is authoritative for wording; this table is a map.
 | Phase diagrams, thresholds and searches on `S¹` … `S⁴` | [PROBE] only | `probes/` |
 
 Open and refuted conjectures (with the evidence for and against each) are in `ledger/`, as entries
-`SR-C1` … `SR-C28`. The scripts' own output and docstrings call these `C-1` … `C-28`; `C-n` there is
-ledger entry `SR-Cn`.
+`SR-C1` … `SR-C35`. The scripts' own output and docstrings call these `C-1` … `C-35`; `C-n` there is
+ledger entry `SR-Cn`. Since v1.1.0 the ledger also holds results reviewed by one AI agent, such as
+first-order rigidity (SR-C34); `FRONTIER.md` ranks the open problems.
 
 ## Reproduce
 
@@ -84,7 +95,7 @@ ledger entry `SR-Cn`.
 export PATH="$HOME/.elan/bin:$HOME/go/bin:/usr/local/go/bin:$PATH"
 cd ropes/av1 && bash REPRODUCE            # exit 0: "all 10 as expected"
 
-# the exact certificates (Python 3.10, numpy 1.26.4, sympy 1.14.0)
+# the exact certificates (Python 3.10, numpy 1.26.4, sympy 1.14.0, python-flint 0.9.0)
 bash certificates/check.sh                # fast set; every line PASS
 bash certificates/check.sh --all          # everything, including the slow scripts
 
@@ -122,7 +133,7 @@ concept DOI 10.5281/zenodo.23366343 (v1.0.0: 10.5281/zenodo.23366344).
 
 This repository cites mobius-ramsey v1.0.0 (Will Strinz, 2026; doi:10.5281/zenodo.23339523), the
 published home of Theorem C; OpenAI's result 172; Pálvölgyi, *A cyclic non-Ramsey heptagon*
-(arXiv:2609.23327); JD-Jones-ASES/six-concyclic-lean (`0703d7d`); Rogerhu12/openai-math-extensions
+(arXiv:2609.23327, including its appendix); JD-Jones-ASES/six-concyclic-lean (`0703d7d`); Rogerhu12/openai-math-extensions
 (`f8a2bb2`); atimics/math2 (`8ab51fa`); and Gibbons–Luo, *Colorings of the n-sphere and inversive
 geometry* (arXiv:1307.5351).
 

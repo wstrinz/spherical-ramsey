@@ -22,6 +22,32 @@
   history:
   - 2026-10-12 filed as a conjecture
   - '2026-10-12 proved: CERT for d <= 5, then d = 6, HAND for every d'
+- id: SR-C3
+  title: Generic n-subsets of S^{d-1} are non-Ramsey iff n >= N(d)
+  status: proved
+  merged_into: SR-C17
+  warrant: 'bookkeeping of prior work: d = 2: Theorem B(a) (LEAN) + the circle phase diagram (HAND, AI-reviewed);
+    d >= 3, Ramsey half: OpenAI''s Prop. 7.3 (LEAN, theirs) + HAND genericity glue (reviewed once by an
+    AI agent); non-Ramsey half: Palvolgyi''s Theorem A.12 (appendix labelled unchecked by its author;
+    its proof read by an AI reviewer) and independently SR-C30 with m = 0 (SKETCH, reviewed once)'
+  scope: GENERIC_OF(configuration space)
+  difficulty: done
+  lean_stub: none
+  fc_category: research solved (by prior work) once public
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - certificates/corank_exact.py
+  - probes/e1_phase.py
+  - probes/e1_s2.py
+  - probes/e1_s3.py
+  - probes/e1_s4.py
+  note: Conjecture C3
+  history:
+  - 2026-10-12 filed
+  - 2026-10-13 merged into SR-C17
+  - 2026-10-14 proved, mostly by prior work (v1.1.0)
 - id: SR-C10
   title: Eight consecutive multiples of any angle form a Ramsey set
   status: proved
@@ -39,6 +65,26 @@
   history:
   - 2026-10-12 filed (probe evidence)
   - 2026-10-13 proved via SR-C24 and an exact rank
+- id: SR-C11
+  title: Is there a 2-jet failure with no scalar single-derivation certificate?
+  status: proved
+  warrant: answered yes by SR-C32 (CERT + HAND glue, reviewed by one non-author AI agent; non-Ramsey via
+    the 2-jet necessity); the earlier PROBE evidence against was automatic (quadric corank one)
+  scope: ANY
+  difficulty: done
+  lean_stub: none
+  fc_category: research solved (answer yes) once public
+  ams:
+  - 05D10
+  replay:
+  - probes/scalar_cert.py
+  - certificates/scalar_exact.py
+  note: Section (second-order necessary test), scalar certificates
+  history:
+  - 2026-10-12 filed (replacing a withdrawn witness)
+  - 2026-10-12 evidence against on all tested cells
+  - 2026-10-14 evidence re-scoped (automatic at corank one)
+  - 2026-10-14 answered yes by SR-C32
 - id: SR-C14
   title: One rigid five-point group forces the two-group structure
   status: proved
@@ -56,6 +102,26 @@
   history:
   - 2026-10-13 filed with a proof sketch
   - 2026-10-13 proved after review (fixes applied)
+- id: SR-C16
+  title: Seven generic points on S^2 are Ramsey
+  status: proved
+  warrant: '(a): LEAN (OpenAI''s Prop. 7.3; theirs) + HAND genericity glue (reviewed once by an AI agent)
+    + exact rank; holds for up to nine generic points on S^2. (b): HAND, reviewed by AI'
+  scope: GENERIC_OF((S^2)^7)
+  difficulty: done; engineering (a Lean corollary)
+  lean_stub: lean/SphericalRamseyConjectures.lean#C16_generic_seven_S2
+  fc_category: research solved (a corollary of prior work) once public
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - certificates/corank_exact.py
+  - probes/c15_c16.py
+  - probes/e1_s2.py
+  history:
+  - 2026-10-13 filed
+  - 2026-10-13 consistent on sample; part (c) withdrawn after its prediction failed
+  - '2026-10-14 (a) proved: a corollary of OpenAI''s Prop. 7.3, overlooked in v1.0.0'
 - id: SR-C24
   title: Rank criterion for one-parameter cyclic sets of at most eight points
   status: proved
@@ -108,6 +174,87 @@
   note: Remark (definable and polynomial-factor colourings), item (b)
   history:
   - 2026-10-13 proved
+- id: SR-C29
+  title: Generic points of S^{d-1}, up to the dimension of quadrics on the sphere, are Ramsey (corollaries
+    of OpenAI's Prop. 7.3)
+  status: proved
+  warrant: LEAN (OpenAI's spherical_quadraticIndependent_ramsey_all; theirs, prior work) + HAND genericity
+    glue (reviewed once by an AI agent) + exact quadric ranks (d = 3..8)
+  scope: GENERIC_OF((S^{d-1})^N), N <= (d+1)(d+2)/2 - 1
+  difficulty: done; engineering (a Lean corollary)
+  lean_stub: none
+  fc_category: research solved (corollaries of prior work) once public
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - certificates/corank_exact.py
+  history:
+  - 2026-10-14 filed before its exact rank checks
+  - 2026-10-14 proved; genericity glue reviewed once (AI), with a spanning fix
+- id: SR-C32
+  title: Twelve and thirteen points on S^2 (quadric corank 3 and 4) fail the 2-jet test and have no scalar
+    certificate
+  status: proved
+  warrant: 'proved for the four seeded families: (i) 2-jet FAIL by CERT (dual rank at a rational specialization,
+    plus an independent primal rank pair) + HAND specialization glue, reviewed by one non-author AI agent;
+    non-Ramsey via the 2-jet necessity (HAND, reviewed by AI); (ii) no scalar certificate, even over C:
+    CERT (the ideal of k x k minors is exactly (y)^k) + glue, reviewed by AI'
+  scope: 'GENERIC_OF(F_{N,k,s}): the four seeded rational-affine families of certificates/corank_exact.py
+    c32, with theta algebraically independent over Q'
+  difficulty: done for these families; attackable (colour counts via SR-C35)
+  lean_stub: none
+  fc_category: research solved once public
+  ams:
+  - 05D10
+  - 13N15
+  replay:
+  - certificates/corank_exact.py
+  history:
+  - 2026-10-14 filed as a prediction before any computation
+  - 2026-10-14 consistent on sample (4/4 exact)
+  - 2026-10-14 proved for the four seeded families after a non-author AI review
+- id: SR-C34
+  title: If the 2-jet dual space vanishes, the set is Ramsey
+  status: proved
+  warrant: HAND, reviewed by one non-author AI agent (Smith form over the local ring at the diagonal,
+    J2 duality, Nakayama); the (d+1)^2 threshold law and 'not two-group' consistent on sample (10/10 PROBE
+    with exact dual dimensions); the non-Ramsey side at 16 points CERT per instance
+  scope: ANY
+  difficulty: done (HAND); engineering (a Lean proof over OpenAI's FieldCriterion)
+  lean_stub: none
+  fc_category: research open (until a proof is public and accepted)
+  ams:
+  - 05D10
+  - 13N15
+  replay:
+  - probes/c34_test.py
+  - certificates/c34_det16.py
+  - certificates/corank_exact.py
+  history:
+  - 2026-10-14 filed with a sketch, before its probe test
+  - 2026-10-14 consistent on sample (10/10)
+  - 2026-10-14 proved after a non-author AI review
+- id: SR-C7
+  title: If the generic member of an irreducible family is Ramsey, every member is
+  status: refuted
+  warrant: 'refuted as stated, for every d >= 3: SR-C16(a) (OpenAI''s Prop. 7.3, LEAN, theirs + HAND genericity
+    glue, reviewed once by an AI agent + exact ranks) and SR-C16(b) (HAND, reviewed by AI); the review
+    of the refutation: one AI agent'
+  scope: GENERIC_OF(V)
+  difficulty: done
+  lean_stub: none
+  fc_category: research solved (answer False) once public
+  ams:
+  - 05D10
+  - 14Q99
+  replay:
+  - certificates/corank_exact.py
+  - probes/c15_c16.py
+  history:
+  - 2026-10-12 filed
+  - 2026-10-13 probe-level counter-instance off the circle (SR-C16)
+  - 2026-10-14 refuted for every d >= 3 via OpenAI's Prop. 7.3 (reviewed once, AI)
 - id: SR-C13
   title: Naive seven-point classification by two groups
   status: refuted
@@ -159,23 +306,6 @@
   history:
   - 2026-10-13 filed
   - 2026-10-13 consistent on sample
-- id: SR-C16
-  title: Seven generic points on S^2 are Ramsey
-  status: consistent-on-sample
-  warrant: PROBE for (a); HAND, reviewed by AI, for (b)
-  scope: GENERIC_OF((S^2)^7)
-  difficulty: attackable
-  lean_stub: lean/SphericalRamseyConjectures.lean#C16_generic_seven_S2
-  fc_category: research open
-  ams:
-  - 05D10
-  - 52C10
-  replay:
-  - probes/c15_c16.py
-  - probes/e1_s2.py
-  history:
-  - 2026-10-13 filed
-  - 2026-10-13 consistent on sample; part (c) withdrawn after its prediction failed
 - id: SR-C19
   title: Ramsey-ness is decidable over an explicitly presented finitely generated field
   status: consistent-on-sample
@@ -231,6 +361,48 @@
   history:
   - 2026-10-13 filed before its probe
   - 2026-10-13 30/30
+- id: SR-C30
+  title: Rational plus at least four independent points at or above N(d) are non-Ramsey, every d >= 3
+    (embedded S^2 cell)
+  status: consistent-on-sample
+  warrant: SKETCH for every d, reviewed once by an AI agent (sound; the step-2 rank lemma needs a written
+    proof); CERT per instance (exact ranks and energy forms at rational points) + HAND specialization
+    glue for d = 3..7, 16/16
+  scope: GENERIC_OF(m rational in general position + j independent), d >= 3
+  difficulty: engineering (a non-author review of the sketch)
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 52C10
+  replay:
+  - certificates/corank_exact.py
+  history:
+  - 2026-10-14 filed with a sketch, before its exact checks
+  - 2026-10-14 consistent on sample (16/16 exact, d = 3..7)
+- id: SR-C31
+  title: The 2-jet test fails iff (kappa = 1 and k > G_d) or (kappa >= 2 and kappa(k+1) > 2 G_d), for
+    families in general position
+  status: consistent-on-sample
+  warrant: '(a): HAND, reviewed by one non-author AI agent; (b): exact 2-jet dual dimensions and pairings
+    at rational specializations, 38/38 decided as predicted (three after re-specializing), plus 8/8 PROBE
+    with the primal 2-jet'
+  scope: '(a): ANY; (b): GENERIC_OF(rational-affine families u_i(theta) = alpha_i + B_i theta with seeded
+    rational coefficients)'
+  difficulty: attackable (generic non-vanishing of the pairing; general position of geometric families)
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 13N15
+  replay:
+  - certificates/corank_exact.py
+  - certificates/c31_respecialize.py
+  - probes/c31_c32_jet2.py
+  history:
+  - 2026-10-14 filed before its probe and exact checks
+  - 2026-10-14 consistent on sample
+  - 2026-10-14 (a) proved after a non-author AI review
 - id: SR-C1
   title: The second-order (2-jet) test decides Ramsey-ness
   status: open
@@ -250,27 +422,6 @@
   history:
   - 2026-10-12 filed
   - 2026-10-12 evidence restricted to real configurations
-- id: SR-C3
-  title: Generic n-subsets of S^{d-1} are non-Ramsey iff n >= N(d)
-  status: open
-  merged_into: SR-C17
-  warrant: 'PROBE; failing-side boundary cells: S^2 CERT, circle HAND (AI-reviewed)'
-  scope: GENERIC_OF(configuration space)
-  difficulty: attackable
-  lean_stub: none
-  fc_category: research open
-  ams:
-  - 05D10
-  - 52C10
-  replay:
-  - probes/e1_phase.py
-  - probes/e1_s2.py
-  - probes/e1_s3.py
-  - probes/e1_s4.py
-  note: Conjecture C3
-  history:
-  - 2026-10-12 filed
-  - 2026-10-13 merged into SR-C17
 - id: SR-C4
   title: Algebraic points plus at most three arbitrary points are Ramsey on every sphere; four can fail
   status: open
@@ -326,23 +477,6 @@
   note: Conjecture R1
   history:
   - 2026-10-12 filed
-- id: SR-C7
-  title: If the generic member of an irreducible family is Ramsey, every member is
-  status: open
-  warrant: 'off the circle: refuted at PROBE level if SR-C16(a) holds; on the circle: no evidence either
-    way'
-  scope: GENERIC_OF(V)
-  difficulty: attackable
-  lean_stub: none
-  fc_category: research open
-  ams:
-  - 05D10
-  - 14Q99
-  replay:
-  - probes/c15_c16.py
-  history:
-  - 2026-10-12 filed
-  - 2026-10-13 probe-level counter-instance off the circle (SR-C16)
 - id: SR-C8
   title: The tensor criterion with an indefinite form gives a well-posed O(p,q)-invariant Ramsey theory
   status: open
@@ -373,23 +507,6 @@
   note: Conjecture T1; Corollary (radian progressions), item 2
   history:
   - 2026-10-12 filed
-- id: SR-C11
-  title: Is there a 2-jet failure with no scalar single-derivation certificate?
-  status: open
-  warrant: PROBE evidence against, on every tested cell
-  scope: ANY
-  difficulty: attackable
-  lean_stub: none
-  fc_category: research open
-  ams:
-  - 05D10
-  replay:
-  - probes/scalar_cert.py
-  - certificates/scalar_exact.py
-  note: Section (second-order necessary test), scalar certificates
-  history:
-  - 2026-10-12 filed (replacing a withdrawn witness)
-  - 2026-10-12 evidence against on all tested cells
 - id: SR-C12
   title: Pálvölgyi's scalar method suffices for rational plus independent points
   status: open
@@ -408,8 +525,10 @@
 - id: SR-C17
   title: Rational plus independent points on S^{d-1}, d >= 3
   status: open
-  warrant: PROBE; the minimal failing cells on S^2 and S^3 are CERT; the passing side with j <= 3 follows
-    from SR-C2
+  warrant: 'passing side proved: SR-C2 for j <= 3; OpenAI''s Prop. 7.3 + HAND genericity glue (SR-C29,
+    reviewed once, AI) for m + j <= D_d. Failing side: CERT + glue for specific rational points, d = 3..7
+    (and S^2, S^3 cells in the note); every d at SKETCH, reviewed once (AI), via SR-C30; the all-free
+    cell is Palvolgyi A.12 (unchecked appendix)'
   scope: GENERIC_OF(m rational in general position + j independent)
   difficulty: attackable
   lean_stub: none
@@ -421,9 +540,11 @@
   - probes/e1_s2.py
   - probes/e3_sphere.py
   - certificates/scalar_exact.py
+  - certificates/corank_exact.py
   note: Conjecture C3 (merged form); Theorem NR-S23
   history:
   - 2026-10-13 filed, merging SR-C3 and SR-C4
+  - 2026-10-14 passing side proved via OpenAI's Prop. 7.3; failing side via Palvolgyi A.12 and SR-C30
 - id: SR-C18
   title: Hyperbolic-Ramsey sets are the hyperbolic models of Euclidean-Ramsey sets
   status: open
@@ -480,3 +601,37 @@
   note: Remark (definable and polynomial-factor colourings), items (c), (d)
   history:
   - 2026-10-13 filed
+- id: SR-C33
+  title: Ramsey iff b lies in Phi(m O^M) over the local ring at the diagonal; corank one reduces to one
+    ideal membership
+  status: open
+  warrant: '(a)-(c): HAND, reviewed by one non-author AI agent; (d): conjecture'
+  scope: ANY
+  difficulty: attackable (doubly degenerate corank-one families)
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 13N15
+  - 13D02
+  replay: []
+  history:
+  - 2026-10-14 filed with sketches; no computation run
+  - 2026-10-14 (a)-(c) proved after a non-author AI review; (d) open
+- id: SR-C35
+  title: A nonzero pairing on the 2-jet dual space gives an explicit colouring (matrix-weighted Lemma
+    A.1)
+  status: open
+  warrant: SKETCH (derived by a non-author AI reviewer; not itself reviewed); the identity was exact-tested
+    on the four SR-C32 families under random isometric embeddings into R^5, with a failing control (reviewer's
+    check, not shipped)
+  scope: ANY
+  difficulty: engineering (a review); attackable (colour counts)
+  lean_stub: none
+  fc_category: research open
+  ams:
+  - 05D10
+  - 13N15
+  replay: []
+  history:
+  - 2026-10-14 filed (found by a non-author reviewer of SR-C32)

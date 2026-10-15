@@ -5,11 +5,18 @@ suffice* (`note/` in this release). Every entry has a stable id, a status, the s
 behind it, and a starting state that a reader can replay. Refuted entries are kept, with the sample
 that killed them. The format, status vocabulary and warrant rules are in `README.md`; the YAML
 headers are collected in `ledger.yaml`; statement-only Lean stubs for six entries are in
-`lean/SphericalRamseyConjectures.lean`; the open threads are in `BACKLOG.md`.
+`lean/SphericalRamseyConjectures.lean`; the open threads are in `BACKLOG.md`. The ranked open
+frontier is `FRONTIER.md` at the release root.
 
-**Count (28 entries).** proved: 6 (SR-C2, SR-C10, SR-C14, SR-C24, SR-C25, SR-C26); refuted: 2
-(SR-C13, SR-C22); consistent-on-sample: 5 (SR-C15, SR-C16, SR-C19, SR-C23, SR-C27); open: 15. Four
-further refuted or withdrawn guesses with no entry of their own are listed under *Tailings* at the end.
+**Version 1.1.0.** This version corrects the credit and status of several entries (SR-C3, SR-C7,
+SR-C11, SR-C12, SR-C13, SR-C16, SR-C17; the full list is `CHANGELOG.md` at the release root): OpenAI's
+quadric-independence criterion (result 172, Prop. 7.3) and Pálvölgyi's appendix Theorems A.11–A.13 were
+overlooked in v1.0.0. It adds SR-C29 to SR-C35. Each entry names the reviews behind its status.
+
+**Count (35 entries).** proved: 12 (SR-C2, SR-C3, SR-C10, SR-C11, SR-C14, SR-C16, SR-C24, SR-C25,
+SR-C26, SR-C29, SR-C32, SR-C34); refuted: 3 (SR-C7, SR-C13, SR-C22); consistent-on-sample: 6 (SR-C15,
+SR-C19, SR-C23, SR-C27, SR-C30, SR-C31); open: 14. Four further refuted or withdrawn guesses
+with no entry of their own are listed under *Tailings* at the end.
 
 **Reading the warrants.** `[LEAN]`: proved in Lean 4 and checked by Comparator. `[CERT]`: an exact
 symbolic identity (sympy, over ℚ or ℚ(T)) plus written glue that is not machine-checked. `[HAND]`: a
@@ -31,7 +38,8 @@ never a scope: the verdict can change between algebraic and transcendental membe
 **Replay.** Paths are relative to the release root. Exact scripts: `python -I certificates/<script>`.
 Modulo-p probes import their siblings: `cd probes && python <script>`. Expected outputs are next to the
 scripts (`certificates/expected/`, `probes/expected-v2/`); compare ignoring timing lines. Python 3.10,
-numpy 1.26, sympy 1.14, mpmath 1.3.
+numpy 1.26, sympy 1.14, mpmath 1.3; python-flint 0.9 for `corank_exact.py`, `c31_respecialize.py`,
+`c34_det16.py`, `probes/c31_c32_jet2.py` and `probes/c34_test.py`.
 
 ---
 
@@ -77,6 +85,39 @@ history: ["2026-10-12 filed as a conjecture", "2026-10-12 proved: CERT for d <= 
 - **Links.** Theorem C (Möbius invariance), published: mobius-ramsey v1.0.0,
   doi:10.5281/zenodo.23339523. Related: SR-C4, SR-C13, SR-C15, SR-C23.
 
+### SR-C3: generic thresholds
+
+```yaml
+id: SR-C3
+title: Generic n-subsets of S^{d-1} are non-Ramsey iff n >= N(d)
+status: proved
+merged_into: SR-C17
+warrant: "bookkeeping of prior work: d = 2: Theorem B(a) (LEAN) + the circle phase diagram (HAND, AI-reviewed); d >= 3, Ramsey half: OpenAI's Prop. 7.3 (LEAN, theirs) + HAND genericity glue (reviewed once by an AI agent); non-Ramsey half: Palvolgyi's Theorem A.12 (appendix labelled unchecked by its author; its proof read by an AI reviewer) and independently SR-C30 with m = 0 (SKETCH, reviewed once)"
+scope: "GENERIC_OF(configuration space)"
+difficulty: done
+lean_stub: none
+fc_category: "research solved (by prior work) once public"
+ams: ["05D10", "52C10"]
+replay: ["certificates/corank_exact.py", "probes/e1_phase.py", "probes/e1_s2.py", "probes/e1_s3.py", "probes/e1_s4.py"]
+note: "Conjecture C3"
+history: ["2026-10-12 filed", "2026-10-13 merged into SR-C17", "2026-10-14 proved, mostly by prior work (v1.1.0)"]
+```
+
+- **Statement.** A generic n-subset of S^{d−1} is non-Ramsey iff n ≥ N(d), with N(2) = 7 and
+  N(d) = (d + 1)(d + 2)/2 for d ≥ 3.
+- **Proof (bookkeeping, not a new result).** d = 2: generic sets of at most six points are Ramsey
+  (Theorem B(a), prior work: JD-Jones-ASES), and the phase-diagram cell (0, 7) is non-Ramsey (Pálvölgyi's
+  Theorems A.3/A.7), hence so is every superset. d ≥ 3: generic n-sets with n ≤ D_d = N(d) − 1 are Ramsey,
+  a corollary of OpenAI's Proposition 7.3 (result 172; Lean `spherical_quadraticIndependent_ramsey_all`)
+  with the genericity glue of SR-C29 (reviewed once by an AI agent; the same genericity remark is in the
+  proof of Pálvölgyi's A.12); generic n-sets with n ≥ N(d) are non-Ramsey by Pálvölgyi's Theorem A.12
+  (arXiv:2609.23327, appendix labelled unchecked by its author; its proof was read by our AI reviewer)
+  and, independently, by SR-C30 with m = 0 (`[SKETCH]`, reviewed once). The S² ten-point cell certified
+  in the note (Theorem NR-S23) is the case d = 3.
+- **Earlier evidence `[PROBE]`.** Circle 6 pass / 7 fail; S² 9 / 10; first failures at 15 (S³) and 21 (S⁴).
+- **Starting state.** `python -I certificates/corank_exact.py c29`; `cd probes && python e1_s2.py`;
+  `python e1_s3.py`.
+
 ### SR-C10: the radian 8-gon
 
 ```yaml
@@ -114,6 +155,39 @@ history: ["2026-10-12 filed (probe evidence)", "2026-10-13 proved via SR-C24 and
   40 minutes (the radian 7-gon took 25); try kernel interpolation or z = e^{iθ} coordinates.
 - **Lean.** `C10_radian_eight` (statement only).
 
+### SR-C11: a second-order failure without a scalar certificate
+
+```yaml
+id: SR-C11
+title: Is there a 2-jet failure with no scalar single-derivation certificate?
+status: proved
+warrant: "answered yes by SR-C32 (CERT + HAND glue, reviewed by one non-author AI agent; non-Ramsey via the 2-jet necessity); the earlier PROBE evidence against was automatic (quadric corank one)"
+scope: ANY
+difficulty: done
+lean_stub: none
+fc_category: "research solved (answer yes) once public"
+ams: ["05D10"]
+replay: ["probes/scalar_cert.py", "certificates/scalar_exact.py"]
+note: "Section (second-order necessary test), scalar certificates"
+history: ["2026-10-12 filed (replacing a withdrawn witness)", "2026-10-12 evidence against on all tested cells", "2026-10-14 evidence re-scoped (automatic at corank one)", "2026-10-14 answered yes by SR-C32"]
+```
+
+- **Statement (question).** Is there a finite spherical set whose second-order system is inconsistent
+  but which has no scalar certificate (weights Λᵢ = λᵢC with a single derivation of the coordinate
+  field), even with order-one multipliers allowed?
+- **Answer: yes** (SR-C32). Four seeded families of 12 and 13 points on S² with shared parameters
+  (quadric corank 3 and 4) fail the 2-jet test and have no scalar certificate, even over ℂ; proved for
+  those families, with the glue reviewed by one non-author AI agent. A matrix-weighted Lemma A.1 (SR-C35,
+  a sketch) would still colour them: matrix weights are strictly stronger for certificates, not
+  (as far as is known) for colourings.
+- **Earlier evidence, re-scoped (v1.1.0).** A scalar certificate exists in all sixteen failing S² cells,
+  both S³ threshold cells, the S⁴ threshold and ten generic points on S² `[PROBE]`, seven of them exact.
+  This was recorded as evidence against; it is automatic. Every one of these cells has quadric corank one
+  or contains a failing cell of corank one, and at corank one the 2-jet test equals the scalar test
+  (SR-C31(a), `[HAND]`, reviewed by one non-author AI agent). An earlier claimed witness (three rational
+  plus four independent circle points) is withdrawn: it has a scalar certificate (exact, J2-F7).
+- **Starting state.** `python -I certificates/corank_exact.py c32`; `cd probes && python scalar_cert.py`.
+
 ### SR-C14: rigid-group absorption on the circle
 
 ```yaml
@@ -150,6 +224,48 @@ history: ["2026-10-13 filed with a proof sketch", "2026-10-13 proved after revie
 - **Difficulty.** Attackable: the same statement with "algebraic" in place of "rational" for arbitrary F
   (should need the idempotent transport used for algebraic seeds in SR-C2).
 - **Lean.** `C14_rigid_absorption` (statement only).
+
+### SR-C16: Ramsey-ness is not closed under specialization off the circle
+
+```yaml
+id: SR-C16
+title: Seven generic points on S^2 are Ramsey
+status: proved
+warrant: "(a): LEAN (OpenAI's Prop. 7.3; theirs) + HAND genericity glue (reviewed once by an AI agent) + exact rank; holds for up to nine generic points on S^2. (b): HAND, reviewed by AI"
+scope: "GENERIC_OF((S^2)^7)"
+difficulty: "done; engineering (a Lean corollary)"
+lean_stub: "lean/SphericalRamseyConjectures.lean#C16_generic_seven_S2"
+fc_category: "research solved (a corollary of prior work) once public"
+ams: ["05D10", "52C10"]
+replay: ["certificates/corank_exact.py", "probes/c15_c16.py", "probes/e1_s2.py"]
+history: ["2026-10-13 filed", "2026-10-13 consistent on sample; part (c) withdrawn after its prediction failed", "2026-10-14 (a) proved: a corollary of OpenAI's Prop. 7.3, overlooked in v1.0.0"]
+```
+
+- **Statement.** (a) Seven points of S² whose fourteen stereographic coordinates are algebraically
+  independent over ℚ are Ramsey. (b) Seven points on a great circle of S² with algebraically independent
+  parameters are not Ramsey. Hence the irreducible family of 7-point configurations on S² has a Ramsey
+  generic member and a non-Ramsey specialization, and SR-C7 fails for d ≥ 3.
+- **Status and evidence.** (a) `[LEAN]` (OpenAI's Proposition 7.3, Lean
+  `spherical_quadraticIndependent_ramsey_all`; theirs) + `[HAND]` genericity glue (SR-C29, reviewed once by an
+  AI agent) + an exact rank (seven seeded rational points of S² have quadric rank 7,
+  `corank_exact.py c29`); it holds for up to nine generic points on S². This is a corollary of prior work;
+  ours is only the bookkeeping. (b) `[HAND]`, AI-reviewed (the circle phase diagram). Earlier `[PROBE]`
+  evidence: generic 7, 8 and 9 points on S² pass the second-order test; controls on a great circle fail.
+- **Correction (v1.1.0).** An earlier version said that a certificate for (a) would be the first certified
+  Ramsey set beyond the two-group mechanism on S². That was wrong: OpenAI's criterion already gives one
+  (seven generic points of S² are not two-group: four points of a Möbius image of an algebraic set have an
+  algebraic complex cross-ratio, and four generic points do not). The note's non-two-group Ramsey sets
+  (SR-C13) are on the circle, where the criterion reaches at most five points.
+- **Corollary of (a)** (by Möbius 3-transitivity): three rational plus four free points on S² are Ramsey.
+- **Withdrawn part (c).** The prediction that the generic mirror-symmetric cyclic family {0, ±a, ±b, ±c}
+  is Ramsey (which would have refuted SR-C7 on the circle too) failed: it fails the second-order test at
+  3 of 3 seeds `[PROBE]`.
+- **Falsifier.** A gap in SR-C29's genericity step.
+- **Starting state.** `python -I certificates/corank_exact.py c29`; `cd probes && python c15_c16.py`;
+  `python e1_s2.py`.
+- **Lean.** `C16_generic_seven_S2` (statement of (a) only). It follows from OpenAI's Lean theorem plus an
+  explicit rank-7 rational instance and a generic-rank lemma (`FRONTIER.md`, F8); not done here, so (a) is
+  not "Lean-checked".
 
 ### SR-C24: the rank criterion for one-parameter cyclic sets
 
@@ -265,9 +381,190 @@ history: ["2026-10-13 proved"]
 - **Difficulty.** An effective N needs new math.
 - **Lean.** None.
 
+### SR-C29: generic points up to the quadric dimension are Ramsey (OpenAI's quadric-independence criterion)
+
+```yaml
+id: SR-C29
+title: Generic points of S^{d-1}, up to the dimension of quadrics on the sphere, are Ramsey (corollaries of OpenAI's Prop. 7.3)
+status: proved
+warrant: "LEAN (OpenAI's spherical_quadraticIndependent_ramsey_all; theirs, prior work) + HAND genericity glue (reviewed once by an AI agent) + exact quadric ranks (d = 3..8)"
+scope: "GENERIC_OF((S^{d-1})^N), N <= (d+1)(d+2)/2 - 1"
+difficulty: "done; engineering (a Lean corollary)"
+lean_stub: none
+fc_category: "research solved (corollaries of prior work) once public"
+ams: ["05D10", "52C10"]
+replay: ["certificates/corank_exact.py"]
+history: ["2026-10-14 filed before its exact rank checks", "2026-10-14 proved; genericity glue reviewed once (AI), with a spanning fix"]
+```
+
+- **Prior result (OpenAI).** Result 172, Proposition 7.3: a finite spherical set A ⊂ ℝ^d with
+  coordinate field F that affinely spans ℝ^d is Ramsey if the vectors vec(pᵢpᵢᵀ), pᵢ = (1, aᵢ), are
+  linearly independent over F, that is, if the points impose independent conditions on quadratic
+  polynomials. Lean: `spherical_quadraticIndependent_ramsey_all` (Comparator challenge
+  `EuclideanRamseyQuadratic`), in `Quadratic.lean`, which every rope of this release vendors unmodified
+  (we never ran Comparator on that challenge; the `[LEAN]` tag is OpenAI's). Its circle case (Cor. 7.4, at
+  most five circle points) was cited in v1.0.0; the general criterion was overlooked until 2026-10-14. Call
+  κ(A) = N − rank_F{vec(pᵢpᵢᵀ)} the *quadric corank*; the criterion says κ = 0 ⇒ Ramsey.
+- **Statement (corollaries of OpenAI's Proposition 7.3).** Let D_d = (d + 1)(d + 2)/2 − 1, the dimension
+  of the space of quadratic polynomials restricted to S^{d−1}, and N(d) = D_d + 1.
+  - (Q1) For every d ≥ 2 and N ≤ D_d, N points of S^{d−1} whose stereographic coordinates are
+    algebraically independent over ℚ are Ramsey.
+  - (Q2) SR-C16(a): seven (indeed up to nine) such points of S² are Ramsey, and they are not two-group.
+    With SR-C16(b) this refutes SR-C7 for every d ≥ 3.
+  - (Q3) SR-C17, passing side: m rational points of S^{d−1}, outside a proper Zariski-closed set of
+    rational m-tuples, plus j points with algebraically independent stereographic coordinates are
+    Ramsey whenever m + j ≤ D_d, for every j.
+  - (Q4) SR-C3, Ramsey half: for d ≥ 3, generic n-subsets of S^{d−1} with n < N(d) are Ramsey.
+- **Genericity glue `[HAND]`** (reviewed once by an AI agent, which required the spanning fix below).
+  D_d generic points of S^{d−1} affinely span ℝ^d and impose independent conditions on quadrics:
+  quadratic polynomials restrict to linearly independent functions on S^{d−1}, so a D_d × D_d evaluation
+  minor is a nonzero polynomial in the stereographic coordinates (the F-rank is at least the rank at any
+  rational specialization; exact rational instances of full rank for d = 3, …, 8 below); the same
+  genericity remark is in the proof of Pálvölgyi's Theorem A.12. So a generic spanning D_d-set is Ramsey by OpenAI's theorem. Subsets of Ramsey sets are
+  Ramsey, and a generic N-set (N ≤ D_d), or m rational points in general position plus j generic points
+  with m + j ≤ D_d, is a subset of such a generic spanning D_d-set (for (Q3), full rank at generic free
+  points is the nonvanishing of a minor, a polynomial condition on the rational points). This matters
+  already for seven points when d ≥ 7, where seven points do not span. Not two-group: four points of a
+  Möbius image of an algebraic set have an algebraic complex cross-ratio and four generic points do not,
+  so each group of a two-group set of generic points has at most three points, and seven or more generic
+  points are not two-group.
+- **Exact checks.** `corank_exact.py c29` (seeded): D_d rational points on S^{d−1} have quadric rank D_d
+  for d = 3, …, 8 (9, 14, 20, 27, 35, 44); seven rational points on S² have rank 7; the rational points R₂
+  of the note's Theorem NR-S23 plus three more have rank 9. The script asserts that every configuration
+  has distinct points.
+- **Credit.** The criterion and its mechanism (a right inverse over F lifted through the section
+  F → F ⊗ F; OpenAI's `lift_kernel`) are OpenAI's. The consequences are corollaries; our contribution is
+  noticing them and the bookkeeping.
+- **Falsifier.** A gap in the genericity glue (the criterion itself is OpenAI's Lean theorem).
+- **Starting state.** `python -I certificates/corank_exact.py c29` (seconds).
+- **Lean.** None here. (Q2) as a Lean corollary needs one explicit rank-7 rational instance and a
+  generic-rank lemma (`FRONTIER.md`, F8); until then nothing in this entry is "Lean-checked" beyond
+  OpenAI's own theorem.
+
+### SR-C32: second-order failures with no scalar certificate
+
+```yaml
+id: SR-C32
+title: Twelve and thirteen points on S^2 (quadric corank 3 and 4) fail the 2-jet test and have no scalar certificate
+status: proved
+warrant: "proved for the four seeded families: (i) 2-jet FAIL by CERT (dual rank at a rational specialization, plus an independent primal rank pair) + HAND specialization glue, reviewed by one non-author AI agent; non-Ramsey via the 2-jet necessity (HAND, reviewed by AI); (ii) no scalar certificate, even over C: CERT (the ideal of k x k minors is exactly (y)^k) + glue, reviewed by AI"
+scope: "GENERIC_OF(F_{N,k,s}): the four seeded rational-affine families of certificates/corank_exact.py c32, with theta algebraically independent over Q"
+difficulty: "done for these families; attackable (colour counts via SR-C35)"
+lean_stub: none
+fc_category: "research solved once public"
+ams: ["05D10", "13N15"]
+replay: ["certificates/corank_exact.py"]
+history: ["2026-10-14 filed as a prediction before any computation", "2026-10-14 consistent on sample (4/4 exact)", "2026-10-14 proved for the four seeded families after a non-author AI review"]
+```
+
+- **Statement.** For (N, k) = (12, 4) and (13, 3) and seeds s = 0, 1, let F_{N,k,s} be the family of N
+  points of S² whose stereographic coordinates are the rational-affine functions αᵢ + Bᵢθ of
+  `corank_exact.py c32` (seeded rational coefficients), with θ = (θ₁, …, θ_k) algebraically independent
+  over ℚ (quadric corank 3, respectively 4). Then (i) the 2-jet test fails, so the set is not Ramsey; and
+  (ii) no relation λ ≠ 0, even complex, and derivation satisfy the linear conditions of Lemma A.1 (or its
+  matrix reduction, Pálvölgyi's A.4), so the set has no scalar (single-relation) derivation certificate.
+  These are the first non-Ramsey sets known to us with no such certificate. A matrix-weighted
+  (vector-energy) version of Lemma A.1 still colours them (SR-C35): "matrix weights are strictly
+  stronger" is true for certificates, not for colourings.
+- **Why (SR-C31's counts).** The 2-jet dual has dimension at least κk(k + 1)/2 − kG = 30 − 24 = 6 > 0,
+  while the scalar locus {λ : rank Π_λ ≤ k − 1} has expected codimension G − k + 1 = 3 > κ − 1 = 2, so it
+  is empty. On the circle the two thresholds coincide for every κ; on S² they first separate at
+  (κ, k) = (3, 4) and (4, 3).
+- **Evidence and proof.** (i) `corank_exact.py c32`: at θ = 0 the dual has dimension 6, equal to the
+  generic lower bound, with a nonzero pairing (2-jet FAIL, exact). The reviewer confirmed it with an
+  independent exact primal rank pair (N = 12: rank 150 against 151 for the augmented system; N = 13: 99
+  against 100; computed in the review, not shipped here). The specialization glue was reviewed (one
+  non-author AI review); non-Ramsey follows from the 2-jet necessity (Proposition J2, `[HAND]`,
+  AI-reviewed). (ii) The maximal (k × k) minors of Π_y (y the relation coordinates) generate a
+  zero-dimensional homogeneous ideal over ℚ (`corank_exact.py c32`); the reviewer showed that this ideal
+  is exactly (y)^k (the minors have full rank on the degree-k monomials, 15/15 and 20/20; one nonzero
+  rational determinant certifies it), so its only zero is y = 0, even over ℂ, and emptiness at the
+  specialization gives emptiness for the generic member (a closed condition). 4/4.
+- **Note on the probe.** `probes/c31_c32_jet2.py` runs the primal 2-jet test modulo p on SR-C31's seed-0
+  families with the same (N, k), not on these four families; the exact primal check above covers the
+  SR-C32 families themselves.
+- **Falsifier.** A gap in the reviewed glue.
+- **Starting state.** `python -I certificates/corank_exact.py c32` (about 20 s).
+
+### SR-C34: first-order rigidity
+
+```yaml
+id: SR-C34
+title: If the 2-jet dual space vanishes, the set is Ramsey
+status: proved
+warrant: "HAND, reviewed by one non-author AI agent (Smith form over the local ring at the diagonal, J2 duality, Nakayama); the (d+1)^2 threshold law and 'not two-group' consistent on sample (10/10 PROBE with exact dual dimensions); the non-Ramsey side at 16 points CERT per instance"
+scope: ANY
+difficulty: "done (HAND); engineering (a Lean proof over OpenAI's FieldCriterion)"
+lean_stub: none
+fc_category: "research open (until a proof is public and accepted)"
+ams: ["05D10", "13N15"]
+replay: ["probes/c34_test.py", "certificates/c34_det16.py", "certificates/corank_exact.py"]
+history: ["2026-10-14 filed with a sketch, before its probe test", "2026-10-14 consistent on sample (10/10)", "2026-10-14 proved after a non-author AI review"]
+```
+
+- **Statement.** Let A be a finite subset of the unit sphere S^{d−1} centred at 0 (other spheres by a
+  similarity), with coordinate field F, let D₁, …, D_k be a basis of Der_ℚ(F) (or of the derivations of
+  any finitely generated real field containing the coordinates), and let Δ(A) be the 2-jet dual space
+  (SR-C31(a)), without the trace-pairing condition. If Δ(A) = 0, then A is Ramsey. Scope `ANY`.
+- **Proof** (`[HAND]`, reviewed by one non-author AI agent). Over O = (F ⊗ F)_𝔪 take a Smith form of the
+  evaluation map Φ; the obstruction b has entries bᵢ = −½ Σ_j (a_ij ⊗ 1 − 1 ⊗ a_ij)², so it lies in
+  𝔪²O^N; by the duality behind Proposition J2 the annihilator of the order-two image is Δ(A) (Δ ≅ W^⊥);
+  so Δ = 0 gives 𝔪²O^κ ⊆ 𝔪·Im Ψ + 𝔪³O^κ, and Nakayama's lemma puts the obstruction in 𝔪·Im Ψ, which by
+  SR-C33(a) is Ramsey.
+- **Special cases.** κ = 0 is OpenAI's quadric-independence criterion (SR-C29). On the circle with one
+  parameter it contains SR-C24, now without the regularity hypothesis on F. It is silent when κ ≥ 1 and
+  some derivation is Möbius-null (for example transcendental rotations of rational sets).
+- **Instances.** A Ramsey verdict where Δ = 0 at a specialization with maximal quadric rank is a theorem:
+  for example the exact 2-jet passes with Δ = 0 in SR-C31's sample and in `probes/c34_test.py` (N ≤ 15 on
+  S², one parameter).
+- **Consistent on sample (not proved).** For one-parameter configurations in general position on
+  S^{d−1}, the threshold is (d + 1)² points (9 on the circle, Theorem D's count; 16 on S²), and the Ramsey
+  sets with quadric corank 1 to 4 that this gives on S² are not two-group. Evidence: `probes/c34_test.py`,
+  N = 13, …, 17 on S², two seeds each: exact dim Δ at θ = 0 is 0 for N ≤ 15 and 1, 2 (nonzero pairing) for
+  N = 16, 17; the curve probe (the truncated π-adic test, order 12, modulo p) and the 2-jet test pass for
+  every N ≤ 15 and fail for N = 16, 17 `[PROBE]`, 10/10 as predicted. The non-Ramsey side at N = 16 is
+  exact without the 2-jet test: the 16 × 16 evaluation determinant is nonzero at two rational points for
+  both seeds (`certificates/c34_det16.py`, Theorem D's method, `[CERT]` per instance).
+- **Novelty.** Novel as far as found: a literature sweep on 2026-10-15 (OpenAI's paper and Lean tree, Pálvölgyi's appendix, arXiv, OpenAlex, zbMATH, GitHub including OpenAI's forks, the Palomar registry, MathOverflow) found no prior statement. Its order-zero case is OpenAI's Proposition 7.3; its cases with algebraic coordinates (k = 0) or at most m + 4 points in affine dimension m are prior (JD-Jones-ASES/six-concyclic-lean, and the algebraic-coordinates prior work credited for Theorem A). The new content is positive transcendence degree together with quadric relations (κ ≥ 1).
+- **Falsifier.** A gap in the reviewed argument; a configuration with exact Δ = 0 (maximal quadric rank,
+  a basis of derivations) that is not Ramsey.
+- **Starting state.** `cd probes && python c34_test.py` (about 30 s); `python -I certificates/c34_det16.py`.
+- **Difficulty.** Done at `[HAND]`; a Lean proof is pure commutative algebra over OpenAI's `FieldCriterion`
+  (`FRONTIER.md`, F8).
+
 ---
 
 ## Refuted (kept)
+
+### SR-C7: specialization closure (R2)
+
+```yaml
+id: SR-C7
+title: If the generic member of an irreducible family is Ramsey, every member is
+status: refuted
+warrant: "refuted as stated, for every d >= 3: SR-C16(a) (OpenAI's Prop. 7.3, LEAN, theirs + HAND genericity glue, reviewed once by an AI agent + exact ranks) and SR-C16(b) (HAND, reviewed by AI); the review of the refutation: one AI agent"
+scope: "GENERIC_OF(V)"
+difficulty: done
+lean_stub: none
+fc_category: "research solved (answer False) once public"
+ams: ["05D10", "14Q99"]
+replay: ["certificates/corank_exact.py", "probes/c15_c16.py"]
+history: ["2026-10-12 filed", "2026-10-13 probe-level counter-instance off the circle (SR-C16)", "2026-10-14 refuted for every d >= 3 via OpenAI's Prop. 7.3 (reviewed once, AI)"]
+```
+
+- **Statement (refuted).** If the generic member of an irreducible family of finite spherical
+  configurations is Ramsey, every member is.
+- **Counterexample.** For each d ≥ 3, the family (S^{d−1})⁷ of seven-point configurations has a Ramsey
+  generic member (SR-C16(a): a corollary of OpenAI's Proposition 7.3 with the genericity step) and a
+  non-Ramsey member: seven points on a great circle with algebraically independent parameters (the circle
+  phase diagram; Pálvölgyi's Theorems A.3 and A.7). Pálvölgyi's Theorem A.13 gives another: its explicit
+  nine-point non-Ramsey set on S² is a member of (S²)⁹, whose generic member is Ramsey (SR-C29). The
+  refutation was reviewed once by an AI agent. (In v1.0.0: "refuted at PROBE level if SR-C16(a) holds".)
+- **Successor question (open).** The circle restriction: for irreducible families of *cyclic*
+  configurations, is the Ramsey locus closed under specialization? The mirror-family attempt (SR-C16(c))
+  did not refute it. It is `FRONTIER.md` F13 and a `BACKLOG.md` row; it has no entry of its own yet.
+- **Starting state.** `python -I certificates/corank_exact.py c29`. For the circle question: degenerations
+  of two-group families with the exact k = 1 procedure (SR-C19).
 
 ### SR-C13: seven cyclic points are Ramsey iff two-group
 
@@ -300,8 +597,11 @@ history: ["2026-10-13 filed as the naive working hypothesis, before any check", 
 - **Starting state.** `python -I certificates/cert_nontwogroup.py` (about 36 s for W₇ and W₈; add
   `--slow` for the radian 7-gon, 37–47 min).
 - **Lean.** `C13_refuted` states the negation (statement only).
-- **Pre-posting gate.** The note states these sets as a `[CERT]` theorem; a review of the glue for these
-  instances is still to be done.
+- **Review.** The circle glue for these instances was reviewed on 2026-10-13 by a separate (non-builder)
+  AI agent, with independent sympy and python-flint re-checks; sound, wording fixes applied.
+- **Scope of the novelty.** These are non-two-group Ramsey sets on the circle. Off the circle,
+  non-two-group Ramsey sets already follow from OpenAI's quadric-independence criterion (SR-C29), which
+  on the circle reaches at most five points.
 
 ### SR-C22: seven points, cross-ratio transcendence degree at least 2
 
@@ -362,39 +662,6 @@ history: ["2026-10-13 filed", "2026-10-13 consistent on sample"]
 - **Starting state.** `cd probes && python c15_c16.py`.
 - **Higher dimensions.** False as stated on S² (five rational plus four free points pass but are not
   two-group); a higher-dimensional analogue must be count-aware (SR-C17).
-
-### SR-C16: Ramsey-ness is not closed under specialization off the circle
-
-```yaml
-id: SR-C16
-title: Seven generic points on S^2 are Ramsey
-status: consistent-on-sample
-warrant: "PROBE for (a); HAND, reviewed by AI, for (b)"
-scope: "GENERIC_OF((S^2)^7)"
-difficulty: attackable
-lean_stub: "lean/SphericalRamseyConjectures.lean#C16_generic_seven_S2"
-fc_category: "research open"
-ams: ["05D10", "52C10"]
-replay: ["probes/c15_c16.py", "probes/e1_s2.py"]
-history: ["2026-10-13 filed", "2026-10-13 consistent on sample; part (c) withdrawn after its prediction failed"]
-```
-
-- **Statement.** (a) Seven points of S² whose fourteen stereographic coordinates are algebraically
-  independent over ℚ are Ramsey. (b) Seven points on a great circle of S² with algebraically independent
-  parameters are not Ramsey (the circle phase diagram, `[HAND]`, reviewed). Hence the irreducible family
-  of 7-point configurations on S² has a Ramsey generic member and a non-Ramsey specialization, and
-  SR-C7 fails for d ≥ 3.
-- **Corollary of (a)** (by Möbius 3-transitivity): three rational plus four free points on S² are Ramsey.
-- **Status and evidence.** `[PROBE]` generic 7, 8 and 9 points on S² pass the second-order test (which
-  is only necessary at this transcendence degree); controls on a great circle fail.
-- **Withdrawn part (c).** The prediction that the generic mirror-symmetric cyclic family {0, ±a, ±b, ±c}
-  is Ramsey (which would have refuted SR-C7 on the circle too) failed: it fails the second-order test at
-  3 of 3 seeds `[PROBE]`.
-- **Falsifier.** An exact second-order failure for 7 generic points on S². Promotion needs an exact
-  Ramsey certificate for 7 generic points on S²; that would be the first certified Ramsey set beyond the
-  two-group mechanism on a sphere of dimension ≥ 2.
-- **Starting state.** `cd probes && python c15_c16.py`; `python e1_s2.py`.
-- **Lean.** `C16_generic_seven_S2` (statement of (a) only).
 
 ### SR-C19: decidability over presented fields
 
@@ -494,6 +761,103 @@ history: ["2026-10-13 filed before its probe", "2026-10-13 30/30"]
 - **Falsifier.** A seeded instance with no certified copy within the full search budget (not itself a
   refutation; the cue to attempt an exact avoidance certificate).
 
+### SR-C30: the phase diagram in every dimension, failing side
+
+```yaml
+id: SR-C30
+title: Rational plus at least four independent points at or above N(d) are non-Ramsey, every d >= 3 (embedded S^2 cell)
+status: consistent-on-sample
+warrant: "SKETCH for every d, reviewed once by an AI agent (sound; the step-2 rank lemma needs a written proof); CERT per instance (exact ranks and energy forms at rational points) + HAND specialization glue for d = 3..7, 16/16"
+scope: "GENERIC_OF(m rational in general position + j independent), d >= 3"
+difficulty: "engineering (a non-author review of the sketch)"
+lean_stub: none
+fc_category: "research open"
+ams: ["05D10", "52C10"]
+replay: ["certificates/corank_exact.py"]
+history: ["2026-10-14 filed with a sketch, before its exact checks", "2026-10-14 consistent on sample (16/16 exact, d = 3..7)"]
+```
+
+- **Statement.** For every d ≥ 3, j ≥ 4 and m with m + j ≥ N(d) = (d + 1)(d + 2)/2: m points of S^{d−1}
+  with rational coordinates, outside a proper Zariski-closed subset of rational m-tuples, together with
+  j points whose stereographic coordinates are algebraically independent over ℚ, form a non-Ramsey set.
+  With SR-C29 (Q3) and SR-C4's first half this would give SR-C17 in full.
+- **Sketch `[SKETCH]`, reviewed once by an AI agent (sound)** (Lemma A.1 route). (1) Non-Ramsey passes to supersets, and extra
+  free points can be specialized to rational ones, so it suffices to treat the cell (N(d) − 4, 4).
+  (2) At quadric corank one a Lemma A.1 certificate is a derivation ∂ on the free coordinates with
+  Σᵢ λᵢ⟨V(aᵢ), ∂aᵢ⟩ = 0 for every conformal Killing field V of S^{d−1} and E = Σᵢ λᵢ|∂aᵢ|² ≠ 0. For four
+  free points the fields fixing the 2-sphere through them give vanishing conditions, so the rank of this
+  system Π is at most 4d − 6 against 4(d − 1) unknowns, so its kernel has dimension at least 2. (This
+  rank lemma, via the stabilizer so(W^⊥) of the 2-sphere, needs a written proof. That the kernel
+  dimension matches the j(j − 3)/2 = 2 Möbius moduli of four points, and that this is why the free-point
+  threshold is 3 in every dimension, is a heuristic.) (3) Special member: the S² cell (6,4) of Theorem NR-S23 on a great
+  2-sphere plus N(d) − 10 rational points in general position; a block decomposition of so(1, d) gives
+  rank Π = 4d − 6 with the S² kernel, on which E ≢ 0. (4) Specialization back to generic free points keeps
+  corank 1, rank Π = 4d − 6 and E ≢ 0. (5) These are polynomial nonvanishing conditions on the rational
+  points, so they hold outside a proper Zariski-closed set.
+- **Evidence (exact).** `corank_exact.py c30`: the special member for d = 4, …, 7 and two seeded
+  general-position instances for each d = 3, …, 7 have quadric corank 1, nonzero weights at the four free
+  points, rank Π = 4d − 6, a two-dimensional kernel and E ≢ 0 on it; the controls with three free points
+  (d = 4, 5) have kernel 0. 16/16 as predicted. Each general-position instance certifies the cell
+  (N(d) − 4, 4) for those rational points directly (exact identities plus the specialization glue of
+  Theorem NR-S23).
+- **Prior work.** Pálvölgyi's Theorem A.12 (arXiv:2609.23327, appendix, labelled unchecked by its
+  author) is the all-free cell and, by its isotropy argument, covers the cells with j(d − 1) > d(d + 1).
+  The cells with 4 ≤ j and j(d − 1) ≤ d(d + 1), where the kernel is too small for the isotropy argument,
+  are new.
+- **Falsifier.** A rank of Π above 4d − 6 anywhere (refutes step 2); a rank below it at every seed, or
+  E ≡ 0 on the kernel (breaks steps 3–4).
+- **Starting state.** `python -I certificates/corank_exact.py c30` (about 10 s).
+- **Difficulty.** A written proof of the step-2 rank lemma; then the entry can be promoted.
+
+### SR-C31: the corank law for the 2-jet test on every sphere
+
+```yaml
+id: SR-C31
+title: The 2-jet test fails iff (kappa = 1 and k > G_d) or (kappa >= 2 and kappa(k+1) > 2 G_d), for families in general position
+status: consistent-on-sample
+warrant: "(a): HAND, reviewed by one non-author AI agent; (b): exact 2-jet dual dimensions and pairings at rational specializations, 38/38 decided as predicted (three after re-specializing), plus 8/8 PROBE with the primal 2-jet"
+scope: "(a): ANY; (b): GENERIC_OF(rational-affine families u_i(theta) = alpha_i + B_i theta with seeded rational coefficients)"
+difficulty: "attackable (generic non-vanishing of the pairing; general position of geometric families)"
+lean_stub: none
+fc_category: "research open"
+ams: ["05D10", "13N15"]
+replay: ["certificates/corank_exact.py", "certificates/c31_respecialize.py", "probes/c31_c32_jet2.py"]
+history: ["2026-10-14 filed before its probe and exact checks", "2026-10-14 consistent on sample", "2026-10-14 (a) proved after a non-author AI review"]
+```
+
+- **Setting.** A ⊂ S^{d−1}, |A| = N, with derivations D₁, …, D_k (k the Möbius-reduced transcendence
+  degree), quadric corank κ (SR-C29) and quadric rank D_d, and G_d = d(d + 1)/2 = dim so(1, d). For a
+  relation λ (Σᵢ λᵢpᵢpᵢᵀ = 0), Π_λ is the G_d × k matrix whose column l is the antisymmetric part of
+  Σᵢ λᵢ pᵢ(D_l pᵢ)ᵀ.
+- **Statement.**
+  - (a) **Proved** (`[HAND]`, reviewed by one non-author AI agent), for any quadric rank and the full
+    derivation module Der(F). The dual space of the 2-jet system is
+    Δ(A) = {(C^ρ)_{ρ ≤ κ}, C^ρ ∈ Sym²(F^k) : Σ_ρ Π_{λ^ρ} C^ρ = 0} for a basis λ¹, …, λ^κ of relations, and
+    the test fails iff some element of Δ(A) has a nonzero trace pairing with the Gram data. At corank one
+    Δ = Sym²(ker Π_λ), so the 2-jet test equals the scalar test of Lemma A.1 (Pálvölgyi's method), and a
+    failure that contains a corank-one failing subset has a scalar certificate (extend λ by 0).
+  - (b) (conjecture; consistent on sample) For families in general position the 2-jet test fails iff
+    κ = 1 and k > G_d, or κ ≥ 2 and κ(k + 1) > 2G_d. On the circle (G = 3, κ = n − 5) this is SR-C23's
+    count. The dimension count holds for Π in general position (checked modulo p by the reviewer); open
+    are the generic non-vanishing of the pairing and the general position of geometric families, whose
+    genericity should include "no Möbius-null derivation" (no derivation moving every point by one
+    conformal Killing field). Configurations with disjoint parameters (phase-diagram cells) and two-group
+    sets are not in general position.
+- **Evidence.** Exact (`corank_exact.py c31`): 19 cells (d, N, k) × 2 seeds on S¹ (N = 7, 8), S²
+  (N = 9, …, 13) and S³ (N = 15); 35 decided at θ = 0 exactly as predicted, and 3 families had
+  coincident points at θ = 0 (a degenerate specialization; the families themselves are injective) and
+  decided as predicted at other rational points (`c31_respecialize.py`). Thresholds where predicted: on S², κ = 1: k = 6 pass, 7 fail; κ = 2: 5, 6;
+  κ = 3: 3, 4; κ = 4: 2, 3; on S³, κ = 1: 10, 11. Every test point has maximal quadric rank
+  (κ = N − D_d). The undecided family (d, N, k) = (2, 7, 2), seed 1, re-specializes to an exact pass at 2
+  of 3 points (the third again has coincident points); it is not a decided mismatch. `[PROBE]` (`probes/c31_c32_jet2.py`): the primal 2-jet test of
+  the probe harness agrees on the 8 S² threshold cells, with no `NO_VERDICT`. Where Δ = 0, a 2-jet pass
+  is a Ramsey verdict by SR-C34.
+- **Falsifier.** A decided exact verdict against (b) for a family in general position.
+- **Starting state.** `python -I certificates/corank_exact.py c31` (about 20 s);
+  `python -I certificates/c31_respecialize.py`; `cd probes && python c31_c32_jet2.py`.
+- **Difficulty.** (b): the generic non-vanishing of the pairing, and the general position of geometric
+  families.
+
 ---
 
 ## Open
@@ -531,34 +895,6 @@ history: ["2026-10-12 filed", "2026-10-12 evidence restricted to real configurat
   second-order one). General k: needs new math.
 - **Lean.** None: the second-order system needs about 60 lines of definitions.
 
-### SR-C3: generic thresholds
-
-```yaml
-id: SR-C3
-title: Generic n-subsets of S^{d-1} are non-Ramsey iff n >= N(d)
-status: open
-merged_into: SR-C17
-warrant: "PROBE; failing-side boundary cells: S^2 CERT, circle HAND (AI-reviewed)"
-scope: "GENERIC_OF(configuration space)"
-difficulty: attackable
-lean_stub: none
-fc_category: "research open"
-ams: ["05D10", "52C10"]
-replay: ["probes/e1_phase.py", "probes/e1_s2.py", "probes/e1_s3.py", "probes/e1_s4.py"]
-note: "Conjecture C3"
-history: ["2026-10-12 filed", "2026-10-13 merged into SR-C17"]
-```
-
-- **Statement.** A generic n-subset of S^{d−1} is non-Ramsey iff n ≥ N(d), with N(2) = 7 and
-  N(d) = (d + 1)(d + 2)/2 for d ≥ 3.
-- **Evidence `[PROBE]`.** Circle 6 pass / 7 fail; S² 9 / 10; first failures at 15 (S³) and 21 (S⁴), with
-  four or five free points. On the failing side, the S² boundary cells are certified non-Ramsey (`[CERT]`, the note's
-  minimal non-Ramsey theorem) and the circle cell is proved by hand (`[HAND]`, AI-reviewed; the circle
-  phase diagram).
-- **Falsifier.** An all-generic run on S³ (n = 14, 15) or S⁵ (n = 27, 28), exactly specialized at the
-  boundary.
-- **Starting state.** `cd probes && python e1_s2.py`; `python e1_s3.py`.
-
 ### SR-C4: free-point threshold three
 
 ```yaml
@@ -583,6 +919,8 @@ history: ["2026-10-12 filed", "2026-10-13 merged into SR-C17"]
   a Möbius image of a rational triple), at SR-C2's level: `[CERT]` + glue for d ≤ 6, `[HAND]` for all d;
   on the circle it is `[LEAN]`, Lean-checked (rope AV5). The derivation has had no separate review. Four free points fail
   on S¹ (circle phase diagram), S² and S³ (the cells (6,4) and (11,4), `[CERT]`); `[PROBE]` for 5 ≤ d ≤ 9.
+  Since v1.1.0: exact per-instance certificates of the cell (N(d) − 4, 4) for seeded rational points,
+  d = 3, …, 7 (SR-C30; reviewed once by an AI agent).
 - **Falsifier.** A 3-free-point failure at some d, exactly specialized; or a d where no 4-free-point
   failure exists.
 - **Starting state.** `cd probes && python e3b.py`; `python -I certificates/scalar_exact.py`.
@@ -652,30 +990,6 @@ history: ["2026-10-12 filed"]
 - **Starting state.** `cd probes && python c23_count_law.py` (59 exact-determinant non-Ramsey 9-point
   sets in its sample).
 
-### SR-C7: specialization closure (R2)
-
-```yaml
-id: SR-C7
-title: If the generic member of an irreducible family is Ramsey, every member is
-status: open
-warrant: "off the circle: refuted at PROBE level if SR-C16(a) holds; on the circle: no evidence either way"
-scope: "GENERIC_OF(V)"
-difficulty: attackable
-lean_stub: none
-fc_category: "research open"
-ams: ["05D10", "14Q99"]
-replay: ["probes/c15_c16.py"]
-history: ["2026-10-12 filed", "2026-10-13 probe-level counter-instance off the circle (SR-C16)"]
-```
-
-- **Statement.** If the generic member of an irreducible family of finite spherical configurations is
-  Ramsey, every member is.
-- **Status.** For d ≥ 3 it fails if SR-C16(a) holds (seven generic points on S² `[PROBE]` Ramsey,
-  specializing to seven independent cocircular points, non-Ramsey). On the circle it is open; the
-  mirror-family attempt (SR-C16(c)) did not refute it.
-- **Falsifier.** On the circle: a family with Ramsey generic member and an exact non-Ramsey
-  specialization; try degenerations of two-group families with the exact k = 1 procedure (SR-C19).
-
 ### SR-C8: pseudo-Euclidean Ramsey theory (L1)
 
 ```yaml
@@ -720,42 +1034,11 @@ history: ["2026-10-12 filed"]
 - **Example.** The nine points at 0, e, …, 8e radians are Ramsey iff e^{ie} is algebraic (Theorem D,
   `[LEAN]`, Lean-checked, rope AV3). Schanuel's conjecture implies that e^{ie} is transcendental (Waldschmidt, *Open
   Diophantine problems*, arXiv:math/0312440, §3.1); we know no proof and found none in the literature.
-  That it is open is our inference (a final re-check is pending before posting).
+  That it is open is our inference (re-checked on the posting day, 2026-10-14).
 - **A decided family** (`[HAND]`, unreviewed): for θ = πβ with β real algebraic, the radian 9-gon is
   Ramsey iff β ∈ ℚ (Gelfond–Schneider: (−1)^β is transcendental for irrational algebraic β).
 - **Falsifier.** A proof in the literature that e^{ie} is transcendental (it would kill the example, not
   the framing).
-
-### SR-C11: a second-order failure without a scalar certificate
-
-```yaml
-id: SR-C11
-title: Is there a 2-jet failure with no scalar single-derivation certificate?
-status: open
-warrant: "PROBE evidence against, on every tested cell"
-scope: ANY
-difficulty: attackable
-lean_stub: none
-fc_category: "research open"
-ams: ["05D10"]
-replay: ["probes/scalar_cert.py", "certificates/scalar_exact.py"]
-note: "Section (second-order necessary test), scalar certificates"
-history: ["2026-10-12 filed (replacing a withdrawn witness)", "2026-10-12 evidence against on all tested cells"]
-```
-
-- **Statement (question).** Is there a finite spherical set whose second-order system is inconsistent
-  but which has no scalar certificate (weights Λᵢ = λᵢC with a single derivation of the coordinate
-  field), even with order-one multipliers allowed?
-- **Evidence against `[PROBE]`.** A scalar certificate exists in all sixteen failing S² cells, both S³
-  threshold cells, the S⁴ threshold and ten generic points on S², at two primes; seven of them are exact
-  (the note's minimal non-Ramsey theorem). An earlier claimed witness (three rational plus four
-  independent circle points) is withdrawn: it has a scalar certificate (exact, J2-F7). For k = 1 every
-  certificate is scalar, so no witness exists there.
-- **Falsifier / search.** A random fixed direction is not a test (it misses certificates that exist).
-  Search over all directions: method A of `scalar_cert.py` for disjoint parameter sets, otherwise a
-  bilinear search in (λ, c). Remaining candidates: k ≥ 2 failures with shared parameters (three Möbius
-  groups, 6 + 6 + 6 on S³).
-- **Starting state.** `cd probes && python scalar_cert.py`; `python -I certificates/scalar_exact.py`.
 
 ### SR-C12: scalar sufficiency on disjoint-parameter configurations
 
@@ -776,9 +1059,13 @@ history: ["2026-10-12 filed as a working hypothesis"]
 - **Statement.** On configurations of rational points plus points with pairwise disjoint independent
   parameters, on any S^{d−1}, every failure of the second-order test has a scalar single-derivation
   certificate.
-- **Evidence `[PROBE]`.** As SR-C11.
-- **Falsifier.** A method-A "no scalar certificate" at a failing cell, for example at the free-point
-  thresholds for d = 2, …, 9 (`probes/e3b.py`).
+- **Evidence, re-scoped (v1.1.0).** The `[PROBE]` evidence recorded under SR-C11 is automatic here: the
+  minimal failing cells of rational plus independent points have quadric corank one, every failing cell
+  contains one, and at corank one the 2-jet test equals the scalar test (SR-C31(a)). So the hypothesis has
+  content only for failing configurations that contain no failing corank-one subset. SR-C32's witnesses
+  have shared parameters and do not bear on it.
+- **Falsifier.** A disjoint-parameter configuration that fails the 2-jet test, contains no failing
+  corank-one subset, and has no scalar certificate.
 
 ### SR-C17: the phase diagram in every dimension
 
@@ -786,15 +1073,15 @@ history: ["2026-10-12 filed as a working hypothesis"]
 id: SR-C17
 title: Rational plus independent points on S^{d-1}, d >= 3
 status: open
-warrant: "PROBE; the minimal failing cells on S^2 and S^3 are CERT; the passing side with j <= 3 follows from SR-C2"
+warrant: "passing side proved: SR-C2 for j <= 3; OpenAI's Prop. 7.3 + HAND genericity glue (SR-C29, reviewed once, AI) for m + j <= D_d. Failing side: CERT + glue for specific rational points, d = 3..7 (and S^2, S^3 cells in the note); every d at SKETCH, reviewed once (AI), via SR-C30; the all-free cell is Palvolgyi A.12 (unchecked appendix)"
 scope: "GENERIC_OF(m rational in general position + j independent)"
 difficulty: attackable
 lean_stub: none
 fc_category: "research open"
 ams: ["05D10", "52C10"]
-replay: ["probes/e1_s2.py", "probes/e3_sphere.py", "certificates/scalar_exact.py"]
+replay: ["probes/e1_s2.py", "probes/e3_sphere.py", "certificates/scalar_exact.py", "certificates/corank_exact.py"]
 note: "Conjecture C3 (merged form); Theorem NR-S23"
-history: ["2026-10-13 filed, merging SR-C3 and SR-C4"]
+history: ["2026-10-13 filed, merging SR-C3 and SR-C4", "2026-10-14 passing side proved via OpenAI's Prop. 7.3; failing side via Palvolgyi A.12 and SR-C30"]
 ```
 
 - **Statement.** For d ≥ 3 let N(d) = (d + 1)(d + 2)/2. Take m points of S^{d−1} with rational
@@ -807,7 +1094,13 @@ history: ["2026-10-13 filed, merging SR-C3 and SR-C4"]
   with m ≤ 3 are generic N(d)-sets. On S² the minimal cells (6,4), (5,5), (4,6), (3,7) and generic 10, and
   on S³ the cells (11,4), (10,5), are certified non-Ramsey (`[CERT]` identities plus reviewed glue) for
   the specific rational points listed in the note. The S⁴ cell (17,4) has a scalar certificate modulo p
-  only. Passing side: j ≤ 3 is SR-C4's first half; j ≥ 4 below N(d) is open (first case: SR-C16).
+  only. Passing side (proved): j ≤ 3 is SR-C4's first half (SR-C2); m + j ≤ D_d is a corollary of
+  OpenAI's Proposition 7.3 (SR-C29 (Q3); genericity glue reviewed once by an AI agent).
+- **Since v1.1.0.** The all-free cell (0, N(d)) is Pálvölgyi's Theorem A.12 (arXiv:2609.23327, appendix,
+  labelled unchecked by its author), and its isotropy argument covers the cells with j(d − 1) > d(d + 1).
+  The failing side has exact certificates (plus glue) for specific rational points for d = 3, …, 7, and
+  an argument in every dimension (SR-C30, `[SKETCH]`, reviewed once by an AI agent: sound, with one rank
+  lemma still to be written out). The entry stays open until that lemma is written and checked.
 - **Falsifier.** An S³ cell with j ≥ 6 at m + j = 14 that fails, or one at m + j = 15 that passes; on S²,
   rational points in general position for which (4,6) passes. The S³ j ≥ 6 cells are a large linear
   system (about 4,000 unknowns modulo p): hours, not a campaign.
@@ -933,13 +1226,85 @@ history: ["2026-10-13 filed"]
   for every D, with an exact avoidance certificate. A cheap first probe: SAT over ℤ^D-periodic grid
   colourings at small (D, N, r), constrained by exactly certified robust copies.
 
+### SR-C33: finite-type reformulation; a corank-one membership test
+
+```yaml
+id: SR-C33
+title: Ramsey iff b lies in Phi(m O^M) over the local ring at the diagonal; corank one reduces to one ideal membership
+status: open
+warrant: "(a)-(c): HAND, reviewed by one non-author AI agent; (d): conjecture"
+scope: ANY
+difficulty: "attackable (doubly degenerate corank-one families)"
+lean_stub: none
+fc_category: "research open"
+ams: ["05D10", "13N15", "13D02"]
+replay: []
+history: ["2026-10-14 filed with sketches; no computation run", "2026-10-14 (a)-(c) proved after a non-author AI review; (d) open"]
+```
+
+- **Setting.** B = F ⊗_ℚ F, 𝔪 = ker(multiplication), O = B_𝔪 (a regular local ring with residue field F;
+  for one parameter a discrete valuation ring), Φ : O^{(d+1)²} → O^N the evaluation map
+  P ↦ ((pᵢ ⊗ 1)ᵀP(1 ⊗ pᵢ))ᵢ, and b = Φ(S ⊗ 1) ∈ 𝔪O^N.
+- **Statement.**
+  - (a) **Proved** (`[HAND]`, one non-author AI review). A is Ramsey iff b ∈ Φ(𝔪O^{(d+1)²}), membership
+    taken in O. Hence for each A there is an order N(A) such that A is Ramsey iff the field criterion is
+    solvable over B/𝔪^{N(A)} (by the Krull intersection theorem; N(A) is not effective). The 2-jet test is
+    N = 3, and SR-C1 is the uniform statement N(A) ≤ 3.
+  - (b) **Proved** (same review). κ(A) = 0 gives OpenAI's quadric-independence criterion (SR-C29) in local
+    form. If κ(A) = 1, A is Ramsey iff β ∈ 𝔪·I, where I is the ideal of maximal minors of Φ and β a minor
+    of [Φ_J | b]; I = 0 is allowed, and then A is Ramsey iff β = 0. For one parameter (uniformizer π):
+    Ramsey iff ord_π β > ord_π I.
+  - (c) **Proved** (same review). In (b) with one parameter, ord β = 2 exactly when E ≠ 0, and ord I ≥ 2
+    exactly when the derivation satisfies Lemma A.1's linear conditions; the only undecided case is the
+    doubly degenerate one (linear conditions hold and E = 0).
+  - (d) **Open** (conjecture). At quadric corank one, A is non-Ramsey iff it has a Lemma A.1 certificate.
+- **Falsifier of (d).** A doubly degenerate corank-one configuration with I ⊂ 𝔪³ and ord β ≤ ord I.
+- **Starting state.** One-parameter families of 10 points on S² with a Lemma A.1 derivation and E ≡ 0;
+  compute ord I and ord β exactly over ℚ(T)[U] localized at U = T (the machinery of
+  `certificates/exact_circle_cert.py` generalizes).
+- **Difficulty.** Attackable: construct the doubly degenerate families.
+
+### SR-C35: a matrix-weighted Lemma A.1
+
+```yaml
+id: SR-C35
+title: A nonzero pairing on the 2-jet dual space gives an explicit colouring (matrix-weighted Lemma A.1)
+status: open
+warrant: "SKETCH (derived by a non-author AI reviewer; not itself reviewed); the identity was exact-tested on the four SR-C32 families under random isometric embeddings into R^5, with a failing control (reviewer's check, not shipped)"
+scope: ANY
+difficulty: "engineering (a review); attackable (colour counts)"
+lean_stub: none
+fc_category: "research open"
+ams: ["05D10", "13N15"]
+replay: []
+history: ["2026-10-14 filed (found by a non-author reviewer of SR-C32)"]
+```
+
+- **Statement `[SKETCH]`.** Let (C^ρ) ∈ Δ(A) with E = Σ_ρ tr(C^ρ M_ρ) ≠ 0 (M_ρ = Σᵢ λ^ρ_i Gramᵢ). For
+  derivations ∂_l of ℝ extending the D_l, put g_ρ(x) = Σ_{j,l} C^ρ_{jl}⟨∂_j x, ∂_l x⟩. Then
+  Σᵢ Σ_ρ λ^ρ_i g_ρ(a′ᵢ) = E for every congruent copy a′ = v + Qa of A. With an additive χ : ℝ → ℝ/ℤ with
+  χ(E) = ½, colouring x by the 1/M-cells of (χ(φᵢ(g(x))))ᵢ, M > 2N, uses M^N colours and has no
+  monochromatic copy, so A is not Ramsey.
+- **Consequences, if it survives review.** The SR-C32 sets are non-Ramsey without the 2-jet necessity
+  (Proposition J2), by an explicit colouring; the first step of `FRONTIER.md` F3 is essentially done.
+- **Prior work.** The colouring principle is OpenAI's Proposition 2.4 (the necessity half of their criterion,
+  after EGMRSS I, Lemma 15), which colours from any ℚ-linear functional on the tensor space; SR-C35 is an
+  explicit derivation-energy form of such a functional, so its non-Ramsey conclusion also follows from
+  OpenAI's Theorem 1.1 together with Proposition J2. Pálvölgyi's Theorem A.4 is the scalar-weight analogue
+  (one weight vector with a matrix C, which reduces to a single derivation); SR-C35 lets the weight vectors
+  λ^ρ vary with ρ. Literature sweep 2026-10-15: no vector-valued form of the EGMRSS Lemma 15 argument found
+  (EGMRSS II and III and older surveys not read in full).
+- **Credit.** Found by a non-author AI reviewer of SR-C32.
+- **Falsifier.** A gap in the identity or in the colouring step.
+- **Difficulty.** A review; then colour counts (SR-C21).
+
 ---
 
 ## Tailings (refuted or withdrawn, no entry of their own)
 
 | Guess | Killed by | Warrant |
 |---|---|---|
-| Matrix weights in the dual of the second-order test are strictly stronger than Pálvölgyi's scalar identities | its only witness (three rational plus four independent circle points) has a scalar certificate with E = 4 (`certificates/dual_cert.py`) | `[CERT]`; withdrawn |
+| Matrix weights in the dual of the second-order test are strictly stronger than Pálvölgyi's scalar identities | its only witness (three rational plus four independent circle points) has a scalar certificate with E = 4 (`certificates/dual_cert.py`) | `[CERT]`; withdrawn (a new witness for certificates, not colourings: SR-C32, SR-C35) |
 | Poncelet chains are special (Ramsey beyond the generic threshold) | they fail at seven points like random three-parameter families (`probes/e6_wild.py`) | `[PROBE]` |
 | Two Möbius groups work only on Hopf spheres | S³ two-group certificates, then SR-C2 in every dimension | `[CERT]` / `[HAND]` |
 | The free-point threshold grows with d | it is 3 for d = 2, …, 9 (`probes/e3b.py`) | `[PROBE]` |

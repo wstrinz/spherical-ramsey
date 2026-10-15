@@ -1,0 +1,13 @@
+d=3 N=10 k=6 kappa=1: jet2 PASS       predicted PASS
+d=3 N=10 k=7 kappa=1: jet2 FAIL       predicted FAIL
+d=3 N=11 k=5 kappa=2: jet2 PASS       predicted PASS
+d=3 N=11 k=6 kappa=2: jet2 FAIL       predicted FAIL
+d=3 N=12 k=3 kappa=3: jet2 PASS       predicted PASS
+d=3 N=12 k=4 kappa=3: jet2 FAIL       predicted FAIL
+d=3 N=13 k=2 kappa=4: jet2 PASS       predicted PASS
+d=3 N=13 k=3 kappa=4: jet2 FAIL       predicted FAIL
+# retry tally: jet2 PASS=4 FAIL=4 NO_VERDICT=0 MIXED=0
+
+real	0m7.320s
+user	0m0.061s
+sys	0m0.281s

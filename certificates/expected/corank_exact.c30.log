@@ -1,0 +1,18 @@
+== C-30: PD_d minimal cell (N(d)-4, 4): special (embedded S^2 cell) and general position
+  d=3 general#0: N=10 quadrank=9 kappa=1 lam_free!=0=True rankPi=6 (expect 6) kerdim=2 E!=0=True -> OK
+  d=3 general#1: N=10 quadrank=9 kappa=1 lam_free!=0=True rankPi=6 (expect 6) kerdim=2 E!=0=True -> OK
+  d=4 special : N=15 quadrank=14 kappa=1 lam_free!=0=True rankPi=10 (expect 10) kerdim=2 E!=0=True -> OK
+  d=4 general#0: N=15 quadrank=14 kappa=1 lam_free!=0=True rankPi=10 (expect 10) kerdim=2 E!=0=True -> OK
+  d=4 general#1: N=15 quadrank=14 kappa=1 lam_free!=0=True rankPi=10 (expect 10) kerdim=2 E!=0=True -> OK
+  d=5 special : N=21 quadrank=20 kappa=1 lam_free!=0=True rankPi=14 (expect 14) kerdim=2 E!=0=True -> OK
+  d=5 general#0: N=21 quadrank=20 kappa=1 lam_free!=0=True rankPi=14 (expect 14) kerdim=2 E!=0=True -> OK
+  d=5 general#1: N=21 quadrank=20 kappa=1 lam_free!=0=True rankPi=14 (expect 14) kerdim=2 E!=0=True -> OK
+  d=6 special : N=28 quadrank=27 kappa=1 lam_free!=0=True rankPi=18 (expect 18) kerdim=2 E!=0=True -> OK
+  d=6 general#0: N=28 quadrank=27 kappa=1 lam_free!=0=True rankPi=18 (expect 18) kerdim=2 E!=0=True -> OK
+  d=6 general#1: N=28 quadrank=27 kappa=1 lam_free!=0=True rankPi=18 (expect 18) kerdim=2 E!=0=True -> OK
+  d=7 special : N=36 quadrank=35 kappa=1 lam_free!=0=True rankPi=22 (expect 22) kerdim=2 E!=0=True -> OK
+  d=7 general#0: N=36 quadrank=35 kappa=1 lam_free!=0=True rankPi=22 (expect 22) kerdim=2 E!=0=True -> OK
+  d=7 general#1: N=36 quadrank=35 kappa=1 lam_free!=0=True rankPi=22 (expect 22) kerdim=2 E!=0=True -> OK
+  control d=4 (N(d)-3, 3): kappa=1 rankPi=9 kerdim=0 (expect 0) -> OK
+  control d=5 (N(d)-3, 3): kappa=1 rankPi=12 kerdim=0 (expect 0) -> OK
+  C-30 check: PASS

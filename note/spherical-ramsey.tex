@@ -1,11 +1,12 @@
-% Version 1.0.0, 2026-10-14 (released with spherical-ramsey v1.0.0).
+% Version 1.1.0, 2026-10-15 (released with spherical-ramsey v1.1.0; corrections listed in the
+% section "Changes in version 1.1" and in CHANGELOG.md of the release).
 % Every claim carries exactly one verification tag (see "Status conventions"); open problems are
 % collected in the public conjecture ledger that accompanies this note (ledger/ in the release).
 % Vocabulary: "Comparator-checked" only for statements with a fresh-runner CI receipt;
 % "Lean-checked" only where the full release gate (CI, non-builder fidelity review, fresh-agent
 % reproduction) has passed for that rope. Theorem C is published (doi:10.5281/zenodo.23339523): it
 % is stated and cited here, not re-proved. The quotation of OpenAI's Theorem 1.1 is copied from the
-% published note of [MR]. Pure ASCII source; \TODO and \PH mark what remains before posting.
+% published note of [MR]. Pure ASCII source. No \TODO or \PH markers remain.
 \documentclass[11pt]{amsart}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb,amsthm,mathrsfs}
@@ -53,7 +54,7 @@
 \title[Two M\"obius groups suffice]{Two M\"obius groups suffice: Euclidean Ramsey sets on spheres of
 every dimension, after the tensor classification}
 \author{Will Strinz}
-\date{Version 1.0.0, 14 October 2026}
+\date{Version 1.1.0, 15 October 2026}
 
 \begin{document}
 
@@ -68,7 +69,10 @@ normal form whose entries lie in the Lipschitz group. For $d\le6$ ($S^1$ to $S^5
 it needs is verified as an exact polynomial identity and the passage from identities to the
 theorem is written out; for general $d$ the argument is a written proof, with its identity families
 cross-checked on exact instances through $d=8$. Both levels have been reviewed only by AI agents.
-Two groups are not the only mechanism. On the circle we give exact certificates for $7$- and
+Two groups are not the only mechanism. Off the circle this already follows from OpenAI's
+quadric-independence criterion \cite[Prop.~7.3]{OAI172} (for example, seven points of $S^2$ with
+algebraically independent coordinates are Ramsey and are not two-group); on the circle that criterion
+reaches at most five points. On the circle we give exact certificates for $7$- and
 $8$-point Ramsey sets that are not unions of two M\"obius images of algebraic sets, among them the
 seven points $0,\theta,\dots,6\theta$ for transcendental $e^{i\theta}$; a rank criterion for
 one-parameter cyclic sets of at most eight points, from which the eight points
@@ -89,11 +93,54 @@ expected-dimension law for cyclic sets and measurable forms of Graham's conjectu
 Graham's conjecture holds trivially for colourings definable in an o-minimal structure (folklore
 tameness), and, by a theorem of Dol'nikov and Karasev, for colourings that factor through boundedly
 many polynomials. Several of the easier statements are
-prior work by others (\S\ref{sec:credit}). A public ledger of the open problems, with replayable
+prior work by others (\S\ref{sec:credit}); version~1.1 corrects omissions in that credit
+(see ``Changes in version~1.1'' below). A public ledger of the open problems, with replayable
 starting states, accompanies the note.
 \end{abstract}
 
 \maketitle
+
+\section*{Changes in version 1.1}
+
+Version~1.0.0 overlooked a result of OpenAI and three appendix theorems of P\'alv\"olgyi that bear on
+it; version~1.1 credits them and corrects what they change. The full list is in \texttt{CHANGELOG.md}
+of the release.
+\begin{itemize}
+\item \textbf{OpenAI's quadric-independence criterion} \cite[Prop.~7.3]{OAI172} (Lean:
+\texttt{spherical\_\allowbreak{}quadraticIndependent\_\allowbreak{}ramsey\_\allowbreak{}all}) is now credited
+(\S\ref{sec:credit}, Remark~\ref{rem:quadric}). It implies that up to $(d+1)(d+2)/2-1$ points of
+$S^{d-1}$ with algebraically independent coordinates are Ramsey, so non-two-group Ramsey sets off the
+circle are prior work; Theorem~\ref{thm:NTG} is a statement about the circle, where that criterion
+reaches at most five points. The ledger's remark that a certificate for seven generic points on $S^2$
+would be ``the first certified Ramsey set beyond the two-group mechanism'' was wrong and is withdrawn.
+\item \textbf{P\'alv\"olgyi's Theorems~A.11--A.13} \cite{Palvolgyi} are now credited: A.12 is the
+non-Ramsey half of Conjecture~\ref{conj:C3} for $d\ge3$, and the ten-point cell of
+Theorem~\ref{thm:NR} is its case $d=3$.
+\item The scalar-certificate evidence of \S\ref{sec:jet} is re-scoped: on the tested cells it is
+automatic. The searches of \S\ref{sec:credit} are stated as done (the version~1.0.0 text still carried
+a marker for them), Theorem~C is registered on the Palomar registry, and two references on Vahlen
+matrices are added.
+\item \textbf{Addition: first-order rigidity} (ledger SR-C34). \st{HAND}, reviewed by one non-author AI
+agent; scope \texttt{ANY}. Let $A$ lie on the unit sphere, let $D_1,\dots,D_k$ be a basis of the
+derivations of its coordinate field, and let $\Delta(A)$ be the dual space of the 2-jet system of
+\S\ref{sec:jet} without the trace condition. If $\Delta(A)=0$, then $A$ is Ramsey. The proof is a Smith
+form over the local ring of $F\otimes_\Q F$ at the diagonal, the duality behind
+Proposition~\ref{prop:J2}, and Nakayama's lemma. It contains OpenAI's quadric-independence criterion
+(no quadric relation) and Theorem~\ref{thm:rank} (circle, one parameter), there without the regularity
+hypothesis. A literature sweep (2026-10-15) found no prior statement of it. Its order-zero case is
+OpenAI's Proposition~7.3, and its cases with algebraic coordinates, or with at most $m+4$ points in
+affine dimension $m$, are prior work \cite{JDJones}; the new content is positive transcendence degree
+together with quadric relations.
+\item \textbf{Addition: failures without a scalar certificate} (ledger SR-C32, proved for four seeded
+families of twelve and thirteen points on $S^2$; \st{CERT} plus glue, reviewed by one non-author AI
+agent). They fail the 2-jet test and have no scalar (single-relation) derivation certificate, even over
+$\C$. A matrix-weighted form of Lemma~\ref{lem:A1} still colours them (ledger SR-C35, \st{SKETCH},
+not reviewed); it is an explicit derivation-energy instance of the colouring that OpenAI use for the
+necessity half of their criterion \cite[Prop.~2.4]{OAI172}, and P\'alv\"olgyi's Theorem~A.4 is its
+scalar-weight analogue.
+\item Further new ledger entries (SR-C29 to SR-C35) and a frontier document accompany the release; each
+entry states its own review status.
+\end{itemize}
 
 \noindent\textbf{Status conventions.} Every result carries one tag.
 \st{LEAN}: proved in Lean~4 on top of OpenAI's unmodified Lean proof of \cite{OAI172}, with
@@ -149,7 +196,10 @@ slots (Remark~\ref{rem:whytwo}), and three groups fail a second-order necessary 
 \S\ref{sec:jet}). Theorem~\ref{thm:D} shows that the boundary between the two regimes can sit on
 a transcendence problem that is, to our knowledge, open.
 
-Two groups are not the whole story (\S\ref{sec:beyond}). On the circle there are Ramsey sets of
+Two groups are not the whole story (\S\ref{sec:beyond}). Off the circle this already follows from
+OpenAI's quadric-independence criterion \cite[Prop.~7.3]{OAI172}: seven to nine points of $S^2$ with
+algebraically independent coordinates are Ramsey and not two-group (Remark~\ref{rem:quadric}). On the
+circle that criterion reaches at most five points, but there are Ramsey sets of
 seven and eight points, with a single transcendental parameter, that are not two-group
 (Theorem~\ref{thm:NTG}). For one-parameter cyclic sets of at most eight points a rank condition on
 an explicit $n\times8$ matrix implies Ramsey (Theorem~\ref{thm:rank}); it gives the radian
@@ -171,6 +221,7 @@ Thm~\ref{thm:A} & algebraic coordinates $\Rightarrow$ Ramsey (prior work) & \st{
 Thm~\ref{thm:Ba} & $\le6$ points on a circle (prior work) & \st{LEAN}, Comparator-checked & any \\
 Thm~\ref{thm:Bb} & algebraic circle points $+\le3$ arbitrary & \st{LEAN}, Lean-checked & alg.\ $\cup$ 3 any \\
 Thm~\ref{thm:D} & radian 9-gon Ramsey iff $e^{i\theta}$ algebraic & \st{LEAN}, Lean-checked & transc.\ / alg. \\
+Rem.~\ref{rem:quadric} & up to $(d+1)(d+2)/2-1$ generic points on $S^{d-1}$ (OpenAI's criterion; prior) & \st{LEAN} (OpenAI) + \st{HAND} glue, AI-reviewed & generic \\
 Thm~\ref{thm:NTG} & non-two-group Ramsey sets of 7 and 8 circle points & \st{CERT}+glue & transc.\ param. \\
 Thm~\ref{thm:rank} & rank criterion, one parameter, $n\le8$ & \st{HAND}, AI-reviewed & trdeg 1 \\
 Cor~\ref{cor:radian8} & radian 8-gon Ramsey for every $\theta$ & \st{HAND}, AI-reviewed, exact rank & any \\
@@ -190,7 +241,12 @@ Rem.~\ref{rem:definable} & Graham for o-minimal and polynomial-factor colourings
 (\S\ref{sec:prelim}), the examples ($\le5$ circle points Ramsey, Cor.~7.4; Leader--Russell--Walters
 kites with transcendental parameter Ramsey, Cor.~7.5; nine generic circle points and a 12-point
 three-squares set non-Ramsey, Props.~7.6 and 7.7), and the Lean proof on which all our Lean results
-build.
+build. Version~1.0.0 of this note did not cite OpenAI's Proposition~7.3, the
+\emph{quadric-independence criterion}: a spherical set is Ramsey if the vectors $p_ip_i^T$ are
+linearly independent over $F$ (Lean: \texttt{spherical\_\allowbreak{}quadraticIndependent\_\allowbreak{}ramsey\_\allowbreak{}all}, Comparator
+challenge \texttt{EuclideanRamseyQuadratic}; Cor.~7.4 is its circle case). It is vendored, unmodified,
+in every rope of this release. Its consequences for generic points on spheres
+(Remark~\ref{rem:quadric}) are prior work, not ours.
 \item \textbf{P\'alv\"olgyi \cite{Palvolgyi}} gave the seven-point non-Ramsey heptagon. By the arXiv
 comments and the disclosure in the paper itself, the whole manuscript was written by ChatGPT; its
 appendix, which he labels as unchecked, consists of further results by ChatGPT that he has not
@@ -204,6 +260,13 @@ invariant''; Theorem~A.7, which has a M\"obius-invariant hypothesis without stat
 Ramsey-ness, and which with A.3 gives the non-Ramsey half of Proposition~\ref{prop:PD}; and Theorem~A.10, the certificate-level analogue of Theorem~\ref{thm:Bb} and of
 \cite[Cor.~1(c)]{MR} on the circle (a set that a M\"obius map sends to algebraic points, apart from at
 most three, admits no certificate), with the note that this does not decide Ramsey-ness.
+Three further appendix theorems were not cited in version~1.0.0: Theorem~A.11, that a fixed weighted
+derivation-energy identity with all weights nonzero needs more than $2d+2$ points of an affinely
+$d$-dimensional spherical set (so none exists on at most six points); Theorem~A.12, that for $d\ge3$ a set
+of $(d+1)(d+2)/2$ points on $S^{d-1}$ whose stereographic parameters are algebraically independent is
+not Ramsey, which is the non-Ramsey half of Conjecture~\ref{conj:C3} for $d\ge3$ and contains the
+ten-point cell of Theorem~\ref{thm:NR}; and Theorem~A.13, explicit non-Ramsey spherical sets of $2d+3$
+points in every affine dimension $d\ge2$.
 \item \textbf{Theorem~\ref{thm:A} is prior work.} JD-Jones-ASES/six-concyclic-lean \cite{JDJones}
 (root commit \texttt{0703d7d}, 2026-10-07) proved in Lean, at the level of OpenAI's field
 criterion, that algebraic coordinates satisfy the criterion, that any six concyclic points do (by the
@@ -224,16 +287,33 @@ written without consulting theirs.
 for Conjecture~\ref{conj:M1}, our literature and repository searches (four sweeps, 2026-10-12/13,
 over arXiv, GitHub, MathOverflow and bibliographic databases) found no prior statement; for
 Theorem~\ref{thm:C} the search log is published with \cite{MR}. The searches for
-Theorem~\ref{thm:C2} were made for its circle and two-group forms \TODO{posting-day sweep for C2 in
-every dimension, including the Clifford/Vahlen literature, and for Theorems~\ref{thm:NTG},
-\ref{thm:rank}, \ref{thm:rigid}, Corollary~\ref{cor:radian8} and Remark~\ref{rem:definable}; this is
-the gate for stating them publicly}. Mirabi \cite{Mirabi} shows that adding to a Ramsey set a point
+Theorem~\ref{thm:C2} were made for its circle and two-group forms and were extended in two further
+sweeps. On 2026-10-13 a sweep covered Theorem~\ref{thm:C2} in every dimension,
+Theorems~\ref{thm:NTG} and~\ref{thm:rank}, Corollary~\ref{cor:radian8} and the prior work credited in
+Remark~\ref{rem:definable}. On 2026-10-14 a second sweep covered Theorem~\ref{thm:rigid}; the Clifford
+and Vahlen literature by name (Vahlen matrices, Clifford and Lipschitz groups, Ahlfors's Clifford-number
+description of M\"obius maps, quaternionic cross-ratios), combined with Ramsey and colouring terms; and
+all new items since 2026-10-13. Both used arXiv, OpenAlex, zbMATH, GitHub (including OpenAI's
+repository and its forks), the Palomar registry, MathOverflow and Mathematics Stack Exchange, and
+neither found a prior statement of these results. The nearest items are P\'alv\"olgyi's appendix
+\cite{Palvolgyi} (Lemma~A.5 and Theorems~A.3, A.7 and A.10, which concern certificates and non-Ramsey
+criteria and do not give Theorem~\ref{thm:rigid}) and Gibbons and Luo \cite{GibbonsLuo}. One special
+case is prior: when the points outside the rigid group include four whose parameters are algebraically
+independent over the field generated by three points of the rigid group, the non-Ramsey half of
+Theorem~\ref{thm:rigid} follows from P\'alv\"olgyi's Theorem~A.3.
+The arXiv search covers titles, abstracts and comments, not full texts; \Kriz's 1992 paper was not
+read; the Lean Zulip, Google Scholar and HAL were not searched; and arXiv submissions of 2026-10-14
+were not yet indexed. Separately, OpenAI's Proposition~7.3 (first item), which bears on the
+conjectures of \S\ref{sec:conj} and the ledger rather than on the theorems above, was overlooked until
+2026-10-14, when it was found by reading OpenAI's Lean files. Mirabi \cite{Mirabi} shows that adding to a Ramsey set a point
 outside its affine hull keeps it Ramsey, and Moore \cite{Moore} that a pyramid over a Ramsey base is
 Ramsey; both add points off the affine hull and do not bear on cocircular sets.
 \item \textbf{Name collisions.} ``Two groups'' in this note always means two M\"obius maps, that is, a
 union of two M\"obius images of algebraic sets. It is unrelated to the established ``two-orbit''
 results in which a soluble group of symmetries acts on the set with at most two orbits (\Kriz{}
-\cite{Kriz91}; see Behague \cite{Behague}, who shows that nearly all known Ramsey sets are subsoluble).
+\cite{Kriz91}; see Behague \cite{Behague}, who shows that nearly all known Ramsey sets are subsoluble),
+and to the ``two-orbit problem'' in \Kriz's sense discussed in an appendix of P\'alv\"olgyi
+\cite{Palvolgyi-ncs}.
 Gibbons and Luo's ``inversive Ramsey theory'' \cite{GibbonsLuo} colours spheres and asks for
 M\"obius copies, not congruent ones; Dam\'asdi, Frankl, Pach and P\'alv\"olgyi \cite{DFPP} study
 monochromatic configurations in colourings of a single circle, not Euclidean Ramsey sets in the sense
@@ -337,8 +417,8 @@ $\varphi=\varphi_L$, $L\in\Ort(1,d)$, with no spanning hypothesis:
 \texttt{38493016252}, all 12 checks as expected; a fresh-agent reproduction also passed) and the
 published package \cite{MR} (three kernels; fresh-runner CI run \texttt{38336666705} on the staging copy, and run
 \texttt{38339951762} on the released commit). The package also passed a non-builder fidelity
-review and a fresh-agent reproduction (AI; \S\ref{sec:disclosure}), and was submitted to the
-Palomar registry (registration pending at the time of writing). The reduction from an arbitrary
+review and a fresh-agent reproduction (AI; \S\ref{sec:disclosure}), and is registered on the
+Palomar registry as PALOMAR-2026-10-14-000008 (version 1, 2026-10-14). The reduction from an arbitrary
 sphere to the unit sphere is a similarity \st{HAND} \cite[Remark~1]{MR}, and the identification of
 $\Mob(S^{d-1})$ with $\PO(1,d)$ is cited. Scope: \texttt{ANY}.
 \end{theorem}
@@ -472,7 +552,7 @@ M\"obius map into an inversion and a similarity \cite{Beardon}, and the Cartan--
 theorem \cite{CartanDieudonne}.
 \end{itemize}
 Scope: \texttt{MOBIUS\_ORBIT\_OF(ALGEBRAIC)}$\times2$. No prior statement found in our searches (see
-\S\ref{sec:credit} for the posting-day sweep still required). ``Two groups'' means two M\"obius maps;
+\S\ref{sec:credit} for their coverage). ``Two groups'' means two M\"obius maps;
 the theorem is unrelated to the soluble ``two-orbit'' results of \cite{Kriz91,Behague}
 (\S\ref{sec:credit}).
 \end{theorem}
@@ -554,7 +634,7 @@ lies in $\mathrm{span}\{1,x_i,|x|^2\}\otimes\mathrm{span}\{1,y_j,|y|^2\}$.
 
 \subsection{Lipschitz elements and the Vahlen normal form}
 
-Vahlen matrices \cite{Vahlen,Ahlfors85} describe the M\"obius maps of $\R^n$ by $2\times2$ matrices over a
+Vahlen matrices \cite{Vahlen,Ahlfors85,EGM,Waterman} describe the M\"obius maps of $\R^n$ by $2\times2$ matrices over a
 Clifford algebra. We do not use their characterization, only the explicit normal form below, whose
 coverage we prove directly (Lemma~\ref{lem:coverage}).
 
@@ -825,6 +905,31 @@ the exact threshold for radian progressions with transcendental $e^{i\theta}$.
 
 \section{Beyond two groups on the circle}\label{sec:beyond}
 
+\begin{remark}[Quadric independence; prior work \cite{OAI172}]\label{rem:quadric}
+OpenAI's Proposition~7.3 \cite{OAI172} (\st{LEAN}, theirs: \texttt{spherical\_\allowbreak{}quadraticIndependent\_\allowbreak{}ramsey\_\allowbreak{}all},
+with spanning hypothesis, and \texttt{spherical\_\allowbreak{}quadraticIndependent\_\allowbreak{}ramsey\_\allowbreak{}of\_\allowbreak{}dimension}, without
+one) says that a finite spherical set is Ramsey if the vectors $p_ip_i^T$ are linearly independent over
+$F$, that is, if the points impose independent conditions on quadratic polynomials. Quadratic
+polynomials restrict to a space of dimension $D_d=(d+1)(d+2)/2-1$ on $S^{d-1}$. Corollary
+(\st{LEAN}, OpenAI's, plus a \st{HAND} genericity step reviewed once by an AI agent, plus exact ranks;
+scope \texttt{GENERIC\_OF}): for every $d\ge2$, any $n\le D_d$ points of $S^{d-1}$ whose stereographic
+coordinates are algebraically independent over $\Q$ are Ramsey. Indeed $D_d$ such points affinely span
+$\R^d$ and have independent rows: quadratic polynomials restrict to linearly independent functions on
+$S^{d-1}$, so the $D_d\times D_d$ evaluation determinant is a nonzero polynomial in the stereographic
+coordinates (exact rational instances of full rank: \texttt{certificates/corank\_exact.py c29},
+$d=3,\dots,8$); the same genericity remark is in the proof
+of P\'alv\"olgyi's Theorem~A.12 \cite{Palvolgyi}. Fewer generic points form a subset of a generic
+spanning $D_d$-set, and subsets of Ramsey sets are Ramsey. These are corollaries of OpenAI's
+Proposition~7.3; our part is noticing them. For $d=3$ this covers seven to nine generic points of $S^2$. They are not
+two-group: four points of a M\"obius image of an algebraic set have an algebraic complex cross-ratio,
+which four generic points do not, so each group has at most three points. On the circle ($D_2=5$) the
+criterion gives at most five points, and every set of at most six cyclic points is two-group
+(Remark~\ref{rem:six}). So non-two-group Ramsey sets off the circle are prior work, and
+Theorem~\ref{thm:NTG} below is about the circle. With Proposition~\ref{prop:PD} applied on a great
+circle, the consequence also shows that Ramsey-ness is not closed under specialization on $S^{d-1}$ for
+$d\ge3$ (ledger SR-C7, SR-C16, SR-C29).
+\end{remark}
+
 On the circle, a set of at least four points is a M\"obius image of a set with algebraic coordinates if
 and only if all its four-point cross-ratios are algebraic (cross-ratios are invariant under M\"obius maps
 of the circle, i.e.\ $\mathrm{PGL}_2(\R)$ on the parameter; for the converse send three of its points to
@@ -864,8 +969,10 @@ $(\tan\tfrac\theta2)$.
 
 \smallskip\noindent\emph{What is not claimed.} The only structural claim is ``not two-group''. Ramsey
 sets that are not subtransitive are already known (the Leader--Russell--Walters kites with
-transcendental parameter, \cite[Cor.~7.5]{OAI172}), so we claim nothing about subtransitivity; and we
-do not claim that these sets are not subsoluble, which is open (\cite[Question~6.1]{Behague}).
+transcendental parameter, \cite[Cor.~7.5]{OAI172}), so we claim nothing about subtransitivity; we
+do not claim that these sets are not subsoluble, which is open (\cite[Question~6.1]{Behague}); and we
+do not claim that they are the first non-two-group Ramsey sets: on $S^2$ such sets follow from
+OpenAI's Proposition~7.3 (Remark~\ref{rem:quadric}). The claim is about the circle.
 \end{theorem}
 
 \noindent So the two-group class of Theorem~\ref{thm:C2} is not the whole Ramsey class on the circle,
@@ -1083,6 +1190,10 @@ R_3:\ &(-\tfrac15,-1,-\tfrac54),\ (-\tfrac43,-\tfrac79,-\tfrac35),\ (-\tfrac97,-
 \end{align*}
 For example the first point of $R_2$ is $(5760,6480,-1559)/8809\in S^2$.
 
+\smallskip\noindent\emph{Credit.} The cell of ten points with all coordinates independent is the case
+$d=3$ of P\'alv\"olgyi's Theorem~A.12 \cite{Palvolgyi} (appendix, labelled unchecked by its author),
+which is prior; what is ours there is the exact certificate.
+
 \smallskip\noindent\emph{Status:} \st{CERT} identities plus glue, reviewed (AI) as correct. The
 scalar certificates are exact (\texttt{certificates/scalar\_exact.py}; replay byte-identical): cofactor
 vectors give $\lambda$ and $\partial$ identically in the free coordinates, and at one rational specialization
@@ -1098,7 +1209,9 @@ all seven cells. Scope:
 second, identically vanishing row relation (an infinitesimal M\"obius rotation fixing the 2-sphere through
 the four free points), so one more row must be dropped. With that change the reviewer's scratch run gives
 an exact $E(\tau)\neq0$; that computation is not part of this release. A scalar certificate exists modulo
-$p$ \st{PROBE}.
+$p$ \st{PROBE}. Since version~1.1, ledger entry SR-C30 certifies the cell $(N(d)-4,4)$ exactly (the
+rank computation absorbs the dependent rows) for seeded rational points in general position for $d=3,\dots,7$, which includes a
+cell $(17,4)$ on $S^4$ (\texttt{certificates/corank\_exact.py c30}; glue reviewed once by an AI agent).
 
 \section{A second-order necessary test}\label{sec:jet}
 
@@ -1138,11 +1251,16 @@ for Conjecture~\ref{conj:C1}, not theorems. The test also reproduces every known
 
 \noindent\emph{Scalar certificates.} \st{PROBE} In every tested failing cell (all sixteen on $S^2$, both
 $S^3$ threshold cells, the $S^4$ threshold, and ten generic points on $S^2$) a scalar single-derivation
-certificate exists, at two primes; seven of them are exact (Theorem~\ref{thm:NR}). So we have no witness
-that the 2-jet test is stronger than P\'alv\"olgyi's method (ledger entries SR-C11 and SR-C12:
-whether a 2-jet failure without a scalar certificate exists, and the working hypothesis that none exists
-on configurations of rational plus independent points). A random fixed direction is not a test for this:
-it misses certificates that exist.
+certificate exists, at two primes; seven of them are exact (Theorem~\ref{thm:NR}). A random fixed
+direction is not a test for this: it misses certificates that exist. \emph{Re-scoped in version~1.1:}
+this agreement is automatic and is not evidence about ledger entries SR-C11 and SR-C12 (whether a 2-jet
+failure without a scalar certificate exists, and the working hypothesis that none exists on
+configurations of rational plus independent points). Every cell above has quadric corank one (one
+relation $\sum_i\lambda_ip_ip_i^T=0$) or contains a failing cell of corank one, and at corank one the
+dual space of the 2-jet system consists of weights $\Lambda_i=\lambda_iC$, so a 2-jet failure there
+gives a scalar certificate once $C$ is reduced to a single derivation (\st{HAND}, reviewed by one
+non-author AI agent; ledger SR-C31). 2-jet failures with no scalar certificate exist at quadric corank
+three and four on $S^2$ (ledger SR-C32, proved for four seeded families), which answers SR-C11.
 
 \section{Conjectures}\label{sec:conj}
 
@@ -1161,6 +1279,16 @@ Theorem~\ref{thm:C2} (Remark~\ref{rem:C4}); four free points fail on $S^1$, $S^2
 (Remark~\ref{rem:C4}), and \st{PROBE} for $5\le d\le9$. Ledger entry SR-C17 merges C3 and C4 into one
 phase-diagram conjecture for $m$ rational points in general position plus $j$ independent points on
 $S^{d-1}$, $d\ge3$: non-Ramsey iff $j\ge4$ and $m+j\ge(d+1)(d+2)/2$.
+
+\emph{Status in version~1.1: proved, mostly by prior work} (ledger SR-C3; this is bookkeeping, not a new
+result). On the circle the two halves are Theorem~\ref{thm:Ba} and Proposition~\ref{prop:PD}. For
+$d\ge3$ the Ramsey half ($n<N(d)$) is a corollary of OpenAI's Proposition~7.3
+(Remark~\ref{rem:quadric}), and the non-Ramsey half is P\'alv\"olgyi's Theorem~A.12 \cite{Palvolgyi},
+from an appendix that its author labels unchecked (its proof was read by our AI reviewer), and
+independently the case $m=0$ of ledger entry SR-C30 (\st{SKETCH}, reviewed once by an AI agent). For
+SR-C17 the passing side is proved (Remark~\ref{rem:C4} for $j\le3$, Proposition~7.3 for $m+j\le D_d$);
+the failing side has exact certificates for specific rational points for $d\le7$ and a sketch in every
+dimension (SR-C30).
 \end{conjecture}
 
 \begin{conjecture}[R1, rigidity; ledger SR-C6]\label{conj:R1}
@@ -1314,7 +1442,9 @@ Killed ideas and harness lessons, recorded so that others need not repeat them.
 \st{PROBE}. ``Two groups only on Hopf spheres'' is refuted by $S^3$, and now by
 Theorem~\ref{thm:C2}. A naive count predicting that the free-point threshold grows with $d$ is refuted (it
 is $3$ for $d=2,\dots,9$, \st{PROBE}).
-\item ``Matrix weights are strictly stronger than scalar ones'': withdrawn (\S\ref{sec:jet}).
+\item ``Matrix weights are strictly stronger than scalar ones'': withdrawn for its original witness
+(\S\ref{sec:jet}). For certificates it is true, with new witnesses (ledger SR-C32); for colourings it is
+not known, since a matrix-weighted Lemma~\ref{lem:A1} colours those witnesses (ledger SR-C35, a sketch).
 \item ``A $7$-point cyclic set is Ramsey iff it is two-group'': refuted (Theorem~\ref{thm:NTG}). Its
 refinement to cross-ratio transcendence degree $\ge2$ is refuted at probe level (the threshold is $3$;
 Conjecture~\ref{conj:count}). ``One-parameter cyclic sets of at most eight points are Ramsey'' is false as
@@ -1322,7 +1452,8 @@ stated: P\'alv\"olgyi's heptagon is a one-parameter set; the rank condition of T
 what fails there.
 \item A predicted Ramsey generic member of the mirror family $\{0,\pm a,\pm b,\pm c\}$, which would have
 shown that Ramsey-ness is not closed under specialization on the circle, failed the 2-jet test
-\st{PROBE}; off the circle the question is ledger entry SR-C16.
+\st{PROBE}; off the circle the question is settled by OpenAI's Proposition~7.3
+(Remark~\ref{rem:quadric}; ledger SR-C16).
 \item The generic-entry quaternionic recipe for M\"obius graph forms does not extend to $\Cl_{0,4}$
 (\S\ref{sec:lowdim}); the Lipschitz normal form is needed.
 \item Three probe traps: integer division producing floats, and a point at the stereographic pole, each
@@ -1355,7 +1486,10 @@ Theorem~\ref{thm:NTG} were re-verified by a non-builder with independent code, a
 reviewed (AI), as was the hypothesis check for P\'alv\"olgyi's Theorems~A.3 and A.7 in
 Proposition~\ref{prop:PD}. The author read
 the hand proof of Theorem~\ref{thm:C} line by line, and reviewed this note and the ledger before
-release (not line by line); both are an owner's sign-off, not expert review. \textbf{No human expert has reviewed any part of this note.} Machine checks:
+release (not line by line); both are an owner's sign-off, not expert review. The corrections of
+version~1.1 were found and written by Claude Opus~5.5 agents and reviewed by a separate AI agent
+(including the genericity step of Remark~\ref{rem:quadric}), and the two additions listed under
+``Changes in version~1.1'' were each reviewed by one non-author AI agent. \textbf{No human expert has reviewed any part of this note.} Machine checks:
 Lean and Comparator (Theorems~\ref{thm:A}, \ref{thm:Ba}, \ref{thm:Bb}, \ref{thm:C} with
 Corollary~\ref{cor:mobius}(c),(d), and \ref{thm:D}); exact sympy identities and exact ranks (\st{CERT}
 items, and the rank computation in Corollary~\ref{cor:radian8}); random
@@ -1418,7 +1552,10 @@ theorem ramsey_iff_ramsey_mobius_full {s d : N} (a : Fin s -> Space d)
 \texttt{radian\_\allowbreak{}det.py} (Theorem~\ref{thm:D}); \texttt{dual\_\allowbreak{}cert.py} (J2-F7); \texttt{scalar\_\allowbreak{}exact.py}
 (Theorem~\ref{thm:NR}); \texttt{cert\_\allowbreak{}nontwogroup.py} and \texttt{exact\_\allowbreak{}circle\_\allowbreak{}cert.py}
 (Theorem~\ref{thm:NTG}); \texttt{rankN\_\allowbreak{}check.py} and \texttt{rankN\_\allowbreak{}sweep.py} (Theorem~\ref{thm:rank}, Corollary~\ref{cor:radian8});
-\texttt{definable\_\allowbreak{}bigball.py}, \texttt{definable\_\allowbreak{}polyphase.py}, \texttt{definable\_\allowbreak{}crosscheck.py} and \texttt{exact\_\allowbreak{}intervals.py} (exact sanity checks for Remark~\ref{rem:definable}).
+\texttt{definable\_\allowbreak{}bigball.py}, \texttt{definable\_\allowbreak{}polyphase.py}, \texttt{definable\_\allowbreak{}crosscheck.py} and \texttt{exact\_\allowbreak{}intervals.py} (exact sanity checks for Remark~\ref{rem:definable});
+\texttt{corank\_\allowbreak{}exact.py} (Remark~\ref{rem:quadric} and ledger entries SR-C29 to SR-C32),
+\texttt{c31\_\allowbreak{}respecialize.py} and \texttt{c34\_\allowbreak{}det16.py} (ledger SR-C31, SR-C34; added in
+version~1.1, with python-flint).
 Modulo-$p$ probes, in \texttt{probes/}: \texttt{probe2.py}, \texttt{scalar\_\allowbreak{}cert.py}, the \texttt{e*.py}
 experiments and the scripts behind the conjecture ledger (for example \texttt{c14\_\allowbreak{}rigid.py},
 \texttt{c23\_\allowbreak{}count\_\allowbreak{}law.py}); the \texttt{validate.py} controls must pass before any
@@ -1494,6 +1631,10 @@ characterization.)
 \bibitem{Ahlfors85} L.~V.~Ahlfors, \emph{M\"obius transformations and Clifford numbers}, in \emph{Differential
 Geometry and Complex Analysis} (I.~Chavel, H.~M.~Farkas, eds.), Springer, Berlin, 1985, 65--73.
 doi:10.1007/978-3-642-69828-6\_5. (Context only.)
+\bibitem{EGM} J.~Elstrodt, F.~Grunewald, J.~Mennicke, \emph{Vahlen's group of Clifford matrices and
+spin-groups}, Math.~Z. \textbf{196} (1987), no.~3, 369--390. doi:10.1007/BF01200359. (Context only.)
+\bibitem{Waterman} P.~L.~Waterman, \emph{M\"obius transformations in several dimensions}, Adv. Math.
+\textbf{101} (1993), no.~1, 87--113. doi:10.1006/aima.1993.1043. (Context only.)
 \bibitem{Waldschmidt} M.~Waldschmidt, \emph{Open Diophantine problems}, Mosc. Math. J. \textbf{4}
 (2004), no.~1, 245--305; doi:10.17323/1609-4514-2004-4-1-245-305; arXiv:math/0312440.
 \bibitem{Baker} A.~Baker, \emph{Transcendental Number Theory}, Cambridge University Press, 1975,

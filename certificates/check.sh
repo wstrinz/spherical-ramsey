@@ -6,7 +6,8 @@
 #   bash check.sh --slow     the slow set only
 #   bash check.sh NAME...    only the named entries (names as in the tables below)
 #
-# Needs Python >= 3.10 with sympy (1.14.0 was used for expected/), numpy and mpmath.  The interpreter
+# Needs Python >= 3.10 with sympy (1.14.0 was used for expected/), numpy, mpmath and, for
+# corank_exact.py, c31_respecialize.py and c34_det16.py, python-flint (0.9.0 was used).  The interpreter
 # is $PYTHON if set, else python3.  Every script runs as `$PYTHON -I -B script.py ARGS` (isolated mode,
 # no bytecode files), from this directory, with stdout and stderr captured together.
 #
@@ -38,6 +39,12 @@ FAST=(
   "rankN_sweep|rankN_sweep.py"
   "definable_bigball|definable_bigball.py"
   "definable_crosscheck|definable_crosscheck.py"
+  "corank_exact.c29|corank_exact.py|c29"
+  "corank_exact.c30|corank_exact.py|c30"
+  "corank_exact.c31|corank_exact.py|c31"
+  "corank_exact.c32|corank_exact.py|c32"
+  "c31_respecialize|c31_respecialize.py"
+  "c34_det16|c34_det16.py"
 )
 SLOW=(
   "cert_clifford_crosscheck|cert_clifford_crosscheck.py"

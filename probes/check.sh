@@ -6,7 +6,7 @@
 set -uo pipefail
 cd "$(dirname "$0")"
 OUT="${1:-${PROBE_OUT:-out}}"
-FAST="validate e1_phase e1_s2 e1_s3 e3b e5_mobius e5b e6_wild e4_six realness scalar_cert c13_c22_seven c22_controls c23_count_law c14_rigid c15_c16"
+FAST="validate e1_phase e1_s2 e1_s3 e3b e5_mobius e5b e6_wild e4_six realness scalar_cert c13_c22_seven c22_controls c23_count_law c14_rigid c15_c16 c31_c32_jet2 c34_test"
 SLOW="e1_s4 e4_six_real e7_hopf"
 norm() { tr -d '\r' < "$1" | grep -v -E '^(real|user|sys)[[:space:]]' | sed -E 's/ *\([0-9]+s\)//g'; }
 status=0

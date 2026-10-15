@@ -81,6 +81,12 @@ the sibling directory `../probes` (the [PROBE] harness); leave `PROBE_PRIME` uns
 | fast | `rankN_sweep` | `rankN_sweep.py` | 75 s |
 | fast | `definable_bigball` | `definable_bigball.py` | 9 s |
 | fast | `definable_crosscheck` | `definable_crosscheck.py` | 5 s |
+| fast | `corank_exact.c29` | `corank_exact.py c29` | 4 s |
+| fast | `corank_exact.c30` | `corank_exact.py c30` | 10 s |
+| fast | `corank_exact.c31` | `corank_exact.py c31` | 26 s |
+| fast | `corank_exact.c32` | `corank_exact.py c32` | 27 s |
+| fast | `c31_respecialize` | `c31_respecialize.py` | 5 s |
+| fast | `c34_det16` | `c34_det16.py` | 5 s |
 | slow | `cert_clifford_crosscheck` | `cert_clifford_crosscheck.py` | 161-283 s |
 | slow | `cert_s2` | `cert_s2.py` | 137 s |
 | slow | `definable_polyphase` | `definable_polyphase.py` | 403 s |
@@ -369,6 +375,50 @@ re-verifies them without `exact_intervals.py`: the orthogonal frame exactly (sym
 pairwise distances and the colour windows at 60 digits (mpmath, margin `> 1e-40`). Tag: a
 consistency check of the exact certificates, **[PROBE]** (it does not replace them). Runtime:
 5 s. Log: `expected/definable_crosscheck.log`. Dependencies: sympy, mpmath.
+
+### Quadric corank and the 2-jet dual (ledger SR-C29 to SR-C34; added in v1.1.0)
+
+These scripts need python-flint (0.9.0 was used) in addition to sympy. Their ledger entries were
+filed before the scripts ran. Every configuration is given by rational stereographic coordinates
+(projection from (0, ..., 0, 1)); first-order derivation data are rational tangent vectors.
+
+**`corank_exact.py`** — exact computations over Q (python-flint `fmpq_mat`, sympy for null spaces and
+Gröbner bases), one subcommand per entry. `c29`: the quadric evaluation matrix (rows `vec(p_i p_iᵀ)`)
+has full rank at `D_d = (d+1)(d+2)/2 − 1` seeded rational points of S^{d−1} for d = 3..8, at 7 seeded
+rational points of S² and at the rational points `R_2` of Theorem NR-S23 plus 3 more; since
+specialization does not raise rank, the generic member of each family has quadric corank 0, and
+OpenAI's quadratic criterion (Prop. 7.3 of result 172, Lean `spherical_quadraticIndependent_ramsey_all`)
+applies (SR-C29; the genericity glue is in the ledger entry, reviewed once by an AI agent). `c30`: the
+minimal cell (N(d) − 4, 4) of the phase diagram for d = 3..7 (an embedded S² cell and seeded
+general-position instances): quadric corank 1, nonzero weights at the four free points, rank of the
+conformal-Killing pairing matrix `4d − 6`, a two-dimensional kernel and a nonzero energy form on it
+(the Lemma A.1 data), plus two three-free-point controls with no certificate (SR-C30). `c31`: the exact
+2-jet dual dimension and trace pairing at θ = 0 for 19 (d, N, k) rational-affine families × 2 seeds on
+S¹, S², S³, compared with the corank law (SR-C31); a verdict marked `?` is undecided at that
+specialization (coincident points there, dual dimension above the generic bound, or pairing zero) and
+is not counted as agreement or mismatch: three families, (d, N, k) = (3, 13, 2) seed 1, (2, 7, 2) seed 1
+and (2, 7, 3) seed 0, have coincident points at θ = 0 and decide as predicted at other rational points
+(`c31_respecialize.py`; (2, 7, 2) seed 1 at 2 of 3, the third again having coincident points). Every
+family is checked to be injective (its generic member has distinct points), and every fixed rational
+configuration to have distinct points. **Checked
+condition:** every test point of `c31`, `c32` and `../probes/c34_test.py` has maximal quadric rank there
+(κ = N − D_d; the printed κ shows it), which the specialization arguments need. `c32`: two (κ, k) = (3, 4) and two (4, 3)
+families on S² whose 2-jet dual is nonzero with nonzero pairing at the generic lower bound (2-jet FAIL)
+and whose scalar (Lemma A.1) locus is empty: the maximal minors of the pairing matrix in the relation
+coordinates generate a zero-dimensional homogeneous ideal over Q (SR-C32). Tag: **[CERT]** per
+instance (exact ranks, dimensions and Gröbner bases at one rational specialization) plus written
+specialization glue (in the ledger entries; reviewed by one non-author AI agent for SR-C32 and the dual formulation of SR-C31; and, once each, for SR-C29 and SR-C30). Scope: `GENERIC_OF` the seeded rational
+families. Runtimes: 4, 10, 26, 27 s. Logs: `expected/corank_exact.c29.log` … `.c32.log`.
+
+**`c31_respecialize.py`** — the three families of `corank_exact.py c31` that were undecided at θ = 0
+(coincident points there), re-specialized at three seeded rational points each: all decide as predicted. Tag: **[CERT]**
+per instance, as above. Runtime: 5 s. Log: `expected/c31_respecialize.log`.
+
+**`c34_det16.py`** — the non-Ramsey side of the one-parameter threshold 16 on S² (SR-C34), by Theorem
+D's method: for the two N = 16 one-parameter families of `../probes/c34_test.py`, the 16 × 16
+evaluation matrix `[p_ia(T) p_ib(U)]` has nonzero determinant at two rational points (T, U), hence in
+Q(T, U), so condition (1) forces P = 0. Tag: **[CERT]** per instance (glue: the argument of Theorem D).
+Scope: `TRANSCENDENTAL_PARAM(T)` for those two families. Runtime: 5 s. Log: `expected/c34_det16.log`.
 
 ### Helper module (no expected log of its own)
 

@@ -1,0 +1,10 @@
+== C-29: quadric rank of D_d seeded rational points on S^{d-1} (expect D_d), d = 3..8
+  d=3: N=9 rank=9 OK
+  d=4: N=14 rank=14 OK
+  d=5: N=20 rank=20 OK
+  d=6: N=27 rank=27 OK
+  d=7: N=35 rank=35 OK
+  d=8: N=44 rank=44 OK
+  C-16 instance, 7 seeded rational points on S^2: rank=7 (expect 7)
+  NR-S23 R_2 + 3 seeded rational points (cell (6,3)/(9,0) shape): rank=9 (expect 9)
+  C-29 check: PASS

@@ -1,0 +1,15 @@
+N=13 seed=0: kappa=4 dimDelta=0 pairing!=0=False | curve(pi-adic, ord 12) PASS  jet2 PASS  | predicted Ramsey
+N=13 seed=1: kappa=4 dimDelta=0 pairing!=0=False | curve(pi-adic, ord 12) PASS  jet2 PASS  | predicted Ramsey
+N=14 seed=0: kappa=5 dimDelta=0 pairing!=0=False | curve(pi-adic, ord 12) PASS  jet2 PASS  | predicted Ramsey
+N=14 seed=1: kappa=5 dimDelta=0 pairing!=0=False | curve(pi-adic, ord 12) PASS  jet2 PASS  | predicted Ramsey
+N=15 seed=0: kappa=6 dimDelta=0 pairing!=0=False | curve(pi-adic, ord 12) PASS  jet2 PASS  | predicted Ramsey
+N=15 seed=1: kappa=6 dimDelta=0 pairing!=0=False | curve(pi-adic, ord 12) PASS  jet2 PASS  | predicted Ramsey
+N=16 seed=0: kappa=7 dimDelta=1 pairing!=0=True | curve(pi-adic, ord 12) FAIL  jet2 FAIL  | predicted non-Ramsey
+N=16 seed=1: kappa=7 dimDelta=1 pairing!=0=True | curve(pi-adic, ord 12) FAIL  jet2 FAIL  | predicted non-Ramsey
+N=17 seed=0: kappa=8 dimDelta=2 pairing!=0=True | curve(pi-adic, ord 12) FAIL  jet2 FAIL  | predicted non-Ramsey
+N=17 seed=1: kappa=8 dimDelta=2 pairing!=0=True | curve(pi-adic, ord 12) FAIL  jet2 FAIL  | predicted non-Ramsey
+# retry tally: curve_probe PASS=6 FAIL=4 NO_VERDICT=0 MIXED=0; jet2 PASS=6 FAIL=4 NO_VERDICT=0 MIXED=0
+
+real	0m33.881s
+user	0m0.093s
+sys	0m0.170s

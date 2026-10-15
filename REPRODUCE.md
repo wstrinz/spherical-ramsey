@@ -75,11 +75,13 @@ CI: `.github/workflows/rope-av<n>.yml` runs `bash REPRODUCE` on a fresh runner.
 ## 2. The exact certificates ([CERT])
 
 Python 3.10 with numpy 1.26.4 and sympy 1.14.0 (other versions very likely work; these are the
-versions the expected output was produced with). mpmath comes with sympy. A virtual environment is
-recommended:
+versions the expected output was produced with). mpmath comes with sympy. Since v1.1.0 the scripts
+for ledger entries SR-C29 to SR-C34 (`corank_exact.py`, `c31_respecialize.py`, `c34_det16.py`, and
+the probes `c31_c32_jet2.py`, `c34_test.py`) also need python-flint (0.9.0 was used). A virtual
+environment is recommended:
 
 ```sh
-python3 -m venv .venv && . .venv/bin/activate && pip install numpy==1.26.4 sympy==1.14.0
+python3 -m venv .venv && . .venv/bin/activate && pip install numpy==1.26.4 sympy==1.14.0 python-flint==0.9.0
 bash certificates/check.sh          # the fast set; one PASS line per script, exit 0
 bash certificates/check.sh --all    # every script, including the slow ones
 ```

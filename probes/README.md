@@ -138,6 +138,8 @@ r ≥ 2).
 | `c23_count_law.py` | C-23 (expected-dimension law on the circle): per configuration, k and the two-group test as above, prediction PASS iff two-group or (n − 5)(k + 1) ≤ 6, compared with the 2-jet test (and the curve probe for k = 1); verdicts `[PROBE]`. `classify` and `mirror_specs` are also used elsewhere |
 | `c14_rigid.py` | C-14 (rigid-group absorption) and C-23(ii) at n = 9, k = 1. The 9×9 (2,2)-form determinant at a rational point is an **EXACT** computation; det ≠ 0 there implies non-Ramsey through the circle reduction to (2,2)-forms (a hand-proved argument, see the note), so those lines are exact checks resting on that reduction, not mod-p evidence. The two-group classification is exact for non-constancy; the 2-jet and curve verdicts are `[PROBE]` |
 | `c15_c16.py` | C-15 (generic Möbius-group unions on S¹) and C-16 (seven points on S²); `[PROBE]` only |
+| `c31_c32_jet2.py` | C-31 (v1.1.0): the primal `jet2` on the eight S² threshold cells of the corank law, seed 0 of `../certificates/corank_exact.py c31` (two cells have the (N, k) of C-32 but are not the C-32 families); an independent mod-p cross-check of that script's exact dual computation; `[PROBE]`. Needs python-flint (it imports `../certificates/corank_exact.py`) |
+| `c34_test.py` | C-34 (v1.1.0): one-parameter rational-affine families on S², N = 13..17, two seeds each. **EXACT**: dim Δ at θ = 0 (`corank_exact.jet_dual`); `[PROBE]`: `curve_probe` (the truncated π-adic test, order 12, mod p) and `jet2`. Needs python-flint |
 | `run_all.sh` | Runs the suite into `out/` (or `$PROBE_OUT`) with LF logs; `--slow` adds the slow runs |
 | `check.sh` | Diffs `out/` against `expected-v2/`, ignoring timing; non-zero exit on mismatch |
 | `expected-v2/` | Reference logs |
@@ -167,6 +169,8 @@ the `real` line of each log):
 | `c23_count_law.log` | fast | 1 min 8 s | 0 mismatches with the C-23 prediction over 8 families |
 | `c14_rigid.log` | fast | 50 s | 0 C-14 mismatches; 119 + 57 exact det ≠ 0 non-Ramsey instances |
 | `c15_c16.log` | fast | 13 s | every C-15 / C-16 prediction matched by the 2-jet test |
+| `c31_c32_jet2.log` | fast | 7 s | 8/8 S² threshold cells as predicted by the corank law; `NO_VERDICT` 0 |
+| `c34_test.log` | fast | 26 s | exact Δ = 0 for N ≤ 15, Δ ≠ 0 with nonzero pairing for N = 16, 17; curve probe and 2-jet agree, 10/10 as predicted |
 | `scalar_cert.log` | fast | 1 min 18 s | a scalar certificate (method A) at every failing cell, none at the passing cells; random fixed derivations miss them (method R), as expected |
 
 Fast suite about 10–14 min in total; `--slow` adds about 20 min. All verdicts are mod-p `[PROBE]`

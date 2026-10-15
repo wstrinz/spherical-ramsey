@@ -2,8 +2,9 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
 title: "spherical-ramsey: which finite spherical sets are Euclidean Ramsey (Lean 4 ropes, exact certificates, probes, note and conjecture ledger)"
-version: "1.0.0"
-date-released: "2026-10-14"
+version: "1.1.0"
+date-released: "2026-10-15"
+doi: "10.5281/zenodo.23366343"
 authors:
   - family-names: "Strinz"
     given-names: "Will"
@@ -29,7 +30,12 @@ abstract: >-
   certificates also give cyclic Ramsey sets that are not unions of two Moebius
   images of algebraic sets (CERT plus glue, reviewed by AI), and non-Ramsey
   configurations on S^2 and S^3. A note states each claim at its level, and a
-  conjecture ledger keeps the open and refuted conjectures with replay commands.
+  conjecture ledger keeps the open and refuted conjectures with replay commands. Version 1.1.0 corrects the credit of
+  version 1.0.0: OpenAI's quadric-independence criterion (result 172,
+  Proposition 7.3) and Palvolgyi's appendix Theorems A.11-A.13 had been
+  overlooked; several conjecture-ledger statuses change accordingly. It adds
+  ledger entries SR-C29 to SR-C35 (among them first-order rigidity, a written
+  proof reviewed by one AI agent) and a frontier document.
   AI disclosure. The author, Will Strinz, is the only human contributor. The
   proofs, the Lean, the certificates, the probes, the checks and the documentation
   were produced by AI agents (Claude Opus 5.5 and Claude Sonnet 5.5, Anthropic, in
