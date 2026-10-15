@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23366343.svg)](https://doi.org/10.5281/zenodo.23366343)
 
-Archived on Zenodo. Cite all versions with the concept DOI [10.5281/zenodo.23366343](https://doi.org/10.5281/zenodo.23366343); v1.0.0 specifically is [10.5281/zenodo.23366344](https://doi.org/10.5281/zenodo.23366344).
+Archived on Zenodo. Cite all versions with the concept DOI [10.5281/zenodo.23366343](https://doi.org/10.5281/zenodo.23366343); v1.1.0 is [10.5281/zenodo.23396387](https://doi.org/10.5281/zenodo.23396387) and v1.0.0 is [10.5281/zenodo.23366344](https://doi.org/10.5281/zenodo.23366344).
 
 **Version 1.1.0** corrects the credit in v1.0.0. OpenAI's quadric-independence criterion (result 172,
 Prop. 7.3) and Pálvölgyi's appendix Theorems A.11–A.13 had been overlooked. Several ledger statuses
@@ -129,7 +129,7 @@ runner, and `certificates.yml` re-runs the fast certificate scripts and diffs th
 A mixed tree. MIT (`LICENSE`) for this project's files. Apache-2.0 (`LICENSES/Apache-2.0.txt`) for
 OpenAI's Lean files vendored unmodified in each rope, and for the few files adapted from them.
 `NOTICE` says which file is under which licence. Cite with `CITATION.cff`. Archive: Zenodo,
-concept DOI 10.5281/zenodo.23366343 (v1.0.0: 10.5281/zenodo.23366344).
+concept DOI 10.5281/zenodo.23366343 (v1.1.0: 10.5281/zenodo.23396387; v1.0.0: 10.5281/zenodo.23366344).
 
 This repository cites mobius-ramsey v1.0.0 (Will Strinz, 2026; doi:10.5281/zenodo.23339523), the
 published home of Theorem C; OpenAI's result 172; Pálvölgyi, *A cyclic non-Ramsey heptagon*
