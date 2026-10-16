@@ -1,5 +1,5 @@
-% Version 1.1.0, 2026-10-15 (released with spherical-ramsey v1.1.0; corrections listed in the
-% section "Changes in version 1.1" and in CHANGELOG.md of the release).
+% Version 1.1.1, 2026-10-15 (for spherical-ramsey v1.1.1; changes listed in the sections
+% "Changes in version 1.1.1" and "Changes in version 1.1" and in CHANGELOG.md of the release).
 % Every claim carries exactly one verification tag (see "Status conventions"); open problems are
 % collected in the public conjecture ledger that accompanies this note (ledger/ in the release).
 % Vocabulary: "Comparator-checked" only for statements with a fresh-runner CI receipt;
@@ -54,7 +54,7 @@
 \title[Two M\"obius groups suffice]{Two M\"obius groups suffice: Euclidean Ramsey sets on spheres of
 every dimension, after the tensor classification}
 \author{Will Strinz}
-\date{Version 1.1.0, 15 October 2026}
+\date{Version 1.1.1, 15 October 2026}
 
 \begin{document}
 
@@ -100,6 +100,25 @@ starting states, accompanies the note.
 
 \maketitle
 
+\section*{Changes in version 1.1.1}
+
+\begin{itemize}
+\item \textbf{Written proofs of first-order rigidity and of the finite-type reformulation.} Version~1.1.0
+labelled ledger entries SR-C34 and SR-C33(a)--(c) as proved \st{HAND} although only a summary of the
+argument was published. The complete proofs are now in \S\ref{sec:rigidity}: Theorem~\ref{thm:rigidity}
+(SR-C34), Proposition~\ref{prop:finitetype} (SR-C33(a)) and Proposition~\ref{prop:corankone}
+(SR-C33(b),(c)), with the lemmas they use (the local ring at the diagonal, the obstruction, a Smith form,
+and the duality between the 2-jet system and its dual space). Status: \st{HAND}: written proof in
+\S\ref{sec:rigidity} (added in v1.1.1), independently reviewed twice by non-author AI agents (the first
+review reconstructed the argument; a second, independent review found every step sound;
+\S\ref{sec:disclosure}). By-products, proved there: the ``symmetric part'' conditions of
+the 2-jet dual are automatic (Lemma~\ref{lem:Pi}), the dual form of the 2-jet test holds at every quadric
+rank (Corollary~\ref{cor:jetdual}), and the rank criterion holds without its regularity hypothesis
+(Corollary~\ref{cor:rigidcases}(c)).
+\item \textbf{Scope of Theorem~C's Lean status.} The summary table now says what \S\ref{sec:mobius} says:
+\st{LEAN} for the unit sphere and the maps $\varphi_L$; other spheres by a similarity, by hand.
+\end{itemize}
+
 \section*{Changes in version 1.1}
 
 Version~1.0.0 overlooked a result of OpenAI and three appendix theorems of P\'alv\"olgyi that bear on
@@ -120,8 +139,10 @@ Theorem~\ref{thm:NR} is its case $d=3$.
 automatic. The searches of \S\ref{sec:credit} are stated as done (the version~1.0.0 text still carried
 a marker for them), Theorem~C is registered on the Palomar registry, and two references on Vahlen
 matrices are added.
-\item \textbf{Addition: first-order rigidity} (ledger SR-C34). \st{HAND}, reviewed by one non-author AI
-agent; scope \texttt{ANY}. Let $A$ lie on the unit sphere, let $D_1,\dots,D_k$ be a basis of the
+\item \textbf{Addition: first-order rigidity} (ledger SR-C34). \st{HAND}: written proof in \S\ref{sec:rigidity} (added in
+version~1.1.1), independently reviewed twice by non-author AI agents (the first review reconstructed the
+argument; a second, independent review found every step sound); scope
+\texttt{ANY}. Let $A$ lie on the unit sphere, let $D_1,\dots,D_k$ be a basis of the
 derivations of its coordinate field, and let $\Delta(A)$ be the dual space of the 2-jet system of
 \S\ref{sec:jet} without the trace condition. If $\Delta(A)=0$, then $A$ is Ramsey. The proof is a Smith
 form over the local ring of $F\otimes_\Q F$ at the diagonal, the duality behind
@@ -216,7 +237,7 @@ Result & Statement & Status & Scope \\
 \midrule
 Thm~\ref{thm:C2} & two M\"obius images of algebraic sets on $S^{d-1}$ are Ramsey, every $d\ge2$
  & \st{CERT}+glue for $d\le6$; \st{HAND} for all $d$; AI-reviewed & M\"obius orbits \\
-Thm~\ref{thm:C} & M\"obius invariance; published \cite{MR} & \st{LEAN}, Lean-checked \cite{MR} & any \\
+Thm~\ref{thm:C} & M\"obius invariance; published \cite{MR} & \st{LEAN} for the unit sphere (maps $\varphi_L$), Lean-checked \cite{MR}; other spheres by a similarity, \st{HAND} & any \\
 Thm~\ref{thm:A} & algebraic coordinates $\Rightarrow$ Ramsey (prior work) & \st{LEAN}, Lean-checked & algebraic \\
 Thm~\ref{thm:Ba} & $\le6$ points on a circle (prior work) & \st{LEAN}, Comparator-checked & any \\
 Thm~\ref{thm:Bb} & algebraic circle points $+\le3$ arbitrary & \st{LEAN}, Lean-checked & alg.\ $\cup$ 3 any \\
@@ -229,6 +250,7 @@ Thm~\ref{thm:rigid} & rigid-group absorption on the circle & \st{HAND}, AI-revie
 Prop~\ref{prop:PD} & circle phase diagram & \st{HAND}, AI-reviewed & generic \\
 Thm~\ref{thm:NR} & minimal non-Ramsey cells on $S^2$, $S^3$ & \st{CERT}+glue, AI-reviewed & generic \\
 Prop~\ref{prop:J2} & the 2-jet test is necessary & \st{HAND}, AI-reviewed & any \\
+Thm~\ref{thm:rigidity} & vanishing 2-jet dual space $\Rightarrow$ Ramsey (first-order rigidity) & \st{HAND}, reviewed twice (AI) & any \\
 Conj.~\ref{conj:C1} & the 2-jet test is sufficient & evidence \st{PROBE} & any \\
 Rem.~\ref{rem:definable} & Graham for o-minimal and polynomial-factor colourings & \st{HAND}, AI-reviewed & any \\
 \bottomrule
@@ -1258,9 +1280,459 @@ failure without a scalar certificate exists, and the working hypothesis that non
 configurations of rational plus independent points). Every cell above has quadric corank one (one
 relation $\sum_i\lambda_ip_ip_i^T=0$) or contains a failing cell of corank one, and at corank one the
 dual space of the 2-jet system consists of weights $\Lambda_i=\lambda_iC$, so a 2-jet failure there
-gives a scalar certificate once $C$ is reduced to a single derivation (\st{HAND}, reviewed by one
-non-author AI agent; ledger SR-C31). 2-jet failures with no scalar certificate exist at quadric corank
+gives a scalar certificate once $C$ is reduced to a single derivation (\st{HAND}, reviewed twice by
+non-author AI agents; ledger SR-C31(a); written out in Remark~\ref{rem:corankjet}). 2-jet failures with no scalar certificate exist at quadric corank
 three and four on $S^2$ (ledger SR-C32, proved for four seeded families), which answers SR-C11.
+
+\section{First-order rigidity}\label{sec:rigidity}
+
+\noindent\emph{Status of this section.} \st{HAND}: written proof in this section (added in v1.1.1),
+independently reviewed twice by non-author AI agents (the first review reconstructed the argument; a
+second, independent review found every step sound; \S\ref{sec:disclosure}). Scope \texttt{ANY}. Version~1.1.0 stated first-order rigidity (ledger SR-C34) and the
+finite-type reformulation (ledger SR-C33(a)--(c)) with a summary of the proof only; the complete argument
+is written out here. It follows the reconstruction by the non-author AI reviewer of version~1.1.0
+(\S\ref{sec:disclosure}). It rests on OpenAI's Theorem~1.1 and its Lean proof (\S\ref{sec:prelim}); the
+rest is standard commutative algebra over $F\otimes_\Q F$, and each standard fact is named where it is
+used.
+
+\medskip\noindent\emph{Setting.} Throughout this section $A=\{a_1,\dots,a_s\}\subset\R^d$ consists of
+$s\ge2$ distinct points with $|a_i|=1$ (the unit sphere centred at $0$), $d\ge1$. Ramsey-ness is invariant
+under similarities, so a set on another sphere is first moved to this one; the statements below concern
+the coordinates of the moved set, whose coordinate field is in general a different field. Let
+$p_i=(1,a_i)^T$, $F=\Q(a_{i\alpha})$, $B=F\otimes_\Q F$, $m:B\to F$ the multiplication map,
+$\mathfrak m=\ker m$, and $\tau$ the flip $x\otimes y\mapsto y\otimes x$. Put $M=(d+1)^2$, identify
+$(d+1)\times(d+1)$ matrices over any ring with $M$-tuples, and let
+\[
+ \Phi(P)_i=(p_i\otimes1)^TP(1\otimes p_i)=\sum_{\alpha,\beta}(p_{i\alpha}\otimes p_{i\beta})P_{\alpha\beta}
+ \qquad(1\le i\le s),
+\]
+a $B$-linear map $B^M\to B^s$, given by the same formula over every $B$-algebra. Let
+$S=\mathrm{diag}(-1,I_d)$ and $b:=\Phi(S\otimes1)\in B^s$. Applying $m$ to the entries of $\Phi$ gives
+$\bar\Phi:\Mat_{d+1}(F)\to F^s$, $X\mapsto(p_i^TXp_i)_i$, whose rows are the matrices $p_ip_i^T$. Let
+$\rho$ be its rank (the quadric rank), $\kappa=s-\rho$ the quadric corank, and
+$\mathrm{Rel}=\{\lambda\in F^s:\sum_i\lambda_ip_ip_i^T=0\}$, of dimension $\kappa$. Let $k$ be the
+transcendence degree of $F$ over $\Q$, $t_1,\dots,t_k\in F$ a transcendence basis, and $D_1,\dots,D_k$
+the derivations of $F$ with $D_jt_l=\delta_{jl}$. They exist, are unique and commute, because $F$ is a finite
+separable extension of $\Q(t)$: a derivation of $\Q(t)$ extends uniquely along a separable algebraic
+extension (if $\mu$ is the minimal polynomial of $g$, then $0=D(\mu(g))=\mu^D(g)+\mu'(g)Dg$, where $\mu^D$ applies $D$ to the coefficients, with
+$\mu'(g)\ne0$), and $[D_j,D_l]$ is a derivation vanishing on $\Q(t)$. They form an $F$-basis of
+$\mathrm{Der}_\Q(F)$, since $\partial-\sum_j\partial(t_j)D_j$ vanishes on $\Q(t)$, hence on $F$. For
+$g\in F$ write $\delta g=1\otimes g-g\otimes1\in\mathfrak m$. Nothing is assumed about $F$ beyond finite
+generation over $\Q$: $B$ need not be a domain, and $F$ need not be regular over $\Q$.
+
+\begin{lemma}[The local ring at the diagonal]\label{lem:local}
+\begin{enumerate}
+\item[(a)] $B$ is Noetherian.
+\item[(b)] $\mathfrak m$ is generated, as a module over $F\otimes1$, by the elements $\delta g$, and
+$\delta g\equiv\sum_jD_j(g)\,\delta t_j$ modulo $\mathfrak m^2$.
+\item[(c)] Let $\sigma(g)=\sum_{|\alpha|\le2}D^\alpha g\,e^\alpha/\alpha!\in F[e_1,\dots,e_k]/(e)^3$. The Taylor
+map $T(f\otimes g)=f\,\sigma(g)$ induces an $F\otimes1$-linear ring isomorphism
+$B/\mathfrak m^3\to F[e]/(e)^3$, with $T(\mathfrak m^r/\mathfrak m^3)=(e)^r/(e)^3$ and
+$T(\delta g)\equiv\sum_je_jD_jg$ modulo $(e)^2$. In particular $\mathfrak m/\mathfrak m^2$ has $F$-basis
+$\delta t_1,\dots,\delta t_k$, and $\mathfrak m^2/\mathfrak m^3$ has $F$-basis $\delta t_j\delta t_l$
+($j\le l$).
+\item[(d)] $\mathcal O:=B_{\mathfrak m}$ is a Noetherian local ring with maximal ideal $\mathfrak m\mathcal O$
+and residue field $F$. For $n\ge1$ the natural map $B/\mathfrak m^n\to\mathcal O/\mathfrak m^n\mathcal O$ is
+an isomorphism carrying $\mathfrak m^r/\mathfrak m^n$ onto $\mathfrak m^r\mathcal O/\mathfrak m^n\mathcal O$
+for every $0\le r\le n$; in particular $\mathfrak m\mathcal O\cap B=\mathfrak m$.
+\item[(e)] If $k=1$, $\mathcal O$ is a discrete valuation ring with uniformizer $\pi=\delta t_1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) $\Q(t)\otimes_\Q F$ is the localization of $\Q[t]\otimes_\Q F\cong F[X_1,\dots,X_k]$ (a polynomial ring, the $t_j$ being algebraically independent) at the nonzero elements
+of $\Q[t]\otimes1$, so it is Noetherian by Hilbert's basis theorem. $B=F\otimes_{\Q(t)}(\Q(t)\otimes_\Q F)$
+is a free module of rank $[F:\Q(t)]<\infty$ over it, and every ideal of $B$ is a submodule of this finitely
+generated module, hence finitely generated.
+
+(b) If $x=\sum_rf_r\otimes g_r\in\mathfrak m$, then $\sum_rf_rg_r=0$ and
+$x=\sum_r(f_r\otimes1)\,\delta g_r$. The quotient $\mathfrak m/\mathfrak m^2$ is a vector space over
+$B/\mathfrak m=F$, on which $f\otimes1$ and $1\otimes f$ act alike, and
+$\delta(gh)=(1\otimes g)\,\delta h+(h\otimes1)\,\delta g$, so $g\mapsto\delta g$ is a $\Q$-derivation
+$F\to\mathfrak m/\mathfrak m^2$. Then $g\mapsto\delta g-\sum_jD_j(g)\,\delta t_j$ is a derivation vanishing
+on $t_1,\dots,t_k$, hence on $\Q(t)$ and on $F$, as in the setting.
+
+(c) The $D_j$ commute, so the Leibniz rule
+$D^\alpha(gh)=\sum_{\beta\le\alpha}\binom\alpha\beta D^\beta g\,D^{\alpha-\beta}h$ shows that $\sigma$ is a ring
+homomorphism modulo $(e)^3$; $T$ is the ring homomorphism $B\to F[e]/(e)^3$ induced by the two
+$\Q$-algebra maps $f\mapsto f$ and $\sigma$ (this is the Taylor map of Proposition~\ref{prop:J2}). Setting $e=0$
+recovers $m$, so $T(\mathfrak m)\subset(e)$ and $T(\mathfrak m^3)=0$. Since $T(f\otimes1)=f$ and
+$T(\delta t_j)=e_j$, $T$ is onto. By (b), $\mathfrak m/\mathfrak m^2$ is spanned over $F$ by the $k$
+classes $\delta t_j$, and $\mathfrak m^2/\mathfrak m^3$ by the products $\delta t_j\delta t_l$; so
+$\dim_FB/\mathfrak m^3\le1+k+k(k+1)/2=\dim_FF[e]/(e)^3$, and the onto $F$-linear map is bijective. The
+formula for $T(\delta g)=\sigma(g)-g$ is immediate.
+
+(d) A localization of a Noetherian ring is Noetherian. Every prime ideal containing $\mathfrak m^n$
+contains $\mathfrak m$, so $B/\mathfrak m^n$ is local and every $c\notin\mathfrak m$ is a unit modulo
+$\mathfrak m^n$. Injectivity: if $x\in B$ equals $y/c$ in $\mathcal O$ with $y\in\mathfrak m^n$,
+$c\notin\mathfrak m$, then $u(cx-y)=0$ for some $u\notin\mathfrak m$; as $uc$ is a unit modulo
+$\mathfrak m^n$, $x\in\mathfrak m^n$. Surjectivity: $y/c\equiv yc'$ modulo $\mathfrak m^n\mathcal O$, where
+$cc'\equiv1$ modulo $\mathfrak m^n$. Every element of $\mathfrak m^r\mathcal O$ is $y/c$ with $y\in\mathfrak m^r$,
+and then $yc'\in\mathfrak m^r$, so the image of $\mathfrak m^r/\mathfrak m^n$ is all of
+$\mathfrak m^r\mathcal O/\mathfrak m^n\mathcal O$. The case $n=1$ gives the last claim.
+
+(e) $B=F\otimes_{\Q(t_1)}\bigl(\Q(t_1)\otimes_\Q\Q(t_1)\bigr)\otimes_{\Q(t_1)}F$ is a free module over
+$R_0=\Q(t_1)\otimes_\Q\Q(t_1)$, a localization of the domain $\Q[T,U]$, in which $\pi=U-T\ne0$. So
+multiplication by $\pi$ is injective on $B$, hence on $\mathcal O$ (localization is exact). By (c) and (d),
+$\mathfrak m\mathcal O=\pi\mathcal O+\mathfrak m^2\mathcal O$, so $\mathfrak m\mathcal O=\pi\mathcal O$ by
+Nakayama's lemma. By Krull's intersection theorem $\bigcap_n\pi^n\mathcal O=0$, so every nonzero
+$x\in\mathcal O$ is $\pi^nu$ with $u\notin\pi\mathcal O$, a unit; since $\pi$ is a nonzerodivisor, products
+of nonzero elements are nonzero. So $\mathcal O$ is a domain whose nonzero ideals are the $\pi^n\mathcal O$.
+\end{proof}
+
+\noindent(One can show that $\mathcal O$ is regular of dimension $k$; nothing below uses this.)
+
+\begin{lemma}[The obstruction]\label{lem:obstruction}
+$b_i=-\tfrac12\sum_{j=1}^d(\delta a_{ij})^2$ for every $i$. Hence $b\in\mathfrak m^2B^s$, and
+$T(b_i)=-\tfrac12\,e^TG_ie$, where $G_i$ is the Gram matrix $(\langle D_ja_i,D_la_i\rangle)_{j,l}$.
+\end{lemma}
+
+\begin{proof}
+$b_i=\sum_{\alpha,\beta}S_{\alpha\beta}\,p_{i\alpha}\otimes p_{i\beta}=-1\otimes1+\sum_ja_{ij}\otimes a_{ij}$,
+while $(\delta a_{ij})^2=1\otimes a_{ij}^2-2a_{ij}\otimes a_{ij}+a_{ij}^2\otimes1$ and
+$\sum_ja_{ij}^2=1$ in $F$. The last claim follows from Lemma~\ref{lem:local}(c):
+$T(\delta a_{ij})^2\equiv(\sum_le_lD_la_{ij})^2$ modulo $(e)^3$.
+\end{proof}
+
+\noindent By the \emph{field criterion over $B/\mathfrak m^n$} ($n\ge1$) we mean a matrix $P$ over
+$B/\mathfrak m^n$ with $\Phi(P)=0$ in $(B/\mathfrak m^n)^s$ and spatial block of $m(P)$ equal to $I_d$ ($m$
+factors through $B/\mathfrak m^n$). For $n=3$ this is the 2-jet test (Proposition~\ref{prop:J2}).
+
+\begin{proposition}[Finite type; ledger SR-C33(a)]\label{prop:finitetype}
+\begin{enumerate}
+\item[(i)] If $b\in\Phi(\mathfrak m\mathcal O^M)$, then $A$ is Ramsey. (No spanning hypothesis.)
+\item[(ii)] If $A$ affinely spans $\R^d$ and is Ramsey, then $b\in\Phi(\mathfrak mB^M)$.
+\item[(iii)] If $A$ affinely spans $\R^d$ and $n\ge1$, the field criterion over $B/\mathfrak m^n$ is
+solvable if and only if $b\in\Phi(\mathfrak mB^M)+\mathfrak m^nB^s$.
+\item[(iv)] There is $n_0=n_0(A)$ such that for every $n\ge n_0$:
+$b\in\Phi(\mathfrak m\mathcal O^M)$ if and only if $b\in\Phi(\mathfrak mB^M)+\mathfrak m^nB^s$. So a set
+that affinely spans $\R^d$ is Ramsey if and only if the field criterion over $B/\mathfrak m^n$ is solvable,
+for any $n\ge n_0(A)$.
+\end{enumerate}
+The proof gives no bound on $n_0(A)$. Conjecture~\ref{conj:C1} says that $n_0=3$ works for every spanning
+set.
+\end{proposition}
+
+\begin{proof}
+(i) Write $b=\Phi(Q)$ with $Q\in(\mathfrak m\mathcal O)^M$, and $Q=q/c$ with $q\in B^M$ and
+$c\in B\setminus\mathfrak m$ a common denominator. Each $q_{\alpha\beta}=cQ_{\alpha\beta}$ lies in
+$\mathfrak m\mathcal O\cap B=\mathfrak m$ (Lemma~\ref{lem:local}(d)). The equality $cb=\Phi(q)$ in
+$\mathcal O^s$ means $u(cb-\Phi(q))=0$ in $B^s$ for some $u\notin\mathfrak m$ (a product of one such element
+per coordinate). Put $P=uc\,(S\otimes1)-uq$. Then $\Phi(P)=u(cb-\Phi(q))=0$, and $m(P)=m(uc)\,S$ since
+$m(q)=0$; here $m(uc)\ne0$ because $\mathfrak m$ is prime. So the spatial block of $m(P)$ is $m(uc)I_d$ with
+$m(uc)\in F^\times$, and by Lemma~0 $(m(uc)^{-1}\otimes1)P$ satisfies OpenAI's field criterion. Their Lean
+sufficiency \texttt{fieldCriterion\_\allowbreak{}ramsey} needs only $s\ge2$, $d\ge1$ and distinct points
+(\S\ref{sec:prelim}), so $A$ is Ramsey.
+
+(ii) By Theorem~1.1 (Lean: \texttt{ramsey\_\allowbreak{}realCriterion}, then
+\texttt{realCriterion\_\allowbreak{}fieldCriterion}) there is $P$ over $B$ with $\Phi(P)=0$ and spatial
+block of $m(P)$ equal to $I_d$. Let $P^*_{\alpha\beta}=\tau(P_{\beta\alpha})$. Since $\tau$ is a ring
+automorphism with $m\circ\tau=m$, $\Phi(P^*)_i=\tau(\Phi(P)_i)=0$ and $m(P^*)=m(P)^T$. So
+$P'=\tfrac12(P+P^*)$ has $\Phi(P')=0$ and $m(P')$ symmetric with spatial block $I_d$. Applying $m$ to
+$\Phi(P')_i=0$ gives $p_i^Tm(P')p_i=0$: the function $x\mapsto(1,x^T)\,m(P')\,(1,x^T)^T=|x|^2+2v\cdot x+c_0$
+vanishes on $A$, and so does $|x|^2-1$. Their difference is affine and vanishes on a set that affinely
+spans $\R^d$, so $v=0$, $c_0=-1$ and $m(P')=S$. Then $Q:=S\otimes1-P'$ has $m(Q)=0$, so its entries lie in
+$\mathfrak m$, and $\Phi(Q)=b$.
+
+(iii) If $b=\Phi(Q)+r$ with $Q\in\mathfrak m^M$ and $r\in\mathfrak m^nB^s$, then $S\otimes1-Q$ solves the
+criterion over $B/\mathfrak m^n$. Conversely, $\tau(\mathfrak m)=\mathfrak m$, so $\tau$ acts on
+$B/\mathfrak m^n$ and the symmetrization and the spanning argument of (ii) apply verbatim to a solution
+over $B/\mathfrak m^n$; lift the resulting solution with $m(P')=S$ to $\hat P$ over $B$. Then
+$Q=S\otimes1-\hat P$ has entries in $\mathfrak m$ and $b-\Phi(Q)=\Phi(\hat P)\in\mathfrak m^nB^s$.
+
+(iv) Let $K=\Phi(\mathfrak m\mathcal O^M)$. By Lemma~\ref{lem:local}(d) (reduce modulo $\mathfrak m^n$ and
+lift), $b\in K+\mathfrak m^n\mathcal O^s$ if and only if $b\in\Phi(\mathfrak mB^M)+\mathfrak m^nB^s$. If
+$b\in K$, take $n_0=1$. Otherwise the image of $b$ in the finitely generated $\mathcal O$-module
+$\mathcal O^s/K$ is nonzero, and Krull's intersection theorem ($\bigcap_n\mathfrak m^nN=0$ for every finitely
+generated module $N$ over a Noetherian local ring) gives $n_0$ with $b\notin K+\mathfrak m^{n_0}\mathcal O^s$,
+hence $b\notin K+\mathfrak m^n\mathcal O^s$ for all $n\ge n_0$. The last sentence combines this with (i),
+(ii) and (iii).
+\end{proof}
+
+\begin{lemma}[Smith form at the diagonal]\label{lem:smith}
+There are invertible matrices $U$ ($s\times s$) and $V$ ($M\times M$) over $\mathcal O$ with
+\[
+ U^{-1}\Phi V^{-1}=\begin{pmatrix}I_\rho&0\\0&\Psi\end{pmatrix},
+\]
+where $\Psi$ is a $\kappa\times(M-\rho)$ matrix with entries in $\mathfrak m\mathcal O$. Let $\beta\in\mathcal O^\kappa$
+be the last $\kappa$ coordinates of $U^{-1}b$, and $\operatorname{Im}\Psi\subset\mathcal O^\kappa$ the
+column span of $\Psi$. Then $\beta\in\mathfrak m^2\mathcal O^\kappa$, and $b\in\Phi(\mathfrak m\mathcal O^M)$ if
+and only if $\beta\in\mathfrak m\operatorname{Im}\Psi$. The last $\kappa$ rows of $U_0^{-1}$, where $U_0$ is the
+reduction of $U$ modulo $\mathfrak m$, form a basis of $\mathrm{Rel}$.
+\end{lemma}
+
+\begin{proof}
+Invertible row and column operations over $\mathcal O$ do not change the rank of the reduction modulo
+$\mathfrak m$. If some entry of a matrix is a unit, move it to position $(1,1)$, scale, and clear its row and
+column; the remaining block has reduction of rank one less. Repeat until every entry of the remaining
+block lies in $\mathfrak m\mathcal O$; this happens after exactly $\rho$ steps. Since $V$ preserves
+$\mathfrak m\mathcal O^M$,
+$\Phi(\mathfrak m\mathcal O^M)=U\bigl(\mathfrak m\mathcal O^\rho\oplus\mathfrak m\operatorname{Im}\Psi\bigr)$.
+By Lemma~\ref{lem:obstruction}, $U^{-1}b\in\mathfrak m^2\mathcal O^s$, so its first $\rho$ coordinates lie in
+$\mathfrak m\mathcal O$ automatically, which gives the two claims about $\beta$. Finally
+$U_0^{-1}\bar\Phi=\begin{psmallmatrix}I_\rho&0\\0&0\end{psmallmatrix}V_0$, so the last $\kappa$ rows of the
+invertible matrix $U_0^{-1}$ are independent vectors $\ell$ with $\ell\bar\Phi=0$, that is, with
+$\sum_i\ell_ip_ip_i^T=0$; there are $\kappa=\dim\mathrm{Rel}$ of them.
+\end{proof}
+
+\begin{definition}[The 2-jet dual space]\label{def:Delta}
+$\Delta(A)$ is the $F$-space of tuples $\Lambda=(\Lambda_1,\dots,\Lambda_s)$ of symmetric $k\times k$
+matrices over $F$ such that
+\begin{enumerate}
+\item[(D1)] $\sum_i(\Lambda_i)_{jl}\,p_ip_i^T=0$ for all $j,l$, and
+\item[(D2)] $X_j:=\sum_i\sum_l(\Lambda_i)_{jl}\,p_i(D_lp_i)^T\in\mathrm{span}_F\{p_ip_i^T\}$ for each $j$,
+as an equality of full matrices.
+\end{enumerate}
+These are the first two conditions of the corrected dual form in \S\ref{sec:jet}; the trace condition is not
+imposed. For $\lambda\in F^s$ let $\Pi_\lambda:F^k\to\mathrm{Alt}_{d+1}(F)$ (antisymmetric matrices, of
+dimension $d(d+1)/2=\dim\mathfrak{so}(1,d)$) be
+$\Pi_\lambda(\xi)=\operatorname{asym}\bigl(\sum_i\lambda_ip_i(\sum_l\xi_lD_lp_i)^T\bigr)$, where
+$\operatorname{asym}(X)=\tfrac12(X-X^T)$ and $\operatorname{sym}(X)=\tfrac12(X+X^T)$.
+\end{definition}
+
+\begin{lemma}[Symmetric parts are automatic]\label{lem:Pi}
+\begin{enumerate}
+\item[(a)] For $\lambda\in\mathrm{Rel}$ and any $\Q$-derivation $\partial$ of $F$, the matrix
+$Y=\sum_i\lambda_ip_i(\partial p_i)^T$ satisfies $Y+Y^T=-\sum_i(\partial\lambda_i)\,p_ip_i^T$; so
+$\operatorname{sym}(Y)\in\mathrm{span}_F\{p_ip_i^T\}$.
+\item[(b)] Let $\lambda^1,\dots,\lambda^\kappa$ be a basis of $\mathrm{Rel}$. Writing
+$\Lambda_i=\sum_r\lambda^r_iC^r$ identifies $\Delta(A)$ with the space of tuples $(C^1,\dots,C^\kappa)$ of
+symmetric $k\times k$ matrices such that $\sum_r\Pi_{\lambda^r}(C^r\xi)=0$ for all $\xi\in F^k$. In
+particular $\Delta(A)=0$ if $\kappa=0$, and $\Delta(A)\cong\mathrm{Sym}^2(\ker\Pi_\lambda)$ if
+$\mathrm{Rel}=F\lambda$. The same description holds with any $F$-basis of $\mathrm{Der}_\Q(F)$ in place of
+$D_1,\dots,D_k$, up to the isomorphism $C\mapsto g^TCg$ for the change of basis $g$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Apply $\partial$ entrywise to $\sum_i\lambda_ip_ip_i^T=0$:
+$\sum_i(\partial\lambda_i)p_ip_i^T+\sum_i\lambda_i\bigl((\partial p_i)p_i^T+p_i(\partial p_i)^T\bigr)=0$.
+
+(b) (D1) says that for each $(j,l)$ the vector $((\Lambda_i)_{jl})_i$ lies in $\mathrm{Rel}$, so
+$\Lambda_i=\sum_r\lambda^r_iC^r$ for unique symmetric $C^r$. Then
+$X_j=\sum_r\sum_lC^r_{jl}Y^r_l$ with $Y^r_l=\sum_i\lambda^r_ip_i(D_lp_i)^T$. By (a),
+$\operatorname{sym}(X_j)\in\mathrm{span}_F\{p_ip_i^T\}$, and that span consists of symmetric matrices, so
+(D2) holds if and only if $\operatorname{asym}(X_j)=\sum_r\Pi_{\lambda^r}(C^re_j)=0$ ($C^r$ is symmetric).
+For $\kappa=1$ the condition says that every column of $C$ lies in $\ker\Pi_\lambda$. For another basis
+$D'_l=\sum_jg_{lj}D_j$, $\Pi'_\lambda(\xi)=\Pi_\lambda(g^T\xi)$, and $C'\mapsto g^TC'g$ carries one
+solution space onto the other.
+\end{proof}
+
+\noindent Let $L_2:(\mathfrak m/\mathfrak m^3)^M\to(\mathfrak m/\mathfrak m^3)^s$ be the $F$-linear map
+induced by $\Phi$ (the 2-jet system), and $I_2=\operatorname{Im}L_2\cap(\mathfrak m^2/\mathfrak m^3)^s$. By
+Lemma~\ref{lem:local}(c), $T$ identifies $(\mathfrak m^2/\mathfrak m^3)^s$ with $s$-tuples of quadratic forms
+$e^TX_ie$, $X_i$ symmetric, and $\langle\Lambda,X\rangle=\sum_i\operatorname{tr}(\Lambda_iX_i)$ is a
+perfect pairing with tuples of symmetric $k\times k$ matrices.
+
+\begin{lemma}[Duality]\label{lem:duality}
+$\Delta(A)$ is the annihilator of $I_2$ under this pairing.
+\end{lemma}
+
+\begin{proof}
+Finite-dimensional fact: if $X$ and $Y$ are subspaces of a finite-dimensional space $V$, the restrictions
+to $Y$ of the functionals vanishing on $X$ are exactly the functionals on $Y$ vanishing on $X\cap Y$. (A
+functional $g$ on $Y$ vanishing on $X\cap Y$ defines $f(x+y)=g(y)$ on $X+Y$, well defined, and $f$ extends
+to $V$.) Apply it with $V=(\mathfrak m/\mathfrak m^3)^s$, $X=\operatorname{Im}L_2$ and
+$Y=(\mathfrak m^2/\mathfrak m^3)^s$. Via $T$, $V$ is the space of tuples of polynomials in $e$ with zero
+constant term modulo $(e)^3$, and a functional on $V$ is a pair $(\nu,\Lambda)$, $\nu_i\in F^k$ pairing with
+the linear coefficients and $\Lambda$ as above; its restriction to $Y$ is $\Lambda$. Write an element of
+$(\mathfrak m/\mathfrak m^3)^M$ as $\sum_je_jP_j+\sum_{j\le l}e_je_lQ_{jl}$ with $P_j,Q_{jl}\in\Mat_{d+1}(F)$.
+Since $T(p_{i\alpha}\otimes p_{i\beta})=p_{i\alpha}\sigma(p_{i\beta})$ and
+$\sigma(p_i)\equiv p_i+\sum_le_lD_lp_i$ modulo $(e)^2$, the $i$-th entry of its image under $L_2$ is
+\[
+ \sum_je_j\,p_i^TP_jp_i+\sum_{j,l}e_je_l\,p_i^TP_jD_lp_i+\sum_{j\le l}e_je_l\,p_i^TQ_{jl}p_i .
+\]
+Write $\langle Z,W\rangle=\operatorname{tr}(Z^TW)$ for matrices, so that $p^TZq=\langle Z,pq^T\rangle$. The
+pairing of $(\nu,\Lambda)$ with this image is
+$\sum_j\bigl\langle P_j,\sum_i(\nu_i)_jp_ip_i^T+\sum_i\sum_l(\Lambda_i)_{jl}p_i(D_lp_i)^T\bigr\rangle
++\sum_{j\le l}\bigl\langle Q_{jl},\sum_i(\Lambda_i)_{jl}p_ip_i^T\bigr\rangle$ (for $j<l$ the form
+$c\,e_je_l$ has matrix entries $c/2$ at $(j,l)$ and $(l,j)$, and $\Lambda_i$ is symmetric). So
+$(\nu,\Lambda)$ vanishes on $\operatorname{Im}L_2$ if and only if $\Lambda$ satisfies (D1) and
+$X_j=-\sum_i(\nu_i)_jp_ip_i^T$ for every $j$. The $\Lambda$ for which some $\nu$ exists are exactly those
+satisfying (D1) and (D2).
+\end{proof}
+
+\begin{corollary}[Dual form of the 2-jet test, at every quadric rank]\label{cor:jetdual}
+If $A$ affinely spans $\R^d$, the field criterion over $B/\mathfrak m^3$ (the 2-jet test) is solvable if
+and only if $\sum_i\operatorname{tr}(\Lambda_iG_i)=0$ for every $\Lambda\in\Delta(A)$. The ``if'' direction
+needs no spanning hypothesis.
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:finitetype}(iii) the test is solvable if and only if
+$b\in\Phi(\mathfrak mB^M)+\mathfrak m^3B^s$, that is, if and only if the class $\bar b$ of $b$ lies in
+$\operatorname{Im}L_2$ (lift a preimage to $\mathfrak m^M$). By Lemma~\ref{lem:obstruction},
+$\bar b\in(\mathfrak m^2/\mathfrak m^3)^s$, so this says $\bar b\in I_2=\Delta(A)^\perp$
+(Lemma~\ref{lem:duality} and finite dimension), and $\langle\Lambda,\bar b\rangle=-\tfrac12\sum_i
+\operatorname{tr}(\Lambda_iG_i)$. The step from $b\in\Phi(\mathfrak mB^M)+\mathfrak m^3B^s$ to a solution
+($S\otimes1-Q$) does not use the span.
+\end{proof}
+
+\begin{remark}[Corank one]\label{rem:corankjet}
+Let $\mathrm{Rel}=F\lambda$. For a derivation $\partial=\sum_l\xi_lD_l$ we have $\partial p_i=(0,\partial a_i)$,
+so $\Pi_\lambda(\xi)=0$ says exactly that $\sum_i\lambda_i\partial a_i=0$ and
+$\sum_i\lambda_i(\partial a_i)a_i^T$ is symmetric: the linear conditions of Lemma~\ref{lem:A1}. By
+Lemma~\ref{lem:Pi}(b), $\Delta(A)=\mathrm{Sym}^2(K)$ with $K=\ker\Pi_\lambda$, which is spanned by the
+$\xi\xi^T$, $\xi\in K$, and $\sum_i\operatorname{tr}(\xi\xi^T\lambda_iG_i)=\sum_i\lambda_i|\partial a_i|^2$, the quantity $E$ of Lemma~\ref{lem:A1}.
+A linear functional on $\mathrm{Sym}^2(K)$ that vanishes on every $\xi\xi^T$ is zero, so at quadric corank
+one the pairing of Corollary~\ref{cor:jetdual} is nonzero on $\Delta(A)$ (for a spanning set: the 2-jet test
+fails) if and only if some derivation of $F$ satisfies all the hypotheses of Lemma~\ref{lem:A1} with this
+$\lambda$; then $A$ is not Ramsey by Lemma~\ref{lem:A1} directly (extend the derivation to $\R$), with no
+spanning hypothesis. This is the corank-one statement used in \S\ref{sec:jet}.
+\end{remark}
+
+\begin{theorem}[First-order rigidity; ledger SR-C34]\label{thm:rigidity}
+Let $A$ be as in the setting of this section (the unit sphere centred at $0$; no spanning hypothesis). If
+$\Delta(A)=0$, then $A$ is Ramsey.
+
+\smallskip\noindent\emph{Status:} \st{HAND}: written proof in this section (added in v1.1.1),
+independently reviewed twice by non-author AI agents (the first review reconstructed the argument; a
+second, independent review found every step sound). Scope \texttt{ANY}.
+\end{theorem}
+
+\begin{proof}
+Take $U,V,\Psi,\beta$ as in Lemma~\ref{lem:smith}. By Lemma~\ref{lem:local}(d), $\mathcal O/\mathfrak m^3\mathcal O=
+B/\mathfrak m^3$, so $U$ and $V$ reduce to invertible matrices $\bar U,\bar V$ over $B/\mathfrak m^3$, and
+$L_2$ is the restriction of $\Phi$ modulo $\mathfrak m^3$ to $(\mathfrak m/\mathfrak m^3)^M$, which $\bar V$
+preserves. Hence
+\[
+ \operatorname{Im}L_2=\bar U\bigl((\mathfrak m/\mathfrak m^3)^\rho\oplus W\bigr),\qquad
+ W:=\bigl(\mathfrak m\operatorname{Im}\Psi+\mathfrak m^3\mathcal O^\kappa\bigr)/\mathfrak m^3\mathcal O^\kappa
+ \subset(\mathfrak m^2/\mathfrak m^3)^\kappa,
+\]
+the inclusion because $\Psi$ has entries in $\mathfrak m$. $\bar U$ is invertible and preserves
+$(\mathfrak m^2/\mathfrak m^3)^s$, so
+$I_2=\bar U\bigl((\mathfrak m^2/\mathfrak m^3)^\rho\oplus W\bigr)$ and, by Lemma~\ref{lem:duality},
+\[
+ \dim_F\Delta(A)=s\,\tfrac{k(k+1)}2-\dim I_2=\kappa\,\tfrac{k(k+1)}2-\dim_FW .
+\]
+If $\Delta(A)=0$, then $W=(\mathfrak m^2/\mathfrak m^3)^\kappa$, that is,
+$Z=\mathfrak m\operatorname{Im}\Psi+\mathfrak mZ$ for $Z:=\mathfrak m^2\mathcal O^\kappa$, a finitely generated
+$\mathcal O$-module containing $\mathfrak m\operatorname{Im}\Psi$. Nakayama's lemma, applied to
+$Z/\mathfrak m\operatorname{Im}\Psi$, gives $Z=\mathfrak m\operatorname{Im}\Psi$. By Lemma~\ref{lem:smith},
+$\beta\in Z$, so $b\in\Phi(\mathfrak m\mathcal O^M)$, and $A$ is Ramsey by
+Proposition~\ref{prop:finitetype}(i).
+\end{proof}
+
+\noindent The theorem does not say that $\Delta(A)\ne0$ implies non-Ramsey: by
+Corollary~\ref{cor:jetdual} the 2-jet test can pass with $\Delta(A)\ne0$, and then
+Conjecture~\ref{conj:C1} is the open question.
+
+\begin{corollary}[Special cases]\label{cor:rigidcases}
+\begin{enumerate}
+\item[(a)] ($\kappa=0$.) If the matrices $p_ip_i^T$ are linearly independent over $F$, $A$ is Ramsey. This
+is OpenAI's quadric-independence criterion \cite[Prop.~7.3]{OAI172} (Remark~\ref{rem:quadric}); in this
+case $\Psi$ is empty, and their lifting lemma \texttt{lift\_\allowbreak{}kernel} is the corresponding
+order-zero argument.
+\item[(b)] ($k=0$.) If $F$ is algebraic, $\Delta(A)=0$ and $A$ is Ramsey: Theorem~\ref{thm:A}.
+\item[(c)] (The circle, one parameter.) Let $d=2$, let $F$ have transcendence degree $1$, and let $A$ avoid
+the pole $(-1,0)$ (a rational rotation arranges this without changing $F$). With $t$, $\delta=d/dt$,
+$s_i$, $\delta_i$ and the $n\times8$ matrix $N$ as in Theorem~\ref{thm:rank} ($n=s$), $\Delta(A)$ is
+isomorphic to the left kernel of $N$. So if $\operatorname{rank}_FN=n$, $A$ is Ramsey: this is
+Theorem~\ref{thm:rank} without its hypotheses that $F$ is regular over $\Q$ and that $5\le n\le8$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+(a) and (b) are Lemma~\ref{lem:Pi}(b) and the definition. (c) Here $k=1$, $D_1=\delta$ (a basis of
+$\mathrm{Der}_\Q(F)$, which is one-dimensional), and by Lemma~\ref{lem:Pi}(b) $\Delta(A)$ is isomorphic to
+$\{\lambda\in\mathrm{Rel}:\Pi_\lambda(1)=0\}$. With $w_i=1+s_i^2$ and $v(s)=(1+s^2,1-s^2,2s)$, $p_i=v(s_i)/w_i$.
+Put $\lambda'_i=\lambda_i/w_i^2$, a bijective rescaling. The six entries of $v(s)v(s)^T$ span the
+polynomials of degree at most $4$ in $s$, so $\lambda\in\mathrm{Rel}$ if and only if
+$\sum_i\lambda'_is_i^m=0$ for $m=0,\dots,4$. Next, $p_i(\delta p_i)^T=v_i(\delta v_i)^T/w_i^2$ plus a
+multiple of $v_iv_i^T$, and $\delta v_i=\delta_iv'(s_i)$ with $v'(s)=(2s,-2s,2)$; the entries of
+$\operatorname{asym}(v(s)v'(s)^T)$ are $-2s$, $1-s^2$ and $1+s^2$, which span the polynomials of degree at
+most $2$. So $\Pi_\lambda(1)=0$ if and only if $\sum_i\lambda'_i\delta_is_i^m=0$ for $m=0,1,2$. Together:
+$\lambda\in\mathrm{Rel}$ and $\Pi_\lambda(1)=0$ if and only if $\lambda'N=0$.
+\end{proof}
+
+\begin{remark}[Larger fields]\label{rem:largerfield}
+The theorem may be applied with any finitely generated subfield $F'\subset\R$ containing the coordinates in
+place of $F$ (with $F'\otimes_\Q F'$, its diagonal ideal and a basis of $\mathrm{Der}_\Q(F')$). The proofs above
+use only that the coordinates lie in the finitely generated field, and the proof of
+Proposition~\ref{prop:finitetype}(i) gives $P$ over $F'\otimes_\Q F'$ with $\Phi(P)=0$ and $m(P)=cS$,
+$c\in F'^\times$. Its image under $F'\otimes_\Q F'\to\R\otimes_\Q\R$, multiplied by $c^{-1}\otimes1$, satisfies
+OpenAI's real criterion; their \texttt{realCriterion\_\allowbreak{}fieldCriterion} and
+\texttt{fieldCriterion\_\allowbreak{}ramsey} then give that $A$ is Ramsey.
+\end{remark}
+
+\begin{remark}[What the theorem does not say]\label{rem:silent}
+\begin{enumerate}
+\item[(a)] It is not a characterization, and $\Delta(A)$ depends on the coordinates, not only on the
+congruence class. Suppose a nonzero derivation $\partial=\sum_l\xi_lD_l$ satisfies
+$\partial p_i=Xp_i+\mu_ip_i$ for all $i$, with one matrix $X$ over $F$ and scalars $\mu_i\in F$; infinitesimal
+M\"obius motions are of this form. Then
+$\Pi_\lambda(\xi)=\operatorname{asym}\bigl((\sum_i\lambda_ip_ip_i^T)X^T+\sum_i\lambda_i\mu_ip_ip_i^T\bigr)=0$
+for every $\lambda\in\mathrm{Rel}$, so if $\kappa\ge1$ the tuple $C^1=\xi\xi^T$, $C^r=0$ for $r\ge2$, is a
+nonzero element of $\Delta(A)$. For example, if $a_i=Rr_i$ with rational $r_i$, $d$ of them linearly independent, and a
+rotation $R$ whose entries generate a transcendental field, every derivation is of this form, so the
+theorem is silent whenever $\kappa\ge1$, although $A$ is congruent to a rational set and is Ramsey by
+Theorem~\ref{thm:A}. The theorem may be applied to any congruent copy, and by Theorem~\ref{thm:C} to any
+M\"obius image.
+\item[(b)] Not proved here (ledger SR-C34, consistent on sample only): the one-parameter threshold law
+(configurations in general position on $S^{d-1}$ with one parameter are Ramsey if and only if they have
+fewer than $(d+1)^2$ points), and the claim that the Ramsey sets with $\Delta=0$ on $S^2$ in the ledger's
+sample are not two-group.
+\end{enumerate}
+\end{remark}
+
+\begin{proposition}[Corank one; ledger SR-C33(b),(c)]\label{prop:corankone}
+Suppose $\kappa=1$, $\mathrm{Rel}=F\lambda$. Choose $s-1$ columns $J$ of $\Phi$ whose reduction has rank
+$s-1$, let $\beta_J=\det[\Phi_J\mid b]\in B$, and let $I\subset\mathcal O$ be the ideal generated by the
+$s\times s$ minors of $\Phi$.
+\begin{enumerate}
+\item[(a)] $b\in\Phi(\mathfrak m\mathcal O^M)$ if and only if $\beta_J\in\mathfrak mI$ (membership in
+$\mathcal O$). So $A$ is Ramsey if $\beta_J\in\mathfrak mI$, and, if $A$ affinely spans $\R^d$, only then.
+$I=0$ is allowed, and then the condition is $\beta_J=0$ in $\mathcal O$ (the map $B\to\mathcal O$ need not
+be injective when $B$ is not a domain).
+\item[(b)] If $k=1$ (so $\mathcal O$ is a discrete valuation ring, with order function
+$\operatorname{ord}$) and $I\ne0$, the condition is $\operatorname{ord}\beta_J>\operatorname{ord}I$.
+\item[(c)] If $k=1$, let $D=D_1$ and $E=\sum_i\lambda_i|Da_i|^2$. Then $\operatorname{ord}\beta_J\ge2$, with
+equality if and only if $E\ne0$; and $I\subset\mathfrak m^2\mathcal O$ if and only if $D$ satisfies the linear
+conditions of Lemma~\ref{lem:A1} ($\sum_i\lambda_iDa_i=0$ and $\sum_i\lambda_i(Da_i)a_i^T$ symmetric).
+Consequently: if the linear conditions fail, $\Delta(A)=0$ and $A$ is Ramsey; if they hold and $E\ne0$, $A$
+is not Ramsey (Lemma~\ref{lem:A1}); if they hold and $E=0$ (the \emph{doubly degenerate} case) the 2-jet test
+passes, and a non-Ramsey example requires $I\subset\mathfrak m^3\mathcal O$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) Take $U,V,\Psi$ as in Lemma~\ref{lem:smith}; $\Psi=\psi$ is a single row. By the Cauchy--Binet formula
+the ideal of $s\times s$ minors is unchanged by invertible row and column operations, and the $s\times s$
+minors of $\begin{psmallmatrix}I_{s-1}&0\\0&\psi\end{psmallmatrix}$ are $0$ and the entries of $\psi$. So
+$I=\operatorname{Im}\psi$, the ideal generated by the entries of $\psi$. Next,
+$\det(U)^{-1}\beta_J=\det[U^{-1}\Phi_J\mid U^{-1}b]$. The columns $J$ of $U^{-1}\Phi$ are
+$\begin{psmallmatrix}V'\\\psi V''\end{psmallmatrix}$, where $V'$ and $V''$ are the first $s-1$ and the
+remaining rows of the columns $J$ of $V$; the reduction of this block has rank $s-1$ and its last row
+reduces to $0$, so $\det V'$ is a unit. Write $U^{-1}b=(x,\beta)$ with $x\in\mathfrak m^2\mathcal O^{s-1}$.
+By the Schur complement,
+\[
+ \det(U)^{-1}\beta_J=\det(V')\bigl(\beta-\psi V''V'^{-1}x\bigr),
+\]
+and $\psi V''V'^{-1}x\in\mathfrak m^2I\subset\mathfrak mI$ (and $\subset\mathfrak m^3\mathcal O$). So
+$\beta_J\in\mathfrak mI$ if and only if $\beta\in\mathfrak mI=\mathfrak m\operatorname{Im}\Psi$, which is
+Lemma~\ref{lem:smith}; the Ramsey statements are Proposition~\ref{prop:finitetype}(i),(ii).
+
+(b) If $I=\pi^c\mathcal O$, then $\mathfrak mI=\pi^{c+1}\mathcal O$.
+
+(c) By the display, $\beta_J\equiv u\beta$ modulo $\mathfrak m^3\mathcal O$ with $u$ a unit. By
+Lemma~\ref{lem:smith} the last row of $U_0^{-1}$ is $c_0\lambda$ with $c_0\in F^\times$, so
+$\beta\equiv c_0\sum_i\lambda_ib_i$ modulo $\mathfrak m^3\mathcal O$, and by Lemma~\ref{lem:obstruction} and
+Lemma~\ref{lem:local}(c), $\sum_i\lambda_ib_i\equiv-\tfrac12E\,\pi^2$. So $\operatorname{ord}\beta_J\ge2$,
+with equality if and only if $E\ne0$. For $I$: in a discrete valuation ring, $I\subset\mathfrak m^2$ if and only
+if $\mathfrak mI\subset\mathfrak m^3$, that is, $W=0$ in the proof of Theorem~\ref{thm:rigidity}; by the
+dimension formula there ($\kappa=k=1$) this holds if and only if $\Delta(A)\ne0$, that is (Lemma~\ref{lem:Pi}),
+$\Pi_\lambda(1)=0$, which is the pair of linear conditions (Remark~\ref{rem:corankjet}). The consequences:
+if the conditions fail, $\Delta(A)=0$; if they hold and $E\ne0$, Lemma~\ref{lem:A1} applies with $D$
+extended to $\R$; if they hold and $E=0$, the pairing of Corollary~\ref{cor:jetdual} vanishes on
+$\Delta(A)=F$, and if $\operatorname{ord}I=2$ then $\operatorname{ord}\beta_J\ge3>\operatorname{ord}I$ and $A$
+is Ramsey by (b).
+\end{proof}
+
+\noindent\emph{What remains open here} (ledger SR-C33(d)): whether doubly degenerate corank-one
+configurations with $I\subset\mathfrak m^3\mathcal O$ and $\operatorname{ord}\beta_J\le\operatorname{ord}I$
+exist; such a configuration would be a non-Ramsey set with no scalar certificate, and a counterexample to
+Conjecture~\ref{conj:C1}.
 
 \section{Conjectures}\label{sec:conj}
 
@@ -1489,7 +1961,13 @@ the hand proof of Theorem~\ref{thm:C} line by line, and reviewed this note and t
 release (not line by line); both are an owner's sign-off, not expert review. The corrections of
 version~1.1 were found and written by Claude Opus~5.5 agents and reviewed by a separate AI agent
 (including the genericity step of Remark~\ref{rem:quadric}), and the two additions listed under
-``Changes in version~1.1'' were each reviewed by one non-author AI agent. \textbf{No human expert has reviewed any part of this note.} Machine checks:
+``Changes in version~1.1'' were each reviewed by one non-author AI agent. For first-order rigidity that
+reviewer reconstructed a complete proof, which version~1.1.0 summarized without printing it. In
+version~1.1.1 the written proofs of \S\ref{sec:rigidity} were added by a Claude Opus~5.5 agent, following
+that reconstruction and making each step explicit; a second, independent review by a Claude Opus~5.5 agent
+that had not built them, and did not see the earlier review before reaching its verdict, found every step
+sound, and its exact search for counterexamples over about fifteen families of configurations found no
+non-Ramsey set with $\Delta(A)=0$. \textbf{No human expert has reviewed any part of this note.} Machine checks:
 Lean and Comparator (Theorems~\ref{thm:A}, \ref{thm:Ba}, \ref{thm:Bb}, \ref{thm:C} with
 Corollary~\ref{cor:mobius}(c),(d), and \ref{thm:D}); exact sympy identities and exact ranks (\st{CERT}
 items, and the rank computation in Corollary~\ref{cor:radian8}); random

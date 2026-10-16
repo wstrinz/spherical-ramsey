@@ -13,6 +13,13 @@ SR-C11, SR-C12, SR-C13, SR-C16, SR-C17; the full list is `CHANGELOG.md` at the r
 quadric-independence criterion (result 172, Prop. 7.3) and Pálvölgyi's appendix Theorems A.11–A.13 were
 overlooked in v1.0.0. It adds SR-C29 to SR-C35. Each entry names the reviews behind its status.
 
+**Version 1.1.1.** The written proofs of SR-C34 and SR-C33(a)–(c), which v1.1.0 labelled `[HAND]`
+while the note printed only a summary, are now in the note (section "First-order rigidity"); SR-C24 and
+SR-C31(a) point to them as well. A second, independent AI review of the written proofs found every step
+sound, so SR-C34, SR-C33(a)–(c) and SR-C31(a) are `[HAND]`, reviewed twice (AI); the "only if"
+directions of SR-C31(a) and SR-C33(a), (b) now say that they need an affinely spanning set. No status
+changes.
+
 **Count (35 entries).** proved: 12 (SR-C2, SR-C3, SR-C10, SR-C11, SR-C14, SR-C16, SR-C24, SR-C25,
 SR-C26, SR-C29, SR-C32, SR-C34); refuted: 3 (SR-C7, SR-C13, SR-C22); consistent-on-sample: 6 (SR-C15,
 SR-C19, SR-C23, SR-C27, SR-C30, SR-C31); open: 14. Four further refuted or withdrawn guesses
@@ -184,7 +191,7 @@ history: ["2026-10-12 filed (replacing a withdrawn witness)", "2026-10-12 eviden
   both S³ threshold cells, the S⁴ threshold and ten generic points on S² `[PROBE]`, seven of them exact.
   This was recorded as evidence against; it is automatic. Every one of these cells has quadric corank one
   or contains a failing cell of corank one, and at corank one the 2-jet test equals the scalar test
-  (SR-C31(a), `[HAND]`, reviewed by one non-author AI agent). An earlier claimed witness (three rational
+  (SR-C31(a), `[HAND]`, reviewed twice by non-author AI agents). An earlier claimed witness (three rational
   plus four independent circle points) is withdrawn: it has a scalar certificate (exact, J2-F7).
 - **Starting state.** `python -I certificates/corank_exact.py c32`; `cd probes && python scalar_cert.py`.
 
@@ -299,8 +306,9 @@ history: ["2026-10-13 filed with a sketch, before its falsifier ran", "2026-10-1
 - **Falsifier.** An exact non-Ramsey instance with n ≤ 8 and rank N = n.
 - **Starting state.** `python -I certificates/rankN_check.py` (seconds); `python -I
   certificates/rankN_sweep.py` (about 1 min).
-- **Difficulty.** Attackable: the reviewer inferred that regularity can be dropped (the local ring at
-  the diagonal is a DVR for any finitely generated F of transcendence degree 1); a k = 2 analogue must
+- **Difficulty.** Attackable. Regularity can be dropped: since v1.1.1 the note's section "First-order rigidity"
+  proves the criterion for every F of transcendence degree 1, and without 5 ≤ n, as a special case of
+  first-order rigidity (SR-C34; written proof reviewed twice, AI); a k = 2 analogue must
   explain the mirror family of SR-C23; one-parameter families on S².
 - **Lean.** None.
 
@@ -492,21 +500,24 @@ history: ["2026-10-14 filed as a prediction before any computation", "2026-10-14
 id: SR-C34
 title: If the 2-jet dual space vanishes, the set is Ramsey
 status: proved
-warrant: "HAND, reviewed by one non-author AI agent (Smith form over the local ring at the diagonal, J2 duality, Nakayama); the (d+1)^2 threshold law and 'not two-group' consistent on sample (10/10 PROBE with exact dual dimensions); the non-Ramsey side at 16 points CERT per instance"
+warrant: "HAND: written proof in the note (section First-order rigidity, added in v1.1.1), independently reviewed twice by non-author AI agents (the first review reconstructed the argument: Smith form over the local ring at the diagonal, J2 duality, Nakayama; a second, independent review found every step sound); rests on OpenAI's Lean sufficiency fieldCriterion_ramsey; the (d+1)^2 threshold law and 'not two-group' consistent on sample (10/10 PROBE with exact dual dimensions); the non-Ramsey side at 16 points CERT per instance"
 scope: ANY
 difficulty: "done (HAND); engineering (a Lean proof over OpenAI's FieldCriterion)"
 lean_stub: none
 fc_category: "research open (until a proof is public and accepted)"
 ams: ["05D10", "13N15"]
 replay: ["probes/c34_test.py", "certificates/c34_det16.py", "certificates/corank_exact.py"]
-history: ["2026-10-14 filed with a sketch, before its probe test", "2026-10-14 consistent on sample (10/10)", "2026-10-14 proved after a non-author AI review"]
+note: "Theorem (first-order rigidity)"
+history: ["2026-10-14 filed with a sketch, before its probe test", "2026-10-14 consistent on sample (10/10)", "2026-10-14 proved after a non-author AI review", "2026-10-15 literature sweep: novel as far as found", "2026-10-15 written proof added to the note (v1.1.1)", "2026-10-15 second, independent AI review of the written proof: every step sound"]
 ```
 
+- **Status.** If the 2-jet dual space Δ(A) of a finite subset of the unit sphere vanishes, then A is Ramsey (scope ANY, no spanning hypothesis); written proof in §First-order rigidity, independently reviewed twice by non-author AI agents, resting on OpenAI's Lean sufficiency fieldCriterion_ramsey.
 - **Statement.** Let A be a finite subset of the unit sphere S^{d−1} centred at 0 (other spheres by a
   similarity), with coordinate field F, let D₁, …, D_k be a basis of Der_ℚ(F) (or of the derivations of
   any finitely generated real field containing the coordinates), and let Δ(A) be the 2-jet dual space
   (SR-C31(a)), without the trace-pairing condition. If Δ(A) = 0, then A is Ramsey. Scope `ANY`.
-- **Proof** (`[HAND]`, reviewed by one non-author AI agent). Over O = (F ⊗ F)_𝔪 take a Smith form of the
+- **Proof** (`[HAND]`: written proof in the note's section "First-order rigidity" (added in v1.1.1),
+  independently reviewed twice by non-author AI agents (the first review reconstructed the argument; a second, independent review found every step sound)). Over O = (F ⊗ F)_𝔪 take a Smith form of the
   evaluation map Φ; the obstruction b has entries bᵢ = −½ Σ_j (a_ij ⊗ 1 − 1 ⊗ a_ij)², so it lies in
   𝔪²O^N; by the duality behind Proposition J2 the annihilator of the order-two image is Δ(A) (Δ ≅ W^⊥);
   so Δ = 0 gives 𝔪²O^κ ⊆ 𝔪·Im Ψ + 𝔪³O^κ, and Nakayama's lemma puts the obstruction in 𝔪·Im Ψ, which by
@@ -815,25 +826,27 @@ history: ["2026-10-14 filed with a sketch, before its exact checks", "2026-10-14
 id: SR-C31
 title: The 2-jet test fails iff (kappa = 1 and k > G_d) or (kappa >= 2 and kappa(k+1) > 2 G_d), for families in general position
 status: consistent-on-sample
-warrant: "(a): HAND, reviewed by one non-author AI agent; (b): exact 2-jet dual dimensions and pairings at rational specializations, 38/38 decided as predicted (three after re-specializing), plus 8/8 PROBE with the primal 2-jet"
+warrant: "(a): HAND, written proof in the note (section First-order rigidity, added in v1.1.1: the duality lemma, its corollary on the dual form, and the corank-one remark), independently reviewed twice by non-author AI agents; (b) is why the entry stays consistent-on-sample; (b): exact 2-jet dual dimensions and pairings at rational specializations, 38/38 decided as predicted (three after re-specializing), plus 8/8 PROBE with the primal 2-jet"
 scope: "(a): ANY; (b): GENERIC_OF(rational-affine families u_i(theta) = alpha_i + B_i theta with seeded rational coefficients)"
 difficulty: "attackable (generic non-vanishing of the pairing; general position of geometric families)"
 lean_stub: none
 fc_category: "research open"
 ams: ["05D10", "13N15"]
 replay: ["certificates/corank_exact.py", "certificates/c31_respecialize.py", "probes/c31_c32_jet2.py"]
-history: ["2026-10-14 filed before its probe and exact checks", "2026-10-14 consistent on sample", "2026-10-14 (a) proved after a non-author AI review"]
+history: ["2026-10-14 filed before its probe and exact checks", "2026-10-14 consistent on sample", "2026-10-14 (a) proved after a non-author AI review", "2026-10-15 (a): second, independent AI review of the written proof: every step sound"]
 ```
 
+- **Status.** (a) At every quadric rank, the 2-jet test is solvable if the trace pairing vanishes on Δ(A), and only if when A affinely spans; at corank one Δ = Sym²(ker Π_λ), so the 2-jet test equals Pálvölgyi's scalar Lemma A.1 test. The entry as a whole is consistent-on-sample because (b) is a conjecture.
 - **Setting.** A ⊂ S^{d−1}, |A| = N, with derivations D₁, …, D_k (k the Möbius-reduced transcendence
   degree), quadric corank κ (SR-C29) and quadric rank D_d, and G_d = d(d + 1)/2 = dim so(1, d). For a
   relation λ (Σᵢ λᵢpᵢpᵢᵀ = 0), Π_λ is the G_d × k matrix whose column l is the antisymmetric part of
   Σᵢ λᵢ pᵢ(D_l pᵢ)ᵀ.
 - **Statement.**
-  - (a) **Proved** (`[HAND]`, reviewed by one non-author AI agent), for any quadric rank and the full
+  - (a) **Proved** (`[HAND]`, written proof in the note since v1.1.1, reviewed twice by non-author AI agents), for any quadric rank and the full
     derivation module Der(F). The dual space of the 2-jet system is
     Δ(A) = {(C^ρ)_{ρ ≤ κ}, C^ρ ∈ Sym²(F^k) : Σ_ρ Π_{λ^ρ} C^ρ = 0} for a basis λ¹, …, λ^κ of relations, and
-    the test fails iff some element of Δ(A) has a nonzero trace pairing with the Gram data. At corank one
+    the test is solvable if the trace pairing with the Gram data vanishes on Δ(A); for sets that affinely
+    span, it fails iff some element of Δ(A) has a nonzero pairing. At corank one
     Δ = Sym²(ker Π_λ), so the 2-jet test equals the scalar test of Lemma A.1 (Pálvölgyi's method), and a
     failure that contains a corank-one failing subset has a scalar certificate (extend λ by 0).
   - (b) (conjecture; consistent on sample) For families in general position the 2-jet test fails iff
@@ -1230,31 +1243,33 @@ history: ["2026-10-13 filed"]
 
 ```yaml
 id: SR-C33
-title: Ramsey iff b lies in Phi(m O^M) over the local ring at the diagonal; corank one reduces to one ideal membership
+title: For spanning sets, Ramsey iff b lies in Phi(m O^M) over the local ring at the diagonal; corank one reduces to one ideal membership
 status: open
-warrant: "(a)-(c): HAND, reviewed by one non-author AI agent; (d): conjecture"
+warrant: "(a)-(c): HAND, written proof in the note (section First-order rigidity, added in v1.1.1), independently reviewed twice by non-author AI agents (the first review reconstructed the argument; a second, independent review found every step sound); (d): conjecture, so the entry stays open"
 scope: ANY
 difficulty: "attackable (doubly degenerate corank-one families)"
 lean_stub: none
 fc_category: "research open"
 ams: ["05D10", "13N15", "13D02"]
 replay: []
-history: ["2026-10-14 filed with sketches; no computation run", "2026-10-14 (a)-(c) proved after a non-author AI review; (d) open"]
+note: "Propositions (finite type) and (corank one)"
+history: ["2026-10-14 filed with sketches; no computation run", "2026-10-14 (a)-(c) proved after a non-author AI review; (d) open", "2026-10-15 written proofs of (a)-(c) added to the note (v1.1.1)", "2026-10-15 (a)-(c): second, independent AI review of the written proofs: every step sound"]
 ```
 
-- **Setting.** B = F ⊗_ℚ F, 𝔪 = ker(multiplication), O = B_𝔪 (a regular local ring with residue field F;
+- **Status.** (a) A is Ramsey if b ∈ Φ(𝔪O^M), and only if when A affinely spans; for spanning A, Ramsey-ness is equivalent to the field criterion over B/𝔪^n for all n ≥ n₀(A), with n₀ not effective. (b), (c) At quadric corank one, A is Ramsey if β_J ∈ 𝔪I (only if, for spanning A), which for one parameter reads ord β_J > ord I; ord β_J = 2 iff E ≠ 0, and I ⊂ 𝔪² iff Lemma A.1's linear conditions hold, so only the doubly degenerate case is undecided. (a)–(c) are proved (`[HAND]`, reviewed twice, AI); the entry stays open only because (d) is open.
+- **Setting.** B = F ⊗_ℚ F, 𝔪 = ker(multiplication), O = B_𝔪 (a Noetherian local ring (regular; not used) with residue field F;
   for one parameter a discrete valuation ring), Φ : O^{(d+1)²} → O^N the evaluation map
   P ↦ ((pᵢ ⊗ 1)ᵀP(1 ⊗ pᵢ))ᵢ, and b = Φ(S ⊗ 1) ∈ 𝔪O^N.
 - **Statement.**
-  - (a) **Proved** (`[HAND]`, one non-author AI review). A is Ramsey iff b ∈ Φ(𝔪O^{(d+1)²}), membership
-    taken in O. Hence for each A there is an order N(A) such that A is Ramsey iff the field criterion is
+  - (a) **Proved** (`[HAND]`; the note's section "First-order rigidity", Proposition (finite type), since v1.1.1). A is Ramsey
+    if b ∈ Φ(𝔪O^{(d+1)²}), membership taken in O, and only if, for sets that affinely span. Hence for each A that affinely spans there is an order N(A) such that A is Ramsey iff the field criterion is
     solvable over B/𝔪^{N(A)} (by the Krull intersection theorem; N(A) is not effective). The 2-jet test is
     N = 3, and SR-C1 is the uniform statement N(A) ≤ 3.
-  - (b) **Proved** (same review). κ(A) = 0 gives OpenAI's quadric-independence criterion (SR-C29) in local
-    form. If κ(A) = 1, A is Ramsey iff β ∈ 𝔪·I, where I is the ideal of maximal minors of Φ and β a minor
-    of [Φ_J | b]; I = 0 is allowed, and then A is Ramsey iff β = 0. For one parameter (uniformizer π):
-    Ramsey iff ord_π β > ord_π I.
-  - (c) **Proved** (same review). In (b) with one parameter, ord β = 2 exactly when E ≠ 0, and ord I ≥ 2
+  - (b) **Proved** (same section, Proposition (corank one)). κ(A) = 0 gives OpenAI's quadric-independence criterion (SR-C29) in local
+    form. If κ(A) = 1, A is Ramsey if β ∈ 𝔪·I (and only if, for sets that affinely span), where I is the
+    ideal of maximal minors of Φ and β a minor of [Φ_J | b]; I = 0 is allowed, and then the condition is
+    β = 0 in O. For one parameter (uniformizer π) the condition reads ord_π β > ord_π I.
+  - (c) **Proved** (same proposition). In (b) with one parameter, ord β = 2 exactly when E ≠ 0, and ord I ≥ 2
     exactly when the derivation satisfies Lemma A.1's linear conditions; the only undecided case is the
     doubly degenerate one (linear conditions hold and E = 0).
   - (d) **Open** (conjecture). At quadric corank one, A is non-Ramsey iff it has a Lemma A.1 certificate.

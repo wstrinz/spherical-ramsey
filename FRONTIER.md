@@ -1,6 +1,6 @@
 # Spherical Ramsey sets: the open frontier
 
-*Published with spherical-ramsey v1.1.0 (concept doi:10.5281/zenodo.23366343) and the `mobius-ramsey`
+*Published with spherical-ramsey v1.1.0, updated in v1.1.1 (concept doi:10.5281/zenodo.23366343) and the `mobius-ramsey`
 release (Theorem C, v1.0.0, doi:10.5281/zenodo.23339523; Palomar registry PALOMAR-2026-10-14-000008).
 Ledger entries are cited as SR-Cn (`ledger/LEDGER.md`). Entries SR-C29 to SR-C35 are new in v1.1.0; their
 replay scripts are in `certificates/` and `probes/`, and each entry states its own review status. The
@@ -40,13 +40,13 @@ commutative algebra (what happens infinitesimally along the diagonal of F ⊗ F)
   on S^{d−1}, up to (d+1)(d+2)/2 − 1 points with algebraically independent coordinates (SR-C29: corollaries
   of OpenAI's theorem with a genericity step, reviewed once by an AI agent). So seven to nine generic points
   of S² are Ramsey and are not two-group.
-- **First-order rigidity** (SR-C34, `[HAND]`, reviewed by one non-author AI agent). If the dual space Δ(A)
-  of the second-order ("2-jet") system vanishes, A is Ramsey. It contains quadric independence (no
+- **First-order rigidity** (SR-C34, `[HAND]`: written proof in the note since v1.1.1, independently
+  reviewed twice by non-author AI agents). If the dual space Δ(A) of the second-order ("2-jet") system vanishes, A is Ramsey. It contains quadric independence (no
   relations) and the note's rank criterion (circle, one parameter). Novel as far as found (sweep of
   2026-10-15); its algebraic-coordinate and small-point-count cases are prior (OpenAI Prop. 7.3; JD-Jones-ASES).
 - **Obstructions** come from quadric relations combined with derivations of the reals (Pálvölgyi's
   Lemma A.1; the 2-jet test of the note, a necessary condition, is its matrix-weighted generalization).
-  At quadric corank one the two coincide (SR-C31(a), `[HAND]`, reviewed); at corank three and four on S²
+  At quadric corank one the two coincide (SR-C31(a), `[HAND]`, reviewed twice, AI); at corank three and four on S²
   there are 2-jet failures with no scalar certificate (SR-C32, proved for four seeded families).
 - **Thresholds.** On the circle: 7 points can fail (6 cannot); radian progressions {kθ} are Ramsey with 8
   points for every θ (`[HAND]`, AI-reviewed) and fail with 9 exactly when e^{iθ} is transcendental (Theorem D
@@ -76,7 +76,7 @@ points impose gives a prediction of which shapes are Ramsey, valid on every sphe
 
 **Precisely.** Let κ be the quadric corank of A ⊂ S^{d−1} (the dimension of the space of relations
 Σ λᵢ pᵢpᵢᵀ = 0), k the Möbius-reduced transcendence degree of its coordinates, and G = d(d+1)/2 = dim so(1,d).
-- *Rigidity* (SR-C34, `[HAND]`, reviewed by one non-author AI agent). If the 2-jet dual space Δ(A) is
+- *Rigidity* (SR-C34, `[HAND]`, written proof in the note since v1.1.1, reviewed twice, AI). If the 2-jet dual space Δ(A) is
   zero, A is Ramsey (Smith form over (F⊗F)_𝔪, the duality behind the 2-jet test, Nakayama). It is silent
   when κ ≥ 1 and some derivation is Möbius-null (for example transcendental rotations of rational sets).
 - *Corank law* (SR-C31(b), consistent on sample). For configurations in general position within their
@@ -96,8 +96,8 @@ rank, the Ramsey verdict is a theorem by SR-C34; on S² this gives Ramsey sets w
 relations, which on the sample are not two-group.
 
 **First step.** A lemma: for a rational family in general position, the map (C^ρ) ↦ Σ_ρ Π_{λ^ρ} C^ρ has the
-expected rank and the pairing is generically nonzero; then the (d+1)² law becomes a theorem. Also a
-posting-day literature sweep for SR-C34. **Tools:** pen and paper; sympy/python-flint. **Audience:**
+expected rank and the pairing is generically nonzero; then the (d+1)² law becomes a theorem. (The
+literature sweep for SR-C34 was done on 2026-10-15: novel as far as found.) **Tools:** pen and paper; sympy/python-flint. **Audience:**
 commutative algebraist; Lean formalizer (it is pure algebra over OpenAI's `FieldCriterion`).
 
 ### F2. Second-order completeness (SR-C1) — M, interest high
@@ -105,7 +105,8 @@ commutative algebraist; Lean formalizer (it is pure algebra over OpenAI's `Field
 **Plain.** Is the infinitesimal (second-order) test always decisive?
 
 **Precisely.** A is Ramsey iff its 2-jet system is solvable. Necessity is `[HAND]` (AI-reviewed).
-Reformulation (SR-C33(a)–(c), `[HAND]`, reviewed by one non-author AI agent): A is Ramsey iff a vector b lies
+Reformulation (SR-C33(a)–(c), `[HAND]`, written proof in the note since v1.1.1, reviewed twice, AI): a set A
+that affinely spans is Ramsey iff a vector b lies
 in Φ(𝔪 O^M) over O = (F⊗F)_𝔪, so each A has *some* finite jet order that decides it (Krull intersection
 theorem; not effective); SR-C1 claims order 3 always suffices. With SR-C34, the open cases are exactly
 those where the 2-jet dual space is nonzero but every dual pairs to zero. In corank one and one parameter

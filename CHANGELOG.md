@@ -1,5 +1,54 @@
 # Changelog
 
+## v1.1.1 (2026-10-15)
+
+A correction release. Every review named here was done by an AI agent that did not write what it
+reviewed; no human expert has reviewed any of it.
+
+- **Written proofs of first-order rigidity and the finite-type reformulation.** v1.1.0 labelled SR-C34
+  and SR-C33(a)–(c) as proved `[HAND]` in the note, the ledger, the README and the archive metadata, but
+  the note printed only a summary of the argument; the complete proof existed only in the reviewer's
+  report. The note now has a section "First-order rigidity" with the full proofs: the local ring of
+  F ⊗ F at the diagonal (Noetherian, the Taylor isomorphism modulo 𝔪³, a discrete valuation ring for one
+  parameter), the obstruction bᵢ = −½ Σⱼ (aᵢⱼ ⊗ 1 − 1 ⊗ aᵢⱼ)², the finite-type reformulation with a
+  deciding jet order (SR-C33(a), by the Krull intersection theorem, not effective), a Smith form over the
+  local ring, the duality between the 2-jet system and its dual space Δ(A), first-order rigidity
+  (SR-C34, by Nakayama's lemma), and the corank-one membership criterion (SR-C33(b), (c)). Status:
+  `[HAND]`: written proof in §First-order rigidity (added in v1.1.1), independently reviewed twice by
+  non-author AI agents (the first review reconstructed the argument; a second, independent review found
+  every step sound).
+  - Verdict of the independent second review of the written proofs: every step sound; `[HAND]` kept
+    for SR-C34, SR-C33(a), SR-C33(b),(c) and SR-C31(a). Its two small fixes are applied: in the
+    corank-one proposition the condition for I = 0 is β_J = 0 *in O* (B → O need not be injective
+    when B is not a domain), and the local-ring lemma now states that B/𝔪ⁿ ≅ O/𝔪ⁿO carries 𝔪ʳ/𝔪ⁿ onto
+    𝔪ʳO/𝔪ⁿO. Its exact search for counterexamples (about fifteen families of configurations) found no
+    non-Ramsey set with Δ(A) = 0.
+  - Ledger: the "only if" directions of SR-C31(a), SR-C33(a) and SR-C33(b) now say that they need a
+    set that affinely spans (the "if" directions need no span); SR-C33's setting calls O a Noetherian
+    local ring (it is regular, but that is not used). Each of SR-C31, SR-C33 and SR-C34 has a one-line
+    status; SR-C33 stays open only because (d) is open, and SR-C31 stays consistent-on-sample because
+    of (b).
+  - By-products, proved there: the "symmetric part" conditions of the 2-jet dual are automatic, so the
+    dual form of the 2-jet test holds at every quadric rank (SR-C31(a)); at quadric corank one the 2-jet
+    test fails exactly when a Lemma A.1 derivation exists; the rank criterion SR-C24 holds without its
+    regularity hypothesis and without 5 ≤ n.
+  - Not proved, and stated so: the one-parameter (d+1)² threshold law and "not two-group" for the S²
+    sample (consistent on sample only); first-order rigidity is not a characterization, and it is silent
+    when κ ≥ 1 and a derivation acts on the points as one matrix (for example transcendental rotations of
+    rational sets).
+- **Theorem C's Lean scope.** README, `CITATION.cff`, `.zenodo.json` and the note's summary table said
+  `[LEAN]` for Möbius invariance of finite spherical sets. The Lean covers the unit sphere and the maps
+  φ_L; other spheres follow by a similarity, by hand. Now stated so (the note's Theorem C status line
+  already said it).
+- **Credit in two README rows.** The circle phase diagram (its non-Ramsey half is Pálvölgyi's Theorems
+  A.3 and A.7) and the minimal non-Ramsey cells (the ten-point S² cell is the case d = 3 of Pálvölgyi's
+  Theorem A.12) now carry the credit the note gives them.
+- **Novelty sweep for SR-C34.** Done on 2026-10-15 (novel as far as found; already stated in v1.1.0's
+  ledger and changelog); the stale "posting-day literature sweep" next steps in `FRONTIER.md` and
+  `ledger/BACKLOG.md` are marked done.
+- Versions: `CITATION.cff` and `.zenodo.json` 1.1.1; the note is version 1.1.1. No script, certificate,
+  probe or rope changed.
+
 ## v1.1.0 (2026-10-15)
 
 Corrections first, then additions. Every review named here was done by an AI agent that did not write

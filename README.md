@@ -4,6 +4,12 @@
 
 Archived on Zenodo. Cite all versions with the concept DOI [10.5281/zenodo.23366343](https://doi.org/10.5281/zenodo.23366343); v1.1.0 is [10.5281/zenodo.23396387](https://doi.org/10.5281/zenodo.23396387) and v1.0.0 is [10.5281/zenodo.23366344](https://doi.org/10.5281/zenodo.23366344).
 
+**Version 1.1.1** adds the written proofs of first-order rigidity (SR-C34) and of the finite-type
+reformulation (SR-C33(a)–(c)) to the note (section "First-order rigidity"). v1.1.0 labelled them proved
+`[HAND]` while publishing only a summary of the argument; the written proofs were then reviewed
+independently by a second non-author AI agent, which found every step sound. It also scopes Theorem C's `[LEAN]` level to the
+unit sphere and credits Pálvölgyi in two rows below. See [`CHANGELOG.md`](CHANGELOG.md).
+
 **Version 1.1.0** corrects the credit in v1.0.0. OpenAI's quadric-independence criterion (result 172,
 Prop. 7.3) and Pálvölgyi's appendix Theorems A.11–A.13 had been overlooked. Several ledger statuses
 change (SR-C3, SR-C7, SR-C11, SR-C16), and a v1.0.0 sentence calling a certificate for seven generic
@@ -64,7 +70,7 @@ The note is authoritative for wording; this table is a map.
 | With a 7-point non-Ramsey cyclic set (Pálvölgyi's heptagon; also the 3 + 4 set below), 7 is the minimum size of a non-Ramsey cyclic set. The minimality is not in Lean | [LEAN] (≤ 6 points, rope AV2) plus [CERT] (`dual_cert.py`) or Pálvölgyi's theorem for the 7-point set | `ropes/av2`; `certificates/` |
 | **Theorem D.** The radian nine-gon `(cos kθ, sin kθ)`, `k = 0, …, 8`, is not Ramsey when `tan(θ/2)` is transcendental, and (distinct points) is Ramsey iff `e^{iθ}` is algebraic | [LEAN], Lean-checked (fresh-runner Comparator, non-builder fidelity review, fresh-agent reproduction); [CERT] `radian_det.py` | `ropes/av3` |
 | θ = 1 radian: the nine points at angles 0, …, 8 are not Ramsey | [HAND]: Theorem D plus Lindemann–Weierstrass (not in Mathlib at this pin) | note |
-| **Theorem C.** The Ramsey property of a finite spherical set is Möbius invariant (no spanning hypothesis), with corollaries: Möbius images of algebraic spherical sets, and the circle families `circ(k tᵢ)`, `circ(tᵢ + c)`, are Ramsey. **Published** in mobius-ramsey v1.0.0 ([doi:10.5281/zenodo.23339523](https://doi.org/10.5281/zenodo.23339523)) | [LEAN], Comparator-checked on a fresh runner | `ropes/av4` |
+| **Theorem C.** The Ramsey property of a finite spherical set is Möbius invariant (no spanning hypothesis), with corollaries: Möbius images of algebraic spherical sets, and the circle families `circ(k tᵢ)`, `circ(tᵢ + c)`, are Ramsey. **Published** in mobius-ramsey v1.0.0 ([doi:10.5281/zenodo.23339523](https://doi.org/10.5281/zenodo.23339523)) | [LEAN] for the unit sphere (Möbius maps φ_L), Comparator-checked on a fresh runner; other spheres by a similarity, by hand ([HAND]) | `ropes/av4` |
 | **B(b).** Algebraic concyclic points plus at most three arbitrary points on the same circle are Ramsey | [LEAN], Lean-checked (fresh-runner Comparator, non-builder fidelity review, fresh-agent reproduction); [CERT] `cert_mobius.py` (rational case) | `ropes/av5` |
 | **The two-group theorem (C2).** For every `d ≥ 2`, a union of two Möbius images of finite algebraic subsets of `S^{d-1}` is Ramsey (any sizes, both orientations) | every `d ≥ 2`: [HAND], AI-reviewed. Exact certificates plus glue: `S¹` and `S²` [CERT] (`cert_s2.py`, with `g4_test.py` for algebraic seeds); `S³`, `S⁴` [CERT] (`cert_s2_quat.py`); `S⁵` [CERT] (`cert_clifford*.py`); instance cross-checks through `d = 8` | note; `certificates/` |
 | **OpenAI's quadric-independence criterion** (prior work; ledger SR-C29): up to (d+1)(d+2)/2 − 1 generic points of S^{d−1} are Ramsey; on S² this gives non-two-group Ramsey sets | [LEAN] (OpenAI's theorem) + [HAND] genericity step, AI-reviewed; exact ranks `corank_exact.py` | note; ledger |
@@ -74,16 +80,18 @@ The note is authoritative for wording; this table is a map.
 | **The radian 8-gon** (ledger SR-C10): the points `k = 0, …, 7` are Ramsey for every θ | [HAND] (the rank criterion plus an exact rank 8), AI-reviewed | note; ledger |
 | **Rigid-group absorption** (ledger SR-C14) on the circle (regular coordinate fields) | [HAND], AI-reviewed; exact 9 × 9 determinants of instances in `probes/c14_rigid.py` | note; ledger |
 | The 2-jet test is a necessary condition for Ramsey | [HAND], AI-reviewed | note |
+| **First-order rigidity** (ledger SR-C34): if the dual space of the 2-jet system vanishes, the set is Ramsey; with the finite-type reformulation (SR-C33(a)–(c)) | [HAND]: written proof in the note since v1.1.1, reviewed twice (AI); see `DISCLOSURE.md` | note; ledger |
 | 3 rational + 4 algebraically independent circle points are not Ramsey (an instance of Pálvölgyi's Theorem A.3) | [CERT] (`dual_cert.py`) | `certificates/` |
-| The circle phase diagram: `m` rational + `j` independent points are non-Ramsey iff `j ≥ 4` and `m + j ≥ 7` | [HAND], AI-reviewed | note |
-| The minimal 2-jet failure cells on `S²` and `S³` are non-Ramsey | [CERT] identities (`scalar_exact.py`) plus glue, AI-reviewed | note; `certificates/` |
+| The circle phase diagram: `m` rational + `j` independent points are non-Ramsey iff `j ≥ 4` and `m + j ≥ 7`. The non-Ramsey half is Pálvölgyi's (Theorems A.3 and A.7 of his appendix, labelled unchecked by its author); the Ramsey half combines prior work with B(b) | [HAND], AI-reviewed | note |
+| The minimal 2-jet failure cells on `S²` and `S³` are non-Ramsey. The ten-point `S²` cell with all coordinates independent is the case d = 3 of Pálvölgyi's Theorem A.12 (appendix, labelled unchecked by its author), which is prior; ours there is the exact certificate | [CERT] identities (`scalar_exact.py`) plus glue, AI-reviewed | note; `certificates/` |
 | Graham's conjecture holds trivially for colourings definable in an o-minimal structure (big-ball lemma); polynomial-factor colourings contain every bounded-dimension spherical set | [HAND], AI-reviewed; exact interval checks of examples (`definable_*.py`, `exact_intervals.py`) | note; `certificates/` |
 | Phase diagrams, thresholds and searches on `S¹` … `S⁴` | [PROBE] only | `probes/` |
 
 Open and refuted conjectures (with the evidence for and against each) are in `ledger/`, as entries
 `SR-C1` … `SR-C35`. The scripts' own output and docstrings call these `C-1` … `C-35`; `C-n` there is
-ledger entry `SR-Cn`. Since v1.1.0 the ledger also holds results reviewed by one AI agent, such as
-first-order rigidity (SR-C34); `FRONTIER.md` ranks the open problems.
+ledger entry `SR-Cn`. Since v1.1.0 the ledger also holds results reviewed by AI agents only, such as
+first-order rigidity (SR-C34), whose written proof is in the note since v1.1.1 and was reviewed twice; `FRONTIER.md` ranks the
+open problems.
 
 ## Reproduce
 

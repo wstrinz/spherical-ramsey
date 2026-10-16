@@ -217,9 +217,12 @@
 - id: SR-C34
   title: If the 2-jet dual space vanishes, the set is Ramsey
   status: proved
-  warrant: HAND, reviewed by one non-author AI agent (Smith form over the local ring at the diagonal,
-    J2 duality, Nakayama); the (d+1)^2 threshold law and 'not two-group' consistent on sample (10/10 PROBE
-    with exact dual dimensions); the non-Ramsey side at 16 points CERT per instance
+  warrant: 'HAND: written proof in the note (section First-order rigidity, added in v1.1.1), independently
+    reviewed twice by non-author AI agents (the first review reconstructed the argument: Smith form over
+    the local ring at the diagonal, J2 duality, Nakayama; a second, independent review found every step
+    sound); rests on OpenAI''s Lean sufficiency fieldCriterion_ramsey; the (d+1)^2 threshold law and ''not
+    two-group'' consistent on sample (10/10 PROBE with exact dual dimensions); the non-Ramsey side at
+    16 points CERT per instance'
   scope: ANY
   difficulty: done (HAND); engineering (a Lean proof over OpenAI's FieldCriterion)
   lean_stub: none
@@ -231,10 +234,14 @@
   - probes/c34_test.py
   - certificates/c34_det16.py
   - certificates/corank_exact.py
+  note: Theorem (first-order rigidity)
   history:
   - 2026-10-14 filed with a sketch, before its probe test
   - 2026-10-14 consistent on sample (10/10)
   - 2026-10-14 proved after a non-author AI review
+  - '2026-10-15 literature sweep: novel as far as found'
+  - 2026-10-15 written proof added to the note (v1.1.1)
+  - '2026-10-15 second, independent AI review of the written proof: every step sound'
 - id: SR-C7
   title: If the generic member of an irreducible family is Ramsey, every member is
   status: refuted
@@ -384,9 +391,11 @@
   title: The 2-jet test fails iff (kappa = 1 and k > G_d) or (kappa >= 2 and kappa(k+1) > 2 G_d), for
     families in general position
   status: consistent-on-sample
-  warrant: '(a): HAND, reviewed by one non-author AI agent; (b): exact 2-jet dual dimensions and pairings
-    at rational specializations, 38/38 decided as predicted (three after re-specializing), plus 8/8 PROBE
-    with the primal 2-jet'
+  warrant: '(a): HAND, written proof in the note (section First-order rigidity, added in v1.1.1: the duality
+    lemma, its corollary on the dual form, and the corank-one remark), independently reviewed twice by
+    non-author AI agents; (b) is why the entry stays consistent-on-sample; (b): exact 2-jet dual dimensions
+    and pairings at rational specializations, 38/38 decided as predicted (three after re-specializing),
+    plus 8/8 PROBE with the primal 2-jet'
   scope: '(a): ANY; (b): GENERIC_OF(rational-affine families u_i(theta) = alpha_i + B_i theta with seeded
     rational coefficients)'
   difficulty: attackable (generic non-vanishing of the pairing; general position of geometric families)
@@ -403,6 +412,7 @@
   - 2026-10-14 filed before its probe and exact checks
   - 2026-10-14 consistent on sample
   - 2026-10-14 (a) proved after a non-author AI review
+  - '2026-10-15 (a): second, independent AI review of the written proof: every step sound'
 - id: SR-C1
   title: The second-order (2-jet) test decides Ramsey-ness
   status: open
@@ -602,10 +612,12 @@
   history:
   - 2026-10-13 filed
 - id: SR-C33
-  title: Ramsey iff b lies in Phi(m O^M) over the local ring at the diagonal; corank one reduces to one
-    ideal membership
+  title: For spanning sets, Ramsey iff b lies in Phi(m O^M) over the local ring at the diagonal; corank
+    one reduces to one ideal membership
   status: open
-  warrant: '(a)-(c): HAND, reviewed by one non-author AI agent; (d): conjecture'
+  warrant: '(a)-(c): HAND, written proof in the note (section First-order rigidity, added in v1.1.1),
+    independently reviewed twice by non-author AI agents (the first review reconstructed the argument;
+    a second, independent review found every step sound); (d): conjecture, so the entry stays open'
   scope: ANY
   difficulty: attackable (doubly degenerate corank-one families)
   lean_stub: none
@@ -615,9 +627,12 @@
   - 13N15
   - 13D02
   replay: []
+  note: Propositions (finite type) and (corank one)
   history:
   - 2026-10-14 filed with sketches; no computation run
   - 2026-10-14 (a)-(c) proved after a non-author AI review; (d) open
+  - 2026-10-15 written proofs of (a)-(c) added to the note (v1.1.1)
+  - '2026-10-15 (a)-(c): second, independent AI review of the written proofs: every step sound'
 - id: SR-C35
   title: A nonzero pairing on the 2-jet dual space gives an explicit colouring (matrix-weighted Lemma
     A.1)

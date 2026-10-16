@@ -1,7 +1,7 @@
 # Note
 
 `spherical-ramsey.tex` is the note: *Two Möbius groups suffice: Euclidean Ramsey sets on spheres of every dimension, after the tensor
-classification*, version 1.1.0 (2026-10-14; corrections since 1.0.0 in `../CHANGELOG.md`).
+classification*, version 1.1.1 (2026-10-15; changes since 1.0.0 in `../CHANGELOG.md`).
 It states every result of this repository with its verification level (`[LEAN]`, `[CERT]`,
 `[HAND]`, `[PROBE]`), gives the hand proofs and the written glue for the certificates, and cites
 the scripts in `../certificates/` and `../probes/`, the ropes in `../ropes/`, and the conjecture

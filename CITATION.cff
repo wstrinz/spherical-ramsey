@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
 title: "spherical-ramsey: which finite spherical sets are Euclidean Ramsey (Lean 4 ropes, exact certificates, probes, note and conjecture ledger)"
-version: "1.1.0"
+version: "1.1.1"
 date-released: "2026-10-15"
 doi: "10.5281/zenodo.23366343"
 authors:
@@ -22,8 +22,9 @@ abstract: >-
   fresh runner: finite spherical sets with algebraic coordinates are Ramsey (prior
   work; a further proof); any six or fewer points on a circle are Ramsey; the
   radian nine-gon (nine distinct points) is Ramsey if and only if e^{i theta} is
-  algebraic; the Ramsey property of a spherical set is Moebius invariant (Theorem
-  C, published in mobius-ramsey); algebraic concyclic points plus at most three
+  algebraic; the Ramsey property of a set on the unit sphere is invariant under
+  Moebius maps (Theorem C, published in mobius-ramsey; other spheres by a
+  similarity, by hand); algebraic concyclic points plus at most three
   arbitrary points are Ramsey. The two-group theorem: a union of two Moebius
   images of finite algebraic subsets of the sphere S^{d-1} is Ramsey for every
   d >= 2 (HAND, AI-reviewed), with exact certificates on S^1 to S^5 (CERT). Exact
@@ -34,8 +35,13 @@ abstract: >-
   version 1.0.0: OpenAI's quadric-independence criterion (result 172,
   Proposition 7.3) and Palvolgyi's appendix Theorems A.11-A.13 had been
   overlooked; several conjecture-ledger statuses change accordingly. It adds
-  ledger entries SR-C29 to SR-C35 (among them first-order rigidity, a written
-  proof reviewed by one AI agent) and a frontier document.
+  ledger entries SR-C29 to SR-C35 (among them first-order rigidity, whose argument
+  was reviewed by one AI agent) and a frontier document. Version 1.1.1 adds to
+  the note the written proofs of first-order rigidity (SR-C34) and of the
+  finite-type reformulation (SR-C33(a)-(c)), which v1.1.0 labelled HAND while
+  publishing only a summary of the argument (a second, independent AI review of
+  the written proofs found every step sound), and scopes Theorem C's LEAN level
+  to the unit sphere.
   AI disclosure. The author, Will Strinz, is the only human contributor. The
   proofs, the Lean, the certificates, the probes, the checks and the documentation
   were produced by AI agents (Claude Opus 5.5 and Claude Sonnet 5.5, Anthropic, in
